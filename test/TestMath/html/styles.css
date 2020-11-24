@@ -5,7 +5,7 @@ body{
     font-family: Comic Sans MS;
 }
 #start{
-	 display: inline-block;
+    display: inline-block;
     vertical-align: top;
     border: 3px solid black;
     padding: 5px;
@@ -16,7 +16,7 @@ body{
     border-radius: 100px/20px;
 }
 #page{
-	position: absolute;
+    position: absolute;
     left: 50%;
     top: 50%;
     z-index: 20;
@@ -38,11 +38,11 @@ body{
     border-radius: 125px/10px;
 }
 a{
-	color: black;
-	text-decoration: none;
+    color: black;
+    text-decoration: none;
 }
 #home{
-	font-size: 16pt;
+    font-size: 16pt;
     border: 3px solid;
     border-color: black;
     text-align: center;
@@ -55,7 +55,7 @@ a{
     border-radius: 125px/10px;
 }
 #register{
-	
+
 }
 
 
