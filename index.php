@@ -8,6 +8,8 @@
 
 require "vendor/autoload.php";
 require "include/db.php";
+
 require "include/session.php";
 require "include/user.php";
+
 require "include/includePage.php";
