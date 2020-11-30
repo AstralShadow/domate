@@ -19,7 +19,8 @@ namespace Main;
  *
  * @author azcraft
  */
-class Session {
+class Session
+{
 
     /**
      * @var string       $sessionKey      Unique session key, the cookie value.
@@ -57,11 +58,11 @@ class Session {
         $characters = array_merge(range('a', 'z'), range('A', 'Z'), range('0', '9'));
         $charactersLength = count($characters) - 1;
 
-        do {
+        do{
             $key = "";
             for ($i = 0; $i < 23; $i++)
                 $key .= $characters[mt_rand(0, $charactersLength)];
-        } while ($this->sessionExists($key));
+        }while ($this->sessionExists($key));
 
         $sessions->insertOne([
             "key" => $key,
@@ -113,7 +114,7 @@ class Session {
      */
     public function get(string $key) {
         $now = intval((new \DateTime())->format('s'));
-        if (intval($this->lastUpdateTime->format('s')) > $now - 3)
+        if (!isset($this->lastUpdateTime) || $now - 3 < intval($this->lastUpdateTime->format('s')))
             $this->loadSession($this->sessionKey);
 
         if (in_array($key, ["key", "_id"]))
@@ -199,5 +200,34 @@ class Session {
         $this->set($name, $value);
     }
 
-    // TODO: plan a remove/clear/reset session function
+    public function clear() {
+        global $db;
+        $sessions = $db->sessions;
+        if (!isset($this->data))
+            return;
+        $filter = ["_id" => $this->data["_id"]];
+        $cleanState = [
+            "_id" => $this->data["_id"],
+            "key" => $this->data["key"],
+            "created" => $this->data["created"],
+            "modified" => new \MongoDB\BSON\UTCDateTime()
+        ];
+        $sessions->replaceOne($filter, $cleanState);
+    }
+
+    public function reset(): void {
+        global $db;
+        $sessions = $db->sessions;
+        if (!isset($this->data))
+            return;
+        $filter = ["_id" => $this->data["_id"]];
+        $cleanState = [
+            "_id" => $this->data["_id"],
+            "key" => $this->data["key"],
+            "created" => new \MongoDB\BSON\UTCDateTime(),
+            "modified" => new \MongoDB\BSON\UTCDateTime()
+        ];
+        $sessions->replaceOne($filter, $cleanState);
+    }
+
 }

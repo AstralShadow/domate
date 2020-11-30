@@ -7,7 +7,7 @@
  */
 
 
-if (!defined("DETECTED_PAGE")) {
+if (!defined("DETECTED_PAGE")){
     define("DETECTED_PAGE", true);
     $page = "home";
     if (isset($_GET['p']) && is_string($_GET['p']))
@@ -23,13 +23,15 @@ if (!defined("DETECTED_PAGE")) {
         $pageType = "file";
 }
 
-if (!defined("CHECKED_PAGE_ACCESS_PERMISSIONS") && defined("LOADED_USER_DATA")) {
+if (!defined("CHECKED_PAGE_ACCESS_PERMISSIONS") && defined("LOADED_USER_DATA")){
     define("CHECKED_PAGE_ACCESS_PERMISSIONS", true);
 }
 
-if (!defined("INCLUDED_PAGE")) {
+if (!defined("INCLUDED_PAGE")){
     define("INCLUDED_PAGE", true);
-    switch ($pageType) {
+
+    require "include/dictionary.php";
+    switch ($pageType){
         case "file":
             include "pages/files/" . $page . ".php";
             break;

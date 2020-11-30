@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-if (!defined("DEFINED_DB_CLIENT")) {
+if (!defined("DEFINED_DB_CLIENT")){
     define("DEFINED_DB_CLIENT", true);
 
     // Default arguments
@@ -18,10 +18,10 @@ if (!defined("DEFINED_DB_CLIENT")) {
     ];
 
     // Loading configuration file
-    if (file_exists("data/mongodb_authentication.json")) {
-        $options = json_decode(file_get_contents("data/mongodb_authentication.json"), true);
+    if (file_exists("data/private/mongodb_authentication.json")){
+        $options = json_decode(file_get_contents("data/private/mongodb_authentication.json"), true);
 
-        foreach (array_keys($args) as $key) {
+        foreach (array_keys($args) as $key){
             if (isset($options[$key]) && is_string($options[$key]))
                 $args[$key] = $options[$key];
         }
