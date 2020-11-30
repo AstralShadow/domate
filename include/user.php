@@ -6,7 +6,8 @@
  * and open the template in the editor.
  */
 
-if (!defined("LOADED_USER_DATA")) {
+require "include/db.php";
+if (!defined("LOADED_USER_DATA") && isset($db)){
     define("LOADED_USER_DATA", true);
     $i = 0;
     define("USER_ERRCODE_NO_ERROR", $i++);

@@ -20,7 +20,6 @@ if (!defined("DEFINED_DB_CLIENT")){
     // Loading configuration file
     if (file_exists("data/private/mongodb_authentication.json")){
         $options = json_decode(file_get_contents("data/private/mongodb_authentication.json"), true);
-
         foreach (array_keys($args) as $key){
             if (isset($options[$key]) && is_string($options[$key]))
                 $args[$key] = $options[$key];
@@ -29,14 +28,23 @@ if (!defined("DEFINED_DB_CLIENT")){
     }
 
     // Connecting to server
-    $dbClient = new MongoDB\Client($args["url"], [
-        "username" => $args["user"],
-        "password" => $args["pwd"],
-        "authSource" => $args["db"],
-        "db" => $args["db"]
-    ]);
-    $k = $args["db"];
-    $db = $dbClient->$k;
+    try{
+        $dbClient = new MongoDB\Client($args["url"], [
+            "username" => $args["user"],
+            "password" => $args["pwd"],
+            "authSource" => $args["db"],
+            "db" => $args["db"]
+        ]);
+        $k = $args["db"];
+        $db = $dbClient->$k;
+        $dbClient->listDatabases();
+    }catch (Exception $e){
+        if (!isset($_GET["mock"])){
+            echo "Missing Database.";
+            die;
+        }
+        $db = null;
+    }
 
     unset($args, $dbClient, $k);
 }
