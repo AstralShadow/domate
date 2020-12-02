@@ -6,12 +6,15 @@
  * and open the template in the editor.
  */
 
+require "include/db.php";
 if (!defined("CLASS_TASK")){
     define("CLASS_TASK", true);
     require "include/classes/Task.php";
 
-    function createTask(): \Main\Task {
-        
+    function loadTask(): \Main\Task {
+        global $db;
+        if (!isset($db))
+            return new Task();
     }
 
 }

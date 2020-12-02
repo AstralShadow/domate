@@ -43,7 +43,7 @@ if (!defined("INCLUDED_PAGE")){
         default:
             $page = "home";
         case "normal":
-            include "pages/template/default.php";
+            include "pages/templates/default.php";
             break;
     }
     unset($pageType, $page);
