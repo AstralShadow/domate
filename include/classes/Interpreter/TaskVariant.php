@@ -6,18 +6,23 @@
  * and open the template in the editor.
  */
 
-namespace Main;
+namespace Main\Interpreter;
 
 /**
- * Description of Task
+ * Represents a single version of a Task, with solution.
  *
  * @author azcraft
  */
-class Task
+class TaskVariant
 {
 
+    public $answer = null;
+    public string $description = "";
+    public $variables = [];
+    public $original;
+
     /**
-     * Loads a task from the database
+     * Loads a taskVariant from the database
      * @param \MongoDB\BSON\ObjectId $id
      * @return bool $success
      */

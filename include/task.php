@@ -7,14 +7,26 @@
  */
 
 require "include/db.php";
+
 if (!defined("CLASS_TASK")){
     define("CLASS_TASK", true);
-    require "include/classes/Task.php";
+    require "include/classes/Interpreter/Task.php";
 
-    function loadTask(): \Main\Task {
+    /**
+     * Loads task from database, returns null if not defined
+     * Wrapper for Task.load($id)
+     * @global type $db
+     * @param \MongoDB\BSON\ObjectId $id
+     * @return \Main\Task|null $task
+     */
+    function loadTask(\MongoDB\BSON\ObjectId $id): ?\Main\Interpreter\Task {
         global $db;
         if (!isset($db))
-            return new Task();
+            return null;
+        $task = new Task();
+        if ($task->load($id))
+            return $task;
+        return null;
     }
 
 }
