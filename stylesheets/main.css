@@ -11,4 +11,5 @@ and open the template in the editor.
 body, html{
     padding: 0px;
     margin: 0px;
+	height: 100%;
 }

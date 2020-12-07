@@ -11,4 +11,18 @@ and open the template in the editor.
 #navigation_container{
     height: 80px;
     background: pink;
+	display: flex;
+}
+
+a{
+	color: black;
+	text-decoration: none;
+}
+.button{
+	text-align: center;
+	font-size: 25px;
+	flex: 1;
+	border-top: 1.5px solid black;
+	border-left: 1.5px solid black;
+	border-right: 1.5px solid black;
 }

@@ -8,3 +8,33 @@ and open the template in the editor.
     Author     : azcraft
 */
 
+#nachalo{
+}
+
+#page{
+	display: flex; 
+	width: 100%;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    font-size: 20px;
+	height: 100%;
+    text-align: center;
+	border-radius:  100px 100px 0px 0px/20px 20px 0px 0px;
+}
+
+#formuli{
+	display: flex; 
+	width: 25%;
+	margin-right: 10px;
+	height: 100%;
+	border-right: 3px solid black;
+	font-size: 20px;
+    text-align: center;
+	padding: 10px;
+}
+
+#uslovie{
+	margin: 5px;
+	font-size: 20px;
+	text-align: center;
+}
