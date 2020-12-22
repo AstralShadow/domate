@@ -8,30 +8,17 @@ and open the template in the editor.
     Author     : tedi
 */
 
-body, html{
-    padding: 0px;
-    margin: 0px;
-    height: 100%;
-}
 body{
-    background-color: black;
+    color: rgb(0, 255, 0);
 }
 
-
-#menu{
+/* Header */
+#home_header{
     display: flex;
     position: relative;
     margin-bottom: 60px;
 }
-
-#navigation{
-    display: flex;
-    flex: 1;
-    float: right;
-    margin-right: 2px;
-}
-
-#logo{
+#home_logo{
     flex: 3;
     float: left;
     margin-left: 25px;
@@ -40,7 +27,15 @@ body{
     border: 3px inset;
     border-color: rgb(0, 255, 0);
 }
-.password{
+#home_forms{
+    display: flex;
+    flex: 1;
+    margin-right: 2px;
+}
+
+/* Forms */
+input{
+    background-color: black;
     font-size: 16pt;
     text-align: center;
     color: rgb(0, 255, 0);
@@ -51,96 +46,67 @@ body{
     margin-right: 10px;
     border: 1px solid rgb(0, 200, 0);
 }
-
-#reg{
+.dropdown_form_container{
     display: block;
-    height: 75px;
+    position: relative;
 }
-#reginfo{
-    text-align: center;
-    width: 240px;
-}
-
-#register{
-    display: block;
-    font-size: 18pt;
-    border: 3px inset;
-    border-right: 2px inset;
-    border-color: rgb(0, 255, 0);
-    border-radius: 0px 0px 0px 100px/0px 0px 0px 25px;
-    text-align: center;
+.dropdown_form_submit{
     width: 250px;
     height: 30px;
-}
-#home{
-    font-size: 18pt;
-    border: 3px inset;
-    border-left: 2px inset;
-    border-color: rgb(0, 255, 0);
-    border-radius: 0px;
-    text-align: center;
-    height: 30px;
-    width: 250px;
-}
-#danni{
-    display: block; 
-}
-.info{
-    height: 150px;
-}
-
-.g1{
     border: 3px inset rgb(0, 255, 0);
+    border-left: 2px inset rgb(0, 255, 0);
+    font-size: 18pt;
+    text-align: center;
+}
+#sign_up.dropdown_form_submit{
+    border-radius: 0px 0px 0px 100px/0px 0px 0px 25px;
+}
+
+/* Contents */
+#home_container{
+    display: block;
+}
+#home_container > .element{
+    margin-bottom: 50px;
+}
+#home_container > .element.left{
+    text-align: left;
+}
+#home_container > .element.right{
+    text-align: right;
+}
+
+#home_container > .element > .topic{
+    display: inline-block;
+    padding: 4px 50px;
     background-color: rgb(0, 30, 0);
-    width: 500px;
-    float: left; 
+    border: 3px inset rgb(0, 255, 0);
+    border-bottom: 0px;
+    font-size: 22pt;
+}
+#home_container > .element.left > .topic{
     margin-left: 25px;
     border-radius: 0px 100px 0px 0px/0px 30px 0px 0px;
-    border-bottom: 0px;
-    text-align: center;
-    color: rgb(0, 255, 0);
-    padding: 4px;
-    font-size: 22pt;
 }
-
-.g2{
-    border: 3px inset rgb(0, 255, 0);
-    width: 500px;
-    background-color: rgb(0, 30, 0);
-    float: right; 
+#home_container > .element.right > .topic{
     margin-right: 25px;
     border-radius: 100px 0px 0px 0px/30px 0px 0px 0px;
-    border-bottom: 0px;
-    text-align: center;
-    color: rgb(0, 255, 0);
-    padding: 4px;
-    font-size: 22pt;
 }
 
-.a1{
-    border: 3px inset rgb(0, 255, 0);
-    height: 150px;
-    background-color: rgb(0, 60, 0);
+#home_container > .element > .content{
+    display: inline-block;
     width: 80%;
-    float: left; 
-    margin-bottom: 50px;
+    min-height: 80px;
+    background-color: rgb(0, 60, 0);
+    border: 3px inset rgb(0, 255, 0);
+    text-indent: 40px;
+    padding: 4px;
+}
+#home_container > .element.left > .content{
     margin-left: 25px;
     border-radius: 0px 100px 0px 100px/0px 30px 0px 30px;
 }
-
-.a2{
-    border: 3px inset rgb(0, 255, 0);
-    height: 150px;
-    background-color: rgb(0, 60, 0);
-    width: 80%;
-    float: right; 
-    margin-bottom: 50px;
+#home_container > .element.right > .content{
     margin-right: 25px;
     border-radius: 100px 0px 100px 0px/30px 0px 30px 0px;
 }
-
-a{
-    color: rgb(0, 255, 0);
-    text-decoration: none;
-}
-

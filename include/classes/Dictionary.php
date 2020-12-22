@@ -11,10 +11,12 @@ namespace Main;
 class Dictionary
 {
 
+    private string $language;
     private $data = [];
 
     public function __construct($lang = "bg_BG") {
         if (file_exists("data/dictionaries/" . $lang . ".json")){
+            $this->language = $lang;
             $text = file_get_contents("data/dictionaries/" . $lang . ".json");
             $this->data = json_decode($text, true);
         }

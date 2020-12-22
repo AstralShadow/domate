@@ -1,5 +1,40 @@
 {
     "title": "Заглавие",
+
+    "login_placeholders": {
+        "name": "Потребителско име",
+        "password": "Парола",
+        "login": "Вход"
+    },
+    "sign_up_placeholders": {
+        "name": "Потребителско име",
+        "password": "Парола",
+        "repeat_password": "Повтори парола",
+        "sign_up": "Регистрация"
+    },
+    "home_page_contents": [
+        {
+            "topic": "Какво е това?",
+            "content": "Нашият велик сайт."
+        },
+        {
+            "topic": "Как работи?",
+            "content": "Чрез интернет, софтуер, хардуер и електроенергия."
+        },
+        {
+            "topic": "За кого?",
+            "content": "За нас, вас и деца."
+        },
+        {
+            "topic": "Какво може?",
+            "content": "Да раздава тестове."
+        },
+        {
+            "topic": "Защо го може?",
+            "content": "Защото вложихме много усилия и неуморим труд за да го постигнем."
+        }
+    ],
+
     "user_class_error_messages": {
         "USER_ERRCODE_NO_ERROR": "Нямаше грешка.",
         "USER_ERRCODE_USER_ALREADY_EXIST": "Вече съществува такъв потребител.",
