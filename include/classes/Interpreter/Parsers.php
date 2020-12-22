@@ -75,7 +75,6 @@ class Parsers
                 $elements[$key] = new Variable();
                 $elements[$key]->resolved = true;
                 $elements[$key]->value = floatval($el);
-                var_dump($elements[$key]->value);
             }
         }
     }

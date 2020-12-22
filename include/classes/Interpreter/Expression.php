@@ -37,6 +37,7 @@ class Expression extends Variable
         foreach ($parameters as $variable)
             $this->findDependencies($variable, $this->dependencies);
 
+        $this->type = $operation->getType(...$this->parameters);
         $this->solve();
     }
 
@@ -62,7 +63,6 @@ class Expression extends Variable
                 return false;
         }
 
-        $args = [];
         $this->value = $this->operation->execute(...$this->parameters);
         return true;
     }

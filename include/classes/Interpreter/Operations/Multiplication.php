@@ -10,33 +10,27 @@ namespace Main\Interpreter\Operations;
 
 use \Main\Interpreter as Interpreter;
 
-/**
- * Arithmetic multiplication.
- *
- * @author azcraft
- */
-class Multiplication implements Interpreter\Operation
+class Multiplication extends MathematicOperation
 {
 
-    /**
-     * Multiplies N elements. One of them can be text xD
-     * @param type $args
-     * @return float
-     */
-    public function execute(...$args): float {
-        if (count($args) < 1)
-            throw new Interpreter\OperationException
-                ("Multiplication requires at least one parameter!");
+    protected function numbers(float $a, float $b): float {
+        return $a * $b;
+    }
 
-        $result = 1;
-        foreach ($args as $var){
-            if (!is_numeric($var->value))
-                throw new Interpreter\OperationException
-                    ("Multiplication can't work with non-numeric parameters!");
-            $result *= floatval($var->value);
-        }
+    protected function potentialAndNumber(Interpreter\PotentialNumber $a, float $b): Interpreter\PotentialNumber {
+        $a->minValue *= $b;
+        $a->maxValue *= $b;
+        foreach ($a->steps as $step)
+            $step[0] *= $b;
+        return $a;
+    }
 
-        return $result;
+    protected function potentials(Interpreter\PotentialNumber $a, Interpreter\PotentialNumber $b): Interpreter\PotentialNumber {
+        /* $minValue = $a->minValue - $b->maxValue;
+          $maxValue = $a->maxValue - $b->minValue;
+          $potential = new Interpreter\PotentialNumber($minValue, $maxValue);
+          $potential->steps = array_merge($a->steps, $b->steps);
+          return $potential; */
     }
 
 }

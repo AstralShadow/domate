@@ -13,13 +13,17 @@ namespace Main\Interpreter;
  *
  * @author azcraft
  */
-interface Operation
+abstract class Operation
 {
+
+    public static array $accepts;
+
+    public abstract function getType(...$args);
 
     /**
      * Returns value. Throws OperationException
      * @param type $args
      * @return mixed
      */
-    function execute(...$args);
+    public abstract function execute(...$args);
 }

@@ -1,0 +1,92 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16.12.2020 г., 23:30:00
+    Author     : tedi
+*/
+
+body{
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    font-family: Comic Sans MS;
+    background-color: black;
+}
+#start{
+	 display: flex;
+    vertical-align: top;
+    border: 3px solid rgb(0, 255, 222.1);
+    padding: 5px;
+    overflow: hidden;
+    font-family: sans-serif;
+    font-size: 16pt;
+    text-align: center;
+    border-radius: 100px/20px;
+    z-index: 10;
+    background-color: black;
+    position: relative;
+    top: -20px;margin: auto auto;
+display: block;
+}
+#page{
+	position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 20;
+    transform: translate(-50%, -50%);
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#menu{
+    display: flex;
+}
+input{
+  background-color: black;
+  color: rgb(0, 255, 222.1);
+}
+.password{
+    font-size: 16pt;
+    border: 3px solid;
+    border-color: rgb(0, 255, 222.1);
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 200px;
+    margin: 5px;
+    border-radius: 125px 0px 125px 0px/10px 0px 10px 0px;
+    font-family: sans-serif;
+}
+a{
+	color: rgb(0, 255, 222.1);
+	text-decoration: none;
+}
+#home{
+    font-size: 16pt;
+    border: 3px solid;
+    border-right: 2px solid;
+    border-bottom: 0px;
+    border-color: rgb(0, 255, 222.1);
+    border-radius: 100px 0px 0px 0px/10px 0px 0px 0px;
+    text-align: center;
+    width: 200px;
+    padding: 2.5px;
+    height: 50px;
+    margin-left: 10px;
+}
+
+#register{
+    font-size: 16pt;
+    border: 3px solid;
+    border-left: 2px solid;
+    border-bottom: 0px;
+    border-color: rgb(0, 255, 222.1);
+    border-radius: 0px 100px 0px 0px/0px 10px 0px 0px;
+    text-align: center;
+    margin-right: 10px;
+    width: 200px;
+    padding: 2.5px;
+    height: 50px;
+}

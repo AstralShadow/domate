@@ -10,32 +10,25 @@ namespace Main\Interpreter\Operations;
 
 use \Main\Interpreter as Interpreter;
 
-/**
- * Arithmetic division.
- *
- * @author azcraft
- */
-class Addition implements Interpreter\Operation
+class Addition extends MathematicOperation
 {
 
-    /**
-     * @param type $args
-     * @return float
-     */
-    public function execute(...$args): float {
-        if (count($args) < 1)
-            throw new Interpreter\OperationException
-                ("Addition requires at least one parameter!");
+    protected function numbers(float $a, float $b): float {
+        return $a + $b;
+    }
 
-        $result = 0;
-        foreach ($args as $var){
-            if (!is_numeric($var->value))
-                throw new Interpreter\OperationException
-                    ("Addition can't work with non-numeric parameters!");
-            $result += floatval($var->value);
-        }
+    protected function potentialAndNumber(Interpreter\PotentialNumber $a, float $b): Interpreter\PotentialNumber {
+        $a->minValue += $b;
+        $a->maxValue += $b;
+        return $a;
+    }
 
-        return $result;
+    protected function potentials(Interpreter\PotentialNumber $a, Interpreter\PotentialNumber $b): Interpreter\PotentialNumber {
+        $minValue = $a->minValue + $b->minValue;
+        $maxValue = $a->maxValue + $b->maxValue;
+        $potential = new Interpreter\PotentialNumber($minValue, $maxValue);
+        $potential->steps = array_merge($a->steps, $b->steps);
+        return $potential;
     }
 
 }

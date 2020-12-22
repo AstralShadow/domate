@@ -10,24 +10,25 @@ namespace Main\Interpreter\Operations;
 
 use \Main\Interpreter as Interpreter;
 
-/**
- * Arithmetic division.
- *
- * @author azcraft
- */
-class Subtraction implements Interpreter\Operation
+class Subtraction extends MathematicOperation
 {
 
-    /**
-     * @param type $args
-     * @return float
-     */
-    public function execute(...$args): float {
-        if (count($args) != 2 || !is_numeric($args[0]->value) || !is_numeric($args[1]->value))
-            throw new Interpreter\OperationException
-                ("Subtraction requires exactly 2 numeric parameters.");
+    protected function numbers(float $a, float $b): float {
+        return $a - $b;
+    }
 
-        return floatval($args[0]->value) - floatval($args[1]->value);
+    protected function potentialAndNumber(Interpreter\PotentialNumber $a, float $b): Interpreter\PotentialNumber {
+        $a->minValue -= $b;
+        $a->maxValue -= $b;
+        return $a;
+    }
+
+    protected function potentials(Interpreter\PotentialNumber $a, Interpreter\PotentialNumber $b): Interpreter\PotentialNumber {
+        $minValue = $a->minValue - $b->maxValue;
+        $maxValue = $a->maxValue - $b->minValue;
+        $potential = new Interpreter\PotentialNumber($minValue, $maxValue);
+        $potential->steps = array_merge($a->steps, $b->steps);
+        return $potential;
     }
 
 }

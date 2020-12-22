@@ -10,11 +10,11 @@
 if (!defined("DETECTED_PAGE")){
     define("DETECTED_PAGE", true);
     $page = "home";
+    $pageType = null;
     if (isset($_GET['p']) && is_string($_GET['p']))
         if (preg_match("/^[a-zA-Z0-9]{5,}$/", $_GET['p']))
             $page = $_GET['p'];
 
-    $pageType = "normal";
     if (in_array($page . ".php", scandir("pages")))
         $pageType = "normal";
     if (in_array($page . ".php", scandir("pages/ajax")))

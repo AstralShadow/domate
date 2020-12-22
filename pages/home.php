@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 
-/*
 require "include/task.php";
 require "include/interpreter.php";
 
@@ -37,4 +36,4 @@ for ($i = 0; $i < 5; $i++){
     var_dump($variant->answer);
 }
 ?>
- */
+

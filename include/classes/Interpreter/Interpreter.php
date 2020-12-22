@@ -121,7 +121,7 @@ class Interpreter
 
                     $elements[$i] = $parameters;
                     unset($elements[$i + 1], $elements[--$i]);
-                    self::removeEmptyElements($elements);
+                    Parsers::removeEmptyElements($elements);
                 }
                 foreach ($elements as $key => $el){
                     if (!is_array($el))
@@ -133,7 +133,7 @@ class Interpreter
                 } // TODO: make sure all operations work with arrays.
             },
             "/(\\=)/" => function(&$elements) use ($self){
-                for ($i = count($elements) - 1; $i >= 0; $i--){
+                for ($i = count($elements) - 1; $i > 0; $i--){
                     if ($elements[$i] != "=")
                         continue;
 
@@ -150,7 +150,7 @@ class Interpreter
                     // where possible. This may allow calculation
                     // of things with = on both sides
 
-                    $operation = new class($self) implements Operation {
+                    $operation = new class($self) extends Operation {
 
                         private $interpreter;
 
@@ -161,6 +161,10 @@ class Interpreter
                         public function execute(...$args) {
                             $this->interpreter->setVariable($args[0], $args[1]);
                             return $args[1]->value;
+                        }
+
+                        public function getType(...$args) {
+                            return $args[1]->type;
                         }
                     };
 

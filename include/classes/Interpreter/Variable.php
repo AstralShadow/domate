@@ -41,5 +41,6 @@ class Variable
      * @var Variable[] 
      */
     public $dependencies = [];
+    public $type = null;
 
 }
