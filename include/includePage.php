@@ -15,16 +15,12 @@ if (!defined("DETECTED_PAGE")){
         if (preg_match("/^[a-zA-Z0-9]{5,}$/", $_GET['p']))
             $page = $_GET['p'];
 
-    if (in_array($page . ".php", scandir("pages/content")))
-        $pageType = "content";
-    if (in_array($page . ".php", scandir("pages/ajax")))
-        $pageType = "ajax";
-    if (in_array($page . ".php", scandir("pages/standalone")))
-        $pageType = "standalone";
-    if (in_array($page . ".php", scandir("pages/test")))
-        $pageType = "test";
-    if (in_array($page . ".php", scandir("pages/files")))
-        $pageType = "file";
+    $dirs = ["content", "standalone", "ajax", "test", "files"];
+
+    foreach ($dirs as $dir)
+        if (in_array($page . ".php", scandir("pages/" . $dir)))
+            $pageType = $dir;
+    unset($dirs);
 }
 
 if (!defined("CHECKED_PAGE_ACCESS_PERMISSIONS") && defined("LOADED_USER_DATA")){
