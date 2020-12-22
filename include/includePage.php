@@ -15,10 +15,14 @@ if (!defined("DETECTED_PAGE")){
         if (preg_match("/^[a-zA-Z0-9]{5,}$/", $_GET['p']))
             $page = $_GET['p'];
 
-    if (in_array($page . ".php", scandir("pages")))
-        $pageType = "normal";
+    if (in_array($page . ".php", scandir("pages/content")))
+        $pageType = "content";
     if (in_array($page . ".php", scandir("pages/ajax")))
         $pageType = "ajax";
+    if (in_array($page . ".php", scandir("pages/standalone")))
+        $pageType = "standalone";
+    if (in_array($page . ".php", scandir("pages/test")))
+        $pageType = "test";
     if (in_array($page . ".php", scandir("pages/files")))
         $pageType = "file";
 }
@@ -40,10 +44,18 @@ if (!defined("INCLUDED_PAGE")){
             include "pages/ajax/" . $page . ".php";
             break;
 
+        case "test":
+            include "pages/test/" . $page . ".php";
+            break;
+
+        case "content":
+            include "pages/templates/default.php";
+            break;
+
         default:
             $page = "home";
-        case "normal":
-            include "pages/templates/default.php";
+        case "standalone":
+            include "pages/standalone/" . $page . ".php";
             break;
     }
     unset($pageType, $page);
