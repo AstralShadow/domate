@@ -21,18 +21,19 @@
               rel="stylesheet" type="text/css">
     </head>
     <body>
-		<?php require "pages/templates/default_navigation.php"; ?>
+	<?php require "pages/templates/default_navigation.php"; ?>
         <?php include "pages/" . $page . ".php"; ?>
-		<br/>
-		<br/>
-		<div id="nachalo">
-			<div id="page">
-				<div id="formuli">
-					Формули:
-				</div>
-				Условие:   
-				<input id="uslovie" placeholder="в задачата, чрез влачене се добавят стойности/действия" type="text">
-			</div>
-		</div>
+            <br/>
+            <br/>
+            <div id="nachalo">
+                <div id="page">
+                    <div id="formuli">
+                            Формули:
+                    </div>
+                    <div id="uslovie">
+                            Условие:   
+                    </div>
+                </div>
+            </div>
     </body>
 </html>
