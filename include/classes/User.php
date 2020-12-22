@@ -25,24 +25,58 @@ namespace Main;
 class User
 {
 
+    private \MongoDB\Database $database;
+    private \Main\Session $session;
     private ?string $username = null;
     private \MongoDB\Model\BSONDocument $data;
     private \DateTime $lastUpdateTime;
-    private $lastError = USER_ERRCODE_NO_ERROR;
-    private static $regex = [
+
+    private const regex = [
         "user" => '/^[a-zA-Z0-9\_\-]{3,16}$/',
         "pwd" => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,32}$/'
     ];
 
-    public function __construct() {
-        global $session;
+    private function __construct(\MongoDB\Database $database, \Main\Session $session) {
+        $this->session = $session;
+        $this->database = $database;
+    }
+
+    public static function fromSession(\MongoDB\Database $database, \Main\Session $session, int &$errorByte = 0) {
         $username = $session->get("user");
         if (!isset($username))
             return;
 
-        if (!$this->loadUser($username)){
-            $session->set("user", null);
+        $object = new self($database, $session);
+        if ($object->loadUser($username, $errorByte))
+            return $object;
+
+        $session->set("user", null);
+    }
+
+    /**
+     * Authorizes a user.
+     * @param array $data
+     * @return bool
+     */
+    public static function authorize(\MongoDB\Database $database, \Main\Session $session, array $data, int &$errorByte = 0) {
+        $errCodes = ["user" => USER_ERRCODE_ILLEGAL_USERNAME, "pwd" => USER_ERRCODE_ILLEGAL_PASSWORD];
+        foreach (self::regex as $key => $exp){
+            if (!isset($data[$key]) || !is_string($data[$key]) || !preg_match($exp, $data[$key]))
+                $errorByte = $errorByte | $errCodes[$key];
         }
+        if ($errorByte !== USER_ERRCODE_NO_ERROR)
+            return;
+        if (!self::userExists($database, $data["user"]))
+            $errorByte = $errorByte | USER_ERRCODE_USER_DOES_NOT_EXIST;
+
+        if (!self::comparePassword($database, $data["user"], $data["pwd"])){
+            $errorByte = $errorByte | USER_ERRCODE_WRONG_PASSWORD;
+            return;
+        }
+
+        $object = new self($database, $session);
+        if ($object->loadUser($data["user"], $errorByte, $errorByte))
+            return $object;
     }
 
     /**
@@ -51,10 +85,9 @@ class User
      * @param string $username
      * @return bool
      */
-    public function userExists(string $username): bool {
-        global $db;
-        $users = $db->users;
-        $document = $users->findOne(["name" => $username]);
+    public static function userExists(\MongoDB\Database $database, string $username): bool {
+        $users = $database->users;
+        $document = $users->findOne(["user" => $username]);
         return isset($document);
     }
 
@@ -65,19 +98,18 @@ class User
      * @param string $username
      * @return bool
      */
-    private function loadUser(string $username): bool {
-        global $db, $session;
-        $users = $db->users;
-        $document = $users->findOne(["name" => $username]);
+    private function loadUser(string $username, int &$errorByte = 0): bool {
+        $users = $this->database->users;
+        $document = $users->findOne(["user" => $username]);
         if (!isset($document)){
-            $this->lastError = USER_ERRCODE_USER_DOES_NOT_EXIST;
+            $errorByte = $errorByte | USER_ERRCODE_USER_DOES_NOT_EXIST;
             return false;
         }
 
-        $this->username = $document["name"];
+        $this->username = $document["user"];
         $this->data = $document;
         $this->lastUpdateTime = new \DateTime();
-        $session->set("user", $username);
+        $this->session->set("user", $username);
         return true;
     }
 
@@ -87,15 +119,15 @@ class User
      * @param string $key
      * @return mixed $value
      */
-    public function get(string $key) {
+    public function get(string $key, int &$errorByte = 0) {
         if (!isset($this->username)){
-            $this->lastError = USER_ERRCODE_USER_DOES_NOT_EXIST;
+            $errorByte = $errorByte | USER_ERRCODE_USER_DOES_NOT_EXIST;
             return null;
         }
 
         $now = intval((new \DateTime())->format('s'));
         if (intval($this->lastUpdateTime->format('s')) > $now - 3)
-            $this->loadUser($this->data["name"]);
+            $this->loadUser($this->data["user"], $errorByte);
 
         if (in_array($key, ["pwd", "_id"]))
             return null;
@@ -115,19 +147,13 @@ class User
      * @param mixed $value
      * @return bool $success
      */
-    public function set(string $key, $value): bool {
-        global $db;
-        $users = $db->users;
-
-        if (!isset($this->username)){
-            $this->lastError = USER_ERRCODE_USER_DOES_NOT_EXIST;
-            return false;
-        }
+    public function set(string $key, $value, int &$errorByte = 0): bool {
+        $users = $this->database->users;
 
         if (!isset($value))
             return $this->remove($key);
 
-        if (in_array($key, ["name", "pwd", "_id"]))
+        if (in_array($key, ["user", "pwd", "_id"]))
             return false;
 
         $filter = ["_id" => $this->data["_id"]];
@@ -139,11 +165,11 @@ class User
         ];
         $updateResult = $users->updateOne($filter, $update);
         if (!$updateResult->getMatchedCount()){
-            $this->lastError = USER_ERRCODE_USER_DOES_NOT_EXIST;
+            $errorByte = $errorByte | USER_ERRCODE_USER_DOES_NOT_EXIST;
             return false;
         }
         if (!$updateResult->getModifiedCount())
-            $this->loadUser($this->userID);
+            $this->loadUser($this->userID, $errorByte);
         return true;
     }
 
@@ -155,16 +181,10 @@ class User
      * @param string $key
      * @return bool $success
      */
-    public function remove(string $key): bool {
-        global $db;
-        $users = $db->users;
+    public function remove(string $key, int &$errorByte = 0): bool {
+        $users = $this->database->users;
 
-        if (!isset($this->username)){
-            $this->lastError = USER_ERRCODE_USER_DOES_NOT_EXIST;
-            return false;
-        }
-
-        if (in_array($key, ["name", "pwd", "_id"]))
+        if (in_array($key, ["user", "pwd", "_id"]))
             return false;
 
         $filter = ["_id" => $this->data["_id"]];
@@ -178,11 +198,11 @@ class User
         ];
         $updateResult = $users->updateOne($filter, $update);
         if (!$updateResult->getMatchedCount()){
-            $this->lastError = USER_ERRCODE_USER_DOES_NOT_EXIST;
+            $errorByte = $errorByte | USER_ERRCODE_USER_DOES_NOT_EXIST;
             return false;
         }
         if (!$updateResult->getModifiedCount())
-            $this->loadUser($this->userID);
+            $this->loadUser($this->userID, $errorByte);
         return true;
     }
 
@@ -196,25 +216,26 @@ class User
 
     /**
      * Creates new user.
-     * $data must contain keys "name" and "pwd".
+     * $data must contain keys "user" and "pwd".
      * Any extra values will be recorded in the user's data.
      * Keys "created" and "modified" will be added.
      * @param array $data
      * @return bool
      */
-    public function create(array $data): bool {
-        global $db;
-        $users = $db->users;
+    public static function create(\MongoDB\Database $database, array $data, int &$errorByte = 0): bool {
+        $users = $database->users;
 
-        $this->lastError = USER_ERRCODE_NO_ERROR;
-        $errCodes = ["user" => USER_ERRCODE_ILLEGAL_USERNAME, "pwd" => USER_ERRCODE_ILLEGAL_PASSWORD];
-        foreach ($this->regex as $key => $exp){
+        $errCodes = [
+            "user" => USER_ERRCODE_ILLEGAL_USERNAME,
+            "pwd" => USER_ERRCODE_ILLEGAL_PASSWORD
+        ];
+        foreach (self::regex as $key => $exp){
             if (!isset($data[$key]) || !is_string($data[$key]) || !preg_match($exp, $data[$key]))
-                $this->lastError = $errCodes[$key];
+                $errorByte = $errorByte | $errCodes[$key];
         }
-        if ($this->userExists($data["name"]))
-            $this->lastError = USER_ERRCODE_USER_ALREADY_EXIST;
-        if ($this->lastError !== USER_ERRCODE_NO_ERROR)
+        if (self::userExists($database, $data["user"]))
+            $errorByte = $errorByte | USER_ERRCODE_USER_ALREADY_EXIST;
+        if ($errorByte !== USER_ERRCODE_NO_ERROR)
             return false;
         $data["pwd"] = password_hash($data["pwd"], PASSWORD_BCRYPT);
         $data["created"] = isset($data["created"]) ? $data["created"] : new \MongoDB\BSON\UTCDateTime();
@@ -225,48 +246,22 @@ class User
     }
 
     /**
-     * Authorizes a user.
-     * @param array $data
-     * @return bool
-     */
-    public function authorize(array $data): bool {
-        $this->lastError = USER_ERRCODE_NO_ERROR;
-        $errCodes = ["user" => USER_ERRCODE_ILLEGAL_USERNAME, "pwd" => USER_ERRCODE_ILLEGAL_PASSWORD];
-        foreach ($this->regex as $key => $exp){
-            if (!isset($data[$key]) || !is_string($data[$key]) || !preg_match($exp, $data[$key]))
-                $this->lastError = $errCodes[$key];
-        }
-        if ($this->lastError !== USER_ERRCODE_NO_ERROR)
-            return false;
-        if (!$this->userExists($data["name"]))
-            $this->lastError = USER_ERRCODE_USER_DOES_NOT_EXIST;
-
-        if (!$this->comparePassword($data["name"], $data["pwd"])){
-            $this->lastError = USER_ERRCODE_WRONG_PASSWORD;
-            return false;
-        }
-
-        return $this->loadUser($data["name"]);
-    }
-
-    /**
      * Changes password.
      * @global \MongoDB\Client $db
      * @param string $oldPwd
      * @param string $newPwd
      * @return bool
      */
-    public function changePassword(string $oldPwd, string $newPwd): bool {
-        global $db;
-        $users = $db->users;
+    public function changePassword(string $oldPwd, string $newPwd, int &$errorByte = 0): bool {
+        $users = $this->database->users;
 
         if (!isset($this->username)){
-            $this->lastError = USER_ERRCODE_USER_DOES_NOT_EXIST;
+            $errorByte = $errorByte | USER_ERRCODE_USER_DOES_NOT_EXIST;
             return false;
         }
 
         if (!preg_match($this->regex["pwd"], $newPwd)){
-            $this->lastError = USER_ERRCODE_ILLEGAL_PASSWORD;
+            $errorByte = $errorByte | USER_ERRCODE_ILLEGAL_PASSWORD;
             return false;
         }
         if (!$this->comparePassword($this->username, $oldPwd))
@@ -293,23 +288,36 @@ class User
      * @param string $pwd
      * @return bool
      */
-    private static function comparePassword(string $name, string $pwd): bool {
-        global $db;
-        $users = $db->users;
-        $document = $users->findOne(["name" => $name]);
+    private static function comparePassword(\MongoDB\Database $database, string $name, string $pwd): bool {
+        $users = $database->users;
+        $document = $users->findOne(["user" => $name]);
         if (!isset($document))
             return false;
         return password_verify($pwd, $document["pwd"]);
     }
 
     /**
-     * Returns last USER_ERRCODE_* and clears the memory
-     * @return type
+     * Returns error messages from dictionary, each on new line.
+     * @param type $dictionary
+     * @param type $errorByte
+     * @return string
      */
-    public function getLastErrorCode() {
-        $error = $this->lastError;
-        $this->lastError = USER_ERRCODE_NO_ERROR;
-        return $error;
+    public static function getErrorMessage(\Main\Dictionary $dictionary, int $errorByte = 0): string {
+        $possibleCodes = [
+            USER_ERRCODE_NO_ERROR => "USER_ERRCODE_NO_ERROR",
+            USER_ERRCODE_USER_ALREADY_EXIST => "USER_ERRCODE_USER_ALREADY_EXIST",
+            USER_ERRCODE_USER_DOES_NOT_EXIST => "USER_ERRCODE_USER_DOES_NOT_EXIST",
+            USER_ERRCODE_ILLEGAL_USERNAME => "USER_ERRCODE_ILLEGAL_USERNAME",
+            USER_ERRCODE_ILLEGAL_PASSWORD => "USER_ERRCODE_ILLEGAL_PASSWORD",
+            USER_ERRCODE_WRONG_PASSWORD => "USER_ERRCODE_WRONG_PASSWORD"
+        ];
+        $messages = $dictionary->user_class_error_messages;
+        $result = "";
+        foreach ($possibleCodes as $code => $name){
+            if ($errorByte & $code)
+                $result .= $messages[$name] . "\n";
+        }
+        return trim($result);
     }
 
 }

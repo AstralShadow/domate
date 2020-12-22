@@ -23,10 +23,12 @@ class Session
 {
 
     /**
-     * @var string       $sessionKey      Unique session key, the cookie value.
-     * @var BSONDocument $data            All session data. (Reloads if older than 3s)
-     * @var DateTime     $lastUpdateTime  Timestamp of $data.
+     * @var Database $database  Mongodb database object
+     * @var string $sessionKey  Unique session key, the cookie value.
+     * @var BSONDocument $data  All session data. (Reloads if older than 3s)
+     * @var DateTime $lastUpdateTime  Timestamp of $data.
      */
+    private \MongoDB\Database $database;
     private string $sessionKey;
     private \MongoDB\Model\BSONDocument $data;
     private \DateTime $lastUpdateTime;
@@ -34,7 +36,8 @@ class Session
     /**
      * Loads or creates a session.
      */
-    public function __construct() {
+    public function __construct(\MongoDB\Database $database) {
+        $this->database = $database;
         $newSession = false;
         if (!isset($_COOKIE[SESSION_COOKIE]) || !is_string($_COOKIE[SESSION_COOKIE]))
             $newSession = true;
@@ -53,8 +56,7 @@ class Session
      * @return void
      */
     private function newSession(): void {
-        global $db;
-        $sessions = $db->sessions;
+        $sessions = $this->database->sessions;
         $characters = array_merge(range('a', 'z'), range('A', 'Z'), range('0', '9'));
         $charactersLength = count($characters) - 1;
 
@@ -81,8 +83,7 @@ class Session
      * @return bool
      */
     private function sessionExists(string $key): bool {
-        global $db;
-        $sessions = $db->sessions;
+        $sessions = $this->database->sessions;
         $document = $sessions->findOne(["key" => $key]);
         return isset($document);
     }
@@ -95,8 +96,7 @@ class Session
      * @return bool
      */
     private function loadSession(string $key): bool {
-        global $db;
-        $sessions = $db->sessions;
+        $sessions = $this->database->sessions;
         $document = $sessions->findOne(["key" => $key]);
         if (!isset($document))
             return false;
@@ -136,8 +136,7 @@ class Session
      * @return bool $success
      */
     public function set(string $key, $value): bool {
-        global $db;
-        $sessions = $db->sessions;
+        $sessions = $this->database->sessions;
 
         if (!isset($value))
             return $this->remove($key);
@@ -169,8 +168,7 @@ class Session
      * @return bool $success
      */
     public function remove(string $key): bool {
-        global $db;
-        $sessions = $db->sessions;
+        $sessions = $this->database->sessions;
 
         if (in_array($key, ["key", "_id"]))
             return false;
@@ -200,9 +198,12 @@ class Session
         $this->set($name, $value);
     }
 
-    public function clear() {
-        global $db;
-        $sessions = $db->sessions;
+    /**
+     * Clears the session.
+     * @return void
+     */
+    public function clear(): void {
+        $sessions = $this->database->sessions;
         if (!isset($this->data))
             return;
         $filter = ["_id" => $this->data["_id"]];
@@ -215,9 +216,12 @@ class Session
         $sessions->replaceOne($filter, $cleanState);
     }
 
+    /**
+     * Clears the session and resets the creation time.
+     * @return void
+     */
     public function reset(): void {
-        global $db;
-        $sessions = $db->sessions;
+        $sessions = $this->database->sessions;
         if (!isset($this->data))
             return;
         $filter = ["_id" => $this->data["_id"]];

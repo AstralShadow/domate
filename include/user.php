@@ -9,15 +9,13 @@
 require "include/db.php";
 if (!defined("LOADED_USER_DATA") && isset($db)){
     define("LOADED_USER_DATA", true);
-    $i = 0;
-    define("USER_ERRCODE_NO_ERROR", $i++);
-    define("USER_ERRCODE_USER_ALREADY_EXIST", $i++);
-    define("USER_ERRCODE_USER_DOES_NOT_EXIST", $i++);
-    define("USER_ERRCODE_ILLEGAL_USERNAME", $i++);
-    define("USER_ERRCODE_ILLEGAL_PASSWORD", $i++);
-    define("USER_ERRCODE_WRONG_PASSWORD", $i++);
+    define("USER_ERRCODE_NO_ERROR", 0);
+    define("USER_ERRCODE_USER_ALREADY_EXIST", 1);
+    define("USER_ERRCODE_USER_DOES_NOT_EXIST", 2);
+    define("USER_ERRCODE_ILLEGAL_USERNAME", 4);
+    define("USER_ERRCODE_ILLEGAL_PASSWORD", 8);
+    define("USER_ERRCODE_WRONG_PASSWORD", 16);
 
     require "include/classes/User.php";
-    $user = new \Main\User();
     unset($i);
 }

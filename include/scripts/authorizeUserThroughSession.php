@@ -6,14 +6,13 @@
  * and open the template in the editor.
  */
 
-/* Core elements */
-require "vendor/autoload.php";
-require "include/db.php";
-
-/* Authentication */
 require "include/session.php";
 require "include/user.php";
-require "include/scripts/authorizeUserThroughSession.php";
 
-/* Contents */
-require "include/scripts/includePage.php";
+if (!defined("AUTHORIZED_USER_THROUGH_SESSION")){
+    if (!isset($session->user))
+        return;
+
+    $user = User::fromSession($this->database, $session);
+    defined("AUTHORIZED_USER_THROUGH_SESSION", true);
+}
