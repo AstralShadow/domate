@@ -12,8 +12,8 @@ if (!defined("DEFINED_DB_CLIENT")){
     // Default arguments
     $args = [
         "url" => "mongodb://localhost:27017",
-        "user" => "test",
-        "pwd" => "test",
+        "user" => null,
+        "pwd" => null,
         "db" => "test"
     ];
 
