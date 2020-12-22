@@ -1,0 +1,147 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22.12.2020 г., 2:36:12
+    Author     : tedi
+*/
+
+body, html{
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+}
+body{
+    background-color: black;
+}
+
+
+#menu{
+    display: flex;
+    position: relative;
+    margin-bottom: 60px;
+}
+
+#navigation{
+    display: flex;
+    flex: 1;
+    float: right;
+    margin-right: 2px;
+}
+
+#logo{
+    flex: 3;
+    float: left;
+    margin-left: 25px;
+    margin-right: 20px;
+    height: 150px;
+    border: 3px inset;
+    border-color: rgb(0, 255, 0);
+}
+.password{
+    font-size: 16pt;
+    text-align: center;
+    color: rgb(0, 255, 0);
+    width: 230px;
+    background-color: black;
+    height: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid rgb(0, 200, 0);
+}
+
+#reg{
+    display: block;
+    width: 250;
+    height: 75px;
+}
+#reginfo{
+    text-align: center;
+    width: 240px;
+}
+
+#register{
+    display: block;
+    font-size: 18pt;
+    border: 3px inset;
+    border-right: 2px inset;
+    border-color: rgb(0, 255, 0);
+    border-radius: 0px 0px 0px 100px/0px 0px 0px 25px;
+    text-align: center;
+    width: 250px;
+    height: 30px;
+}
+#home{
+    font-size: 18pt;
+    border: 3px inset;
+    border-left: 2px inset;
+    border-color: rgb(0, 255, 0);
+    border-radius: 0px;
+    text-align: center;
+    height: 30px;
+    width: 250px;
+}
+#danni{
+    display: block; 
+}
+.info{
+    height: 150px;
+}
+
+.g1{
+    border: 3px inset rgb(0, 255, 0);
+    background-color: rgb(0, 30, 0);
+    width: 500px;
+    float: left; 
+    margin-left: 25px;
+    border-radius: 0px 100px 0px 0px/0px 30px 0px 0px;
+    border-bottom: 0px;
+    text-align: center;
+    color: rgb(0, 255, 0);
+    padding: 4px;
+    font-size: 22pt;
+}
+
+.g2{
+    border: 3px inset rgb(0, 255, 0);
+    width: 500px;
+    background-color: rgb(0, 30, 0);
+    float: right; 
+    margin-right: 25px;
+    border-radius: 100px 0px 0px 0px/30px 0px 0px 0px;
+    border-bottom: 0px;
+    text-align: center;
+    color: rgb(0, 255, 0);
+    padding: 4px;
+    font-size: 22pt;
+}
+
+.a1{
+    border: 3px inset rgb(0, 255, 0);
+    height: 150px;
+    background-color: rgb(0, 60, 0);
+    width: 80%;
+    float: left; 
+    margin-bottom: 50px;
+    margin-left: 25px;
+    border-radius: 0px 100px 0px 100px/0px 30px 0px 30px;
+}
+
+.a2{
+    border: 3px inset rgb(0, 255, 0);
+    height: 150px;
+    background-color: rgb(0, 60, 0);
+    width: 80%;
+    float: right; 
+    margin-bottom: 50px;
+    margin-right: 25px;
+    border-radius: 100px 0px 100px 0px/30px 0px 30px 0px;
+}
+
+a{
+    color: rgb(0, 255, 0);
+    text-decoration: none;
+}
+
