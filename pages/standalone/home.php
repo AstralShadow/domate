@@ -77,6 +77,7 @@
                 </div>
                 <?php
             }
+            unset($counter, $contents, $element, $position);
             ?>
         </div>
     </body>
