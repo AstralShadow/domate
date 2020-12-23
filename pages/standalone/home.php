@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
+        <title>
+            <?php echo $dictionary->title; ?>
+        </title>
+
         <link href="./stylesheets/main.css"
               rel="stylesheet" type="text/css" />
         <link href="./stylesheets/home.css"
               rel="stylesheet" type="text/css" />
+
+        <script src="./scripts/visuals/dropdown_forms.js" ></script>
     </head>
     <body>
         <div id="home_header">
@@ -16,16 +23,16 @@
                 $sign_up = $dictionary->sign_up_placeholders;
                 $login = $dictionary->login_placeholders;
                 ?>
-                <div class="dropdown_form_container">
-                    <form method="post">
+                <div class="dropdown_form_container" autocomplete="off">
+                    <form method="post" class="dropdown_form_contents">
                         <input placeholder="<?php echo $sign_up["name"]; ?>"
-                               name="user" type="text" />
+                               name="user" type="text" >
                         <br/>
                         <input placeholder="<?php echo $sign_up["password"]; ?>"
-                               name="pass" type="password" />
+                               name="pass" type="password" >
                         <br/>
                         <input placeholder="<?php echo $sign_up["repeat_password"]; ?>"
-                               name="pass2" type="password" />
+                               name="pass2" type="password" >
                     </form>
                     <div id="sign_up" class="dropdown_form_submit">
                         <?php echo $sign_up["sign_up"]; ?>
@@ -35,10 +42,10 @@
                 <div class="dropdown_form_container">
                     <form method="post">
                         <input placeholder="<?php echo $login["name"]; ?>"
-                               name="user" type="text" />
+                               name="user" type="text" >
                         <br/>
                         <input placeholder="<?php echo $login["password"]; ?>"
-                               name="pass" type="password" />
+                               name="pass" type="password" >
                     </form>
                     <div id="login" class="dropdown_form_submit">
                         <?php echo $login["login"]; ?>
