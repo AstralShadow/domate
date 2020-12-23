@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="dropdown_form_container">
-                    <form method="post">
+                    <form method="post" class="dropdown_form_contents">
                         <input placeholder="<?php echo $login["name"]; ?>"
                                name="user" type="text" >
                         <br/>

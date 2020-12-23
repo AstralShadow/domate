@@ -15,7 +15,9 @@ body{
 /* Header */
 #home_header{
     display: flex;
-    position: relative;
+    position: sticky;
+    top: 0px;
+    width: 100%;
     margin-bottom: 60px;
 }
 #home_logo{
@@ -50,6 +52,9 @@ input{
     display: block;
     position: relative;
 }
+.dropdown_form_contents{
+    display: none;
+}
 .dropdown_form_submit{
     width: 250px;
     height: 30px;
@@ -57,6 +62,7 @@ input{
     border-left: 2px inset rgb(0, 255, 0);
     font-size: 18pt;
     text-align: center;
+    cursor: pointer;
 }
 #sign_up.dropdown_form_submit{
     border-radius: 0px 0px 0px 100px/0px 0px 0px 25px;
