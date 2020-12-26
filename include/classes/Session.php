@@ -120,19 +120,21 @@ class Session
         if (in_array($key, ["key", "_id"]))
             return null;
 
-        if (isset($this->data[$key]))
-            return $this->data[$key];
+        $path = explode('.', $key);
+        $value = null;
+        if (count($path) && isset($this->data[$path[0]]))
+            $value = $this->data[$path[0]];
+        for ($i = 1; $i < count($path); $i++)
+            if (isset($value[$path[$i]]))
+                $value = $value[$path[$i]];
 
-        return null;
+        return $value;
     }
 
     /**
-     * Sets the value for given key for current session.
-     * Removes value if set to null.
-     * Values "key" and "_id" are not accessible.
+     * Executes an updateOne query with given update directive.
      * @global $db
-     * @param string $key
-     * @param mixed $value
+     * @param $query
      * @return bool $success
      */
     public function update($query): bool {
@@ -190,10 +192,21 @@ class Session
         return true;
     }
 
+    /**
+     * Alias of get
+     * @param string $name
+     * @return mixed
+     */
     public function __get(string $name) {
         return $this->get($name);
     }
 
+    /**
+     * Sets value with given name in the session object
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
     public function __set(string $name, $value) {
         if (in_array($name, ["key", "_id"]))
             return;

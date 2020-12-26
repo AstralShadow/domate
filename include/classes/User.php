@@ -9,38 +9,52 @@
 namespace Main;
 
 /**
- * User object.
- *
- * Usage:
- * {User}->create([string $name, string $pwd, ...]) : bool $success
- * {User}->athorize([string $name, string $pwd]) : bool $success
- * {User}->changePassword(string $oldPwd, string $newPwd) : bool $success
- * {User}->get(string $key) : mixed $value
- * {User}->set(string $key, mixed $value) : bool $success
- * Note:
- *  values pwd and _id are not accessible and name is permanent
+ * Handles user account, can be created by authorization or by session.
+ * Most functions have $errorByte, which you can read with User::getErrorMessage
  *
  * @author azcraft
  */
 class User
 {
 
+    /**
+     * @var Database $database  Mongodb database object
+     * @var Session $session  Current session.
+     * @var string $username  Current user
+     * @var BSONDocument $data  All data. (Reloads if older than 3s)
+     * @var DateTime $lastUpdateTime  Timestamp of $data.
+     */
     private \MongoDB\Database $database;
-    private \Main\Session $session;
-    private ?string $username = null;
+    private Session $session;
+    private string $username;
     private \MongoDB\Model\BSONDocument $data;
     private \DateTime $lastUpdateTime;
 
+    /**
+     * Regular expressions for username and password
+     */
     private const regex = [
         "user" => '/^[a-zA-Z0-9\_\-]{3,16}$/',
         "pwd" => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,32}$/'
     ];
 
+    /**
+     * Private construct method
+     * @param \MongoDB\Database $database
+     * @param \Main\Session $session
+     */
     private function __construct(\MongoDB\Database $database, \Main\Session $session) {
         $this->session = $session;
         $this->database = $database;
     }
 
+    /**
+     * Constructs user object form session, if possible.
+     * @param \MongoDB\Database $database
+     * @param \Main\Session $session
+     * @param int $errorByte
+     * @return \self
+     */
     public static function fromSession(\MongoDB\Database $database, \Main\Session $session, int &$errorByte = 0) {
         $username = $session->user;
         if (!isset($username))
@@ -54,7 +68,7 @@ class User
     }
 
     /**
-     * Authorizes a user.
+     * Authorizes a user by name and password
      * @param array $data
      * @return bool
      */
@@ -79,6 +93,10 @@ class User
             return $object;
     }
 
+    /**
+     * Disconnects account from session
+     * @return void
+     */
     public function logout(): void {
         $session = $this->session;
         $session->remove("user");
@@ -137,16 +155,19 @@ class User
         if (in_array($key, ["pwd", "_id"]))
             return null;
 
-        if (isset($this->data[$key]))
-            return $this->data[$key];
+        $path = explode('.', $key);
+        $value = null;
+        if (count($path) && isset($this->data[$path[0]]))
+            $value = $this->data[$path[0]];
+        for ($i = 1; $i < count($path); $i++)
+            if (isset($value[$i]))
+                $value = $value[$i];
 
-        return null;
+        return $value;
     }
 
     /**
-     * Sets the value for given key.
-     * Removes value if set to null.
-     * Values "pwd" and "_id" are not accessible.
+     * Executes updateOne with given update directive
      * @global \MongoDB\Client $db
      * @param string $key
      * @param mixed $value
@@ -210,10 +231,21 @@ class User
         return true;
     }
 
+    /**
+     * Alias of get
+     * @param string $name
+     * @return type
+     */
     public function __get(string $name) {
         return $this->get($name);
     }
 
+    /**
+     * Sets value with given name in the user object
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
     public function __set(string $name, $value) {
         if (in_array($name, ["key", "_id"]))
             return;
