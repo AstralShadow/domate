@@ -7,10 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit55ea000a8e724b92137e1c4f01025f95
 {
     public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '3a37ebac017bc098e9a86b35401e7a68' => __DIR__ . '/..' . '/mongodb/mongodb/src/functions.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -40,6 +40,10 @@ class ComposerStaticInit55ea000a8e724b92137e1c4f01025f95
         array (
             'Jean85\\' => 7,
         ),
+        'H' => 
+        array (
+            'Helmich\\MongoMock\\' => 18,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -51,8 +55,8 @@ class ComposerStaticInit55ea000a8e724b92137e1c4f01025f95
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -81,6 +85,10 @@ class ComposerStaticInit55ea000a8e724b92137e1c4f01025f95
         'Jean85\\' => 
         array (
             0 => __DIR__ . '/..' . '/jean85/pretty-package-versions/src',
+        ),
+        'Helmich\\MongoMock\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/helmich/mongomock/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

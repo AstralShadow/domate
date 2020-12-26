@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '037630d16b8ff4a94ee74a36126e76bce8bd3252',
+    'reference' => 'cf0a26f930fa7af9d7cab5216d8e48617b4ca209',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '037630d16b8ff4a94ee74a36126e76bce8bd3252',
+      'reference' => 'cf0a26f930fa7af9d7cab5216d8e48617b4ca209',
     ),
     'composer/package-versions-deprecated' => 
     array (
@@ -37,6 +37,15 @@
       array (
       ),
       'reference' => 'd56bf6102915de5702778fe20f2de3b2fe570b5b',
+    ),
+    'helmich/mongomock' => 
+    array (
+      'pretty_version' => 'v2.4.0',
+      'version' => '2.4.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6a5d4b619ab7d89bf932d284b24c5feb950f53b0',
     ),
     'jean85/pretty-package-versions' => 
     array (

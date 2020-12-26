@@ -1,0 +1,5 @@
+#!/bin/sh
+cd ..
+./vendor/phpunit/phpunit/phpunit ./unitTests
+
+# https://github.com/martin-helmich/php-mongomock

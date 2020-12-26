@@ -145,6 +145,53 @@
             "install-path": "../doctrine/instantiator"
         },
         {
+            "name": "helmich/mongomock",
+            "version": "v2.4.0",
+            "version_normalized": "2.4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/martin-helmich/php-mongomock.git",
+                "reference": "6a5d4b619ab7d89bf932d284b24c5feb950f53b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/martin-helmich/php-mongomock/zipball/6a5d4b619ab7d89bf932d284b24c5feb950f53b0",
+                "reference": "6a5d4b619ab7d89bf932d284b24c5feb950f53b0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mongodb": "*",
+                "mongodb/mongodb": "^1.0",
+                "php": ">=7.1.0,<8.0",
+                "phpunit/phpunit": ">=6.0,<10.0"
+            },
+            "time": "2020-04-01T17:21:31+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Helmich\\MongoMock\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Helmich",
+                    "email": "kontakt@martin-helmich.de"
+                }
+            ],
+            "description": "Library containing highly intelligent MongoDB mocks for unit testing",
+            "support": {
+                "issues": "https://github.com/martin-helmich/php-mongomock/issues",
+                "source": "https://github.com/martin-helmich/php-mongomock/tree/v2.4.0"
+            },
+            "install-path": "../helmich/mongomock"
+        },
+        {
             "name": "jean85/pretty-package-versions",
             "version": "1.5.1",
             "version_normalized": "1.5.1.0",
@@ -2386,6 +2433,7 @@
     "dev": true,
     "dev-package-names": [
         "doctrine/instantiator",
+        "helmich/mongomock",
         "myclabs/deep-copy",
         "nikic/php-parser",
         "phar-io/manifest",

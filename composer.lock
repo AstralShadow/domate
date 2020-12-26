@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a984f81dc76ff50e2d85f34e4b624c43",
+    "content-hash": "d7e01ed81fd0bdde40941547e3165249",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -261,6 +261,50 @@
                 }
             ],
             "time": "2020-11-10T18:47:58+00:00"
+        },
+        {
+            "name": "helmich/mongomock",
+            "version": "v2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/martin-helmich/php-mongomock.git",
+                "reference": "6a5d4b619ab7d89bf932d284b24c5feb950f53b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/martin-helmich/php-mongomock/zipball/6a5d4b619ab7d89bf932d284b24c5feb950f53b0",
+                "reference": "6a5d4b619ab7d89bf932d284b24c5feb950f53b0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mongodb": "*",
+                "mongodb/mongodb": "^1.0",
+                "php": ">=7.1.0,<8.0",
+                "phpunit/phpunit": ">=6.0,<10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Helmich\\MongoMock\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Helmich",
+                    "email": "kontakt@martin-helmich.de"
+                }
+            ],
+            "description": "Library containing highly intelligent MongoDB mocks for unit testing",
+            "support": {
+                "issues": "https://github.com/martin-helmich/php-mongomock/issues",
+                "source": "https://github.com/martin-helmich/php-mongomock/tree/v2.4.0"
+            },
+            "time": "2020-04-01T17:21:31+00:00"
         },
         {
             "name": "myclabs/deep-copy",

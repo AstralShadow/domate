@@ -37,6 +37,7 @@ final class Versions
   'jean85/pretty-package-versions' => '1.5.1@a917488320c20057da87f67d0d40543dd9427f7a',
   'mongodb/mongodb' => '1.7.1@b35af66631a11ee730ff1fde295f71e89f01f121',
   'doctrine/instantiator' => '1.4.0@d56bf6102915de5702778fe20f2de3b2fe570b5b',
+  'helmich/mongomock' => 'v2.4.0@6a5d4b619ab7d89bf932d284b24c5feb950f53b0',
   'myclabs/deep-copy' => '1.10.2@776f831124e9c62e1a2c601ecc52e776d8bb7220',
   'nikic/php-parser' => 'v4.10.3@dbe56d23de8fcb157bbc0cfb3ad7c7de0cfb0984',
   'phar-io/manifest' => '2.0.1@85265efd3af7ba3ca4b2a2c34dbfc5788dd29133',
@@ -70,7 +71,7 @@ final class Versions
   'symfony/polyfill-ctype' => 'v1.20.0@f4ba089a5b6366e453971d3aad5fe8e897b37f41',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
   'webmozart/assert' => '1.9.1@bafc69caeb4d49c39fd0779086c03a3738cbb389',
-  '__root__' => 'dev-master@037630d16b8ff4a94ee74a36126e76bce8bd3252',
+  '__root__' => 'dev-master@cf0a26f930fa7af9d7cab5216d8e48617b4ca209',
 );
 
     private function __construct()
