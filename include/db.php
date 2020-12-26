@@ -6,6 +6,9 @@
  * and open the template in the editor.
  */
 
+/**
+ * @global \MongoDB\Client|null $db
+ */
 if (!defined("DEFINED_DB_CLIENT")){
     define("DEFINED_DB_CLIENT", true);
 

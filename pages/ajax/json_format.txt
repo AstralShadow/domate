@@ -1,7 +1,12 @@
-So far, used in login and register forms:
+So far, used in login, register and logout:
 {
-    msg - feedback message,
-    code - feedback code,
+    msg - feedback message, translated.
+
+    code - feedback code. Can be "success"/"failed"/"forbidden" or
+        something about the concrete case, like "missing_fields"/"invalid_token"/etc.
+
     newToken (optional) - token to use for next request of that kind.
-    reload - whether to reload the page
+
+    reload - whether to reload the page; Some actions require reloading,
+        like logging into account
 }

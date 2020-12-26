@@ -8,6 +8,10 @@
 
 
 require "include/db.php";
+
+/**
+ * @global \Main\Session|null $session
+ */
 if (!defined("SESSION_COOKIE") && isset($db)){
     define("SESSION_COOKIE", "MathSession");
     require "include/classes/Session.php";

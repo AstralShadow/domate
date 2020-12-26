@@ -9,7 +9,7 @@
 require "include/functions/generateSecureToken.php";
 require "include/functions/verifySecureToken.php";
 
-$response["msg"] = $dictionary->login_messages["failure"];
+$response["msg"] = $dictionary->unknown_error;
 $response["code"] = "failed";
 
 /*

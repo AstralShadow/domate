@@ -79,6 +79,11 @@ class User
             return $object;
     }
 
+    public function logout(): void {
+        $session = $this->session;
+        $session->remove("user");
+    }
+
     /**
      * Checks if user exists
      * @global \MongoDB\Client $db

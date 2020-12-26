@@ -9,6 +9,9 @@
 require "include/session.php";
 require "include/user.php";
 
+/**
+ * @global \Main\User|null $user
+ */
 if (!defined("AUTHORIZED_USER_BY_SESSION")){
     if ($session->user === null)
         return;

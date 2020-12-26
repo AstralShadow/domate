@@ -9,6 +9,7 @@
 
 if (!defined("DETECTED_PAGE")){
     define("DETECTED_PAGE", true);
+
     $page = "home";
     $pageType = null;
     if (isset($_GET['p']) && is_string($_GET['p']))
@@ -21,16 +22,53 @@ if (!defined("DETECTED_PAGE")){
         if (in_array($page . ".php", scandir("pages/" . $dir)))
             $pageType = $dir;
     unset($dirs);
+
+    if (!isset($pageType)){
+        $pageType = "standalone";
+        $page = "home";
+    }
 }
 
 if (!defined("CHECKED_PAGE_ACCESS_PERMISSIONS") && defined("LOADED_USER_DATA")){
     define("CHECKED_PAGE_ACCESS_PERMISSIONS", true);
+
+    $defaultNonUserPage = "home";
+    $forbiddenNonUserPages = ["tests", "logout"];
+
+    $defaultUserPage = "tests";
+    $forbiddenUserPages = ["home", "login", "sign_up"];
+
+    $forwardTo = null;
+
+    if (in_array($page, $forbiddenNonUserPages) && !isset($user)){
+        $forwardTo = $defaultNonUserPage;
+    }else if (in_array($page, $forbiddenUserPages) && isset($user)){
+        $forwardTo = $defaultUserPage;
+    }
+
+    if (isset($forwardTo)){
+        if ($pageType === "ajax"){
+            echo json_encode([
+                "msg" => $dictionary->forbidden,
+                "code" => "forbidden",
+                "reload" => false
+            ]);
+            unset($response);
+
+            $page = null;
+            $pageType = null;
+        }else{
+            $page = $forwardTo;
+            $pageType = "standalone";
+        }
+    }
+
+    unset($defaultNonUserPage, $forbiddenNonUserPages, $defaultUserPage, $forbiddenUserPages, $forwardTo);
 }
 
 if (!defined("INCLUDED_PAGE")){
     define("INCLUDED_PAGE", true);
 
-    require "include/dictionary.php";
     switch ($pageType){
         case "file":
             include "pages/files/" . $page . ".php";
@@ -56,8 +94,6 @@ if (!defined("INCLUDED_PAGE")){
             include "pages/templates/default.php";
             break;
 
-        default:
-            $page = "home";
         case "standalone":
             include "pages/standalone/" . $page . ".php";
             break;
