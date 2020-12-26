@@ -14,24 +14,18 @@ body{
 
 /* Header */
 #home_header{
-    display: flex;
-    position: sticky;
-    top: 0px;
-    width: 100%;
-    margin-bottom: 60px;
+    display:block;
 }
 #home_logo{
-    flex: 3;
-    float: left;
-    margin-left: 25px;
-    margin-right: 20px;
+    margin: 40px 25px;
     height: 150px;
     border: 3px inset;
     border-color: rgb(0, 255, 0);
 }
 #home_forms{
-    display: flex;
-    flex: 1;
+    position: fixed;
+    right: 0px;
+    top: 0px;
     margin-right: 2px;
 }
 
@@ -41,19 +35,26 @@ input{
     font-size: 16pt;
     text-align: center;
     color: rgb(0, 255, 0);
-    width: 230px;
+    width: 100%;
     background-color: black;
-    height: 25px;
-    margin-left: 10px;
-    margin-right: 10px;
+    height: 31px;
     border: 1px solid rgb(0, 200, 0);
+    display: block;
+    box-sizing: border-box;
 }
 .dropdown_form_container{
-    display: block;
+    display: inline-block;
     position: relative;
+    vertical-align: top;
+    max-width: 250px;
+    text-align: center;
 }
 .dropdown_form_contents{
     display: none;
+    max-width: 230px;
+    background: black;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .dropdown_form_submit{
     width: 250px;
@@ -63,6 +64,7 @@ input{
     font-size: 18pt;
     text-align: center;
     cursor: pointer;
+    background-color: black;
 }
 #sign_up.dropdown_form_submit{
     border-radius: 0px 0px 0px 100px/0px 0px 0px 25px;

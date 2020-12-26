@@ -9,10 +9,11 @@
 require "include/session.php";
 require "include/user.php";
 
-if (!defined("AUTHORIZED_USER_THROUGH_SESSION")){
-    if (!isset($session->user))
+if (!defined("AUTHORIZED_USER_BY_SESSION")){
+    if ($session->user === null)
         return;
 
-    $user = User::fromSession($this->database, $session);
-    defined("AUTHORIZED_USER_THROUGH_SESSION", true);
+    $user = \Main\User::fromSession($db, $session);
+    define("AUTHORIZED_USER_BY_SESSION", true);
 }
+

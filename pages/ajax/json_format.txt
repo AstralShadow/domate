@@ -1,0 +1,7 @@
+So far, used in login and register forms:
+{
+    msg - feedback message,
+    code - feedback code,
+    newToken (optional) - token to use for next request of that kind.
+    reload - whether to reload the page
+}

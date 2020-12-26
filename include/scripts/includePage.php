@@ -12,7 +12,7 @@ if (!defined("DETECTED_PAGE")){
     $page = "home";
     $pageType = null;
     if (isset($_GET['p']) && is_string($_GET['p']))
-        if (preg_match("/^[a-zA-Z0-9]{5,}$/", $_GET['p']))
+        if (preg_match("/^[a-zA-Z0-9\_]{5,}$/", $_GET['p']))
             $page = $_GET['p'];
 
     $dirs = ["content", "standalone", "ajax", "test", "files"];
@@ -37,7 +37,15 @@ if (!defined("INCLUDED_PAGE")){
             break;
 
         case "ajax":
+            $response = [
+                "msg" => $dictionary->form_messages["no_action"],
+                "code" => null,
+                "reload" => false
+            ];
             include "pages/ajax/" . $page . ".php";
+
+            echo json_encode($response);
+            unset($response);
             break;
 
         case "test":

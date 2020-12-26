@@ -32,13 +32,13 @@ abstract class MathematicOperation extends Interpreter\Operation
     public function getType(...$args) {
         if (count($args) < 1)
             throw new Interpreter\OperationException
-                ("Operation requires at least one parameter!");
+                    ("Operation requires at least one parameter!");
 
         $type = Interpreter\TYPE_NUMBER;
         foreach ($args as $arg){
             if (isset($exceptionMessages[$arg->type]))
                 throw new Interpreter\OperationException
-                    ("Operation not supported with that kind of arguments");
+                        ("Operation not supported with that kind of arguments");
             if ($arg->type === Interpreter\TYPE_POTENTIAL_NUMBER)
                 $type = Interpreter\TYPE_POTENTIAL_NUMBER;
         }
@@ -65,21 +65,21 @@ abstract class MathematicOperation extends Interpreter\Operation
             if ($type1 == $type2){
                 /* 2 numbers */
                 if ($type1 == Interpreter\TYPE_NUMBER)
-                    $args[$i + 1] = $this->numbers($arg1, $arg2);
+                    $args[$i + 1] = $this->numbers($arg1->value, $arg2->value);
 
                 /* 2 sets */
                 if ($type1 == Interpreter\TYPE_POTENTIAL_NUMBER)
-                    $args[$i + 1] = $this->potentials($arg1, $arg2);
+                    $args[$i + 1] = $this->potentials($arg1->value, $arg2->value);
                 continue;
             }
             /* Set and Number */
             if ($type1 == Interpreter\TYPE_POTENTIAL_NUMBER && $type2 == Interpreter\TYPE_NUMBER){
-                $this->potentialAndNumber($arg1, $arg2);
+                $this->potentialAndNumber($arg1->value, $arg2->value);
                 continue;
             }
             /* Number and Set */
             if ($type1 == Interpreter\TYPE_NUMBER && $type2 == Interpreter\TYPE_POTENTIAL_NUMBER){
-                $this->potentialAndNumber($arg2, $arg1);
+                $this->potentialAndNumber($arg2->value, $arg1->value);
                 continue;
             }
         }

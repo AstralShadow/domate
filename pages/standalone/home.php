@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+require "include/functions/generateSecureToken.php";
+?>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -20,19 +29,21 @@
             </div>
             <div id="home_forms">
                 <?php
-                $sign_up = $dictionary->sign_up_placeholders;
-                $login = $dictionary->login_placeholders;
+                $sign_up = $dictionary->sign_up_messages;
+                $login = $dictionary->login_messages;
+                $sign_up_token = generateSecureToken($session, "sign_up");
+                $login_token = generateSecureToken($session, "login");
                 ?>
                 <div class="dropdown_form_container" autocomplete="off">
-                    <form method="post" class="dropdown_form_contents">
+                    <form action="./?p=sign_up" method="post" class="dropdown_form_contents">
                         <input placeholder="<?php echo $sign_up["name"]; ?>"
                                name="user" type="text" >
-                        <br/>
                         <input placeholder="<?php echo $sign_up["password"]; ?>"
-                               name="pass" type="password" >
-                        <br/>
+                               name="pwd" type="password" >
                         <input placeholder="<?php echo $sign_up["repeat_password"]; ?>"
-                               name="pass2" type="password" >
+                               name="pwd2" type="password" >
+                        <span class="dropdown_form_feedback"></span>
+                        <input name="token" type="hidden" value="<?php echo $sign_up_token; ?>" />
                     </form>
                     <div id="sign_up" class="dropdown_form_submit">
                         <?php echo $sign_up["sign_up"]; ?>
@@ -40,19 +51,20 @@
                 </div>
 
                 <div class="dropdown_form_container">
-                    <form method="post" class="dropdown_form_contents">
+                    <form action="./?p=login" method="post" class="dropdown_form_contents">
                         <input placeholder="<?php echo $login["name"]; ?>"
                                name="user" type="text" >
-                        <br/>
                         <input placeholder="<?php echo $login["password"]; ?>"
-                               name="pass" type="password" >
+                               name="pwd" type="password" >
+                        <span class="dropdown_form_feedback"></span>
+                        <input name="token" type="hidden" value="<?php echo $login_token; ?>" />
                     </form>
                     <div id="login" class="dropdown_form_submit">
                         <?php echo $login["login"]; ?>
                     </div>
                 </div>
                 <?php
-                unset($sign_up, $login);
+                unset($sign_up, $login, $sign_up_token, $login_token);
                 ?>
             </div>
         </div>

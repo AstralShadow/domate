@@ -64,6 +64,7 @@ class Expression extends Variable
         }
 
         $this->value = $this->operation->execute(...$this->parameters);
+        $this->resolved = true;
         return true;
     }
 

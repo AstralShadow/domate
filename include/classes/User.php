@@ -42,7 +42,7 @@ class User
     }
 
     public static function fromSession(\MongoDB\Database $database, \Main\Session $session, int &$errorByte = 0) {
-        $username = $session->get("user");
+        $username = $session->user;
         if (!isset($username))
             return;
 
@@ -50,7 +50,7 @@ class User
         if ($object->loadUser($username, $errorByte))
             return $object;
 
-        $session->set("user", null);
+        $session->user = null;
     }
 
     /**
@@ -59,7 +59,7 @@ class User
      * @return bool
      */
     public static function authorize(\MongoDB\Database $database, \Main\Session $session, array $data, int &$errorByte = 0) {
-        $errCodes = ["user" => USER_ERRCODE_ILLEGAL_USERNAME, "pwd" => USER_ERRCODE_ILLEGAL_PASSWORD];
+        $errCodes = ["user" => USER_ERRCODE_WRONG_PASSWORD, "pwd" => USER_ERRCODE_WRONG_PASSWORD];
         foreach (self::regex as $key => $exp){
             if (!isset($data[$key]) || !is_string($data[$key]) || !preg_match($exp, $data[$key]))
                 $errorByte = $errorByte | $errCodes[$key];
@@ -75,7 +75,7 @@ class User
         }
 
         $object = new self($database, $session);
-        if ($object->loadUser($data["user"], $errorByte, $errorByte))
+        if ($object->loadUser($data["user"], $errorByte))
             return $object;
     }
 
@@ -109,7 +109,7 @@ class User
         $this->username = $document["user"];
         $this->data = $document;
         $this->lastUpdateTime = new \DateTime();
-        $this->session->set("user", $username);
+        $this->session->user = $username;
         return true;
     }
 
@@ -147,23 +147,22 @@ class User
      * @param mixed $value
      * @return bool $success
      */
-    public function set(string $key, $value, int &$errorByte = 0): bool {
+    public function update($query, int &$errorByte = 0): bool {
         $users = $this->database->users;
 
-        if (!isset($value))
-            return $this->remove($key);
+        foreach (["user", "pwd", "_id"] as $private){
+            foreach ($query as $key => $value)
+                if (isset($value[$private]))
+                    unset($query[$key][$private]);
+        }
 
-        if (in_array($key, ["user", "pwd", "_id"]))
-            return false;
+        if (!isset($query['$set']))
+            $query['$set'] = [];
+        $query['$set']["modified"] = new \MongoDB\BSON\UTCDateTime();
 
         $filter = ["_id" => $this->data["_id"]];
-        $update = [
-            '$set' => [
-                $key => $value,
-                "modified" => new \MongoDB\BSON\UTCDateTime()
-            ]
-        ];
-        $updateResult = $users->updateOne($filter, $update);
+        $updateResult = $users->updateOne($filter, $query);
+
         if (!$updateResult->getMatchedCount()){
             $errorByte = $errorByte | USER_ERRCODE_USER_DOES_NOT_EXIST;
             return false;
@@ -211,7 +210,21 @@ class User
     }
 
     public function __set(string $name, $value) {
-        $this->set($name, $value);
+        if (in_array($name, ["key", "_id"]))
+            return;
+
+        if (!isset($value)){
+            $this->remove($name);
+            return;
+        }
+
+        $update = [
+            '$set' => [
+                $name => $value,
+                "modified" => new \MongoDB\BSON\UTCDateTime()
+            ]
+        ];
+        $this->update($update);
     }
 
     /**
@@ -302,7 +315,7 @@ class User
      * @param type $errorByte
      * @return string
      */
-    public static function getErrorMessage(\Main\Dictionary $dictionary, int $errorByte = 0): string {
+    public static function getErrorMessage(\Main\Dictionary $dictionary, int $errorByte): string {
         $possibleCodes = [
             USER_ERRCODE_NO_ERROR => "USER_ERRCODE_NO_ERROR",
             USER_ERRCODE_USER_ALREADY_EXIST => "USER_ERRCODE_USER_ALREADY_EXIST",

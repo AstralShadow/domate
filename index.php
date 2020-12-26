@@ -13,7 +13,7 @@ require "include/db.php";
 /* Authentication */
 require "include/session.php";
 require "include/user.php";
-require "include/scripts/authorizeUserThroughSession.php";
+require "include/scripts/authorizeUserBySession.php";
 
 /* Contents */
 require "include/scripts/includePage.php";

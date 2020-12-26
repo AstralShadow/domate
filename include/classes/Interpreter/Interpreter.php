@@ -33,7 +33,6 @@ class Interpreter
             if (!$exp->resolved)
                 $exp->solve();
             if (!$exp->resolved){
-                var_dump($exp->parameters[1]);
                 throw new ParseException("Can not resolve line " . $i);
             }
         }
@@ -105,7 +104,7 @@ class Interpreter
                     $i = array_search(",", $elements);
                     if (!isset($elements[$i + 1]) || !isset($elements[$i - 1]))
                         throw new ParseException
-                            ("Missing parameter in array. Maybe you left an extra comma?");
+                                ("Missing parameter in array. Maybe you left an extra comma?");
 
                     $a = $elements[$i - 1];
                     $b = $elements[$i + 1];
@@ -117,7 +116,7 @@ class Interpreter
                     foreach ($parameters as $p)
                         if (!($p instanceof Variable))
                             throw new ParseException
-                                ("Trying to perform operation with non-variables.");
+                                    ("Trying to perform operation with non-variables.");
 
                     $elements[$i] = $parameters;
                     unset($elements[$i + 1], $elements[--$i]);
@@ -141,10 +140,10 @@ class Interpreter
                     foreach ($parameters as $p)
                         if (!($p instanceof Variable))
                             throw new ParseException
-                                ("Trying to perform operation with non-variables.");
+                                    ("Trying to perform operation with non-variables.");
                     if (!isset($parameters[0]->name))
                         throw new ParseException
-                            ("You can't define nameless variable.");
+                                ("You can't define nameless variable.");
                     $parameters[0]->resolved = true;
                     // Think of reverse-operation for operations,
                     // where possible. This may allow calculation
@@ -194,6 +193,7 @@ class Interpreter
     }
 
     public function setVariable(Variable $destination, Variable $source) {
+        $source->name = $destination->name;
         $this->namespace[$destination->name] = $source;
     }
 

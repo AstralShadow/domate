@@ -135,23 +135,23 @@ class Session
      * @param mixed $value
      * @return bool $success
      */
-    public function set(string $key, $value): bool {
+    public function update($query): bool {
         $sessions = $this->database->sessions;
 
-        if (!isset($value))
-            return $this->remove($key);
+        foreach (["key", "_id"] as $private){
+            foreach ($query as $key => $value)
+                if (isset($value[$private]))
+                    unset($query[$key][$private]);
+        }
 
-        if (in_array($key, ["key", "_id"]))
-            return false;
+
+        if (!isset($query['$set']))
+            $query['$set'] = [];
+        $query['$set']["modified"] = new \MongoDB\BSON\UTCDateTime();
 
         $filter = ["_id" => $this->data["_id"]];
-        $update = [
-            '$set' => [
-                $key => $value,
-                "modified" => new \MongoDB\BSON\UTCDateTime()
-            ]
-        ];
-        $updateResult = $sessions->updateOne($filter, $update);
+        $updateResult = $sessions->updateOne($filter, $query);
+
         if (!$updateResult->getMatchedCount())
             return false;
         if (!$updateResult->getModifiedCount())
@@ -195,7 +195,21 @@ class Session
     }
 
     public function __set(string $name, $value) {
-        $this->set($name, $value);
+        if (in_array($name, ["key", "_id"]))
+            return;
+
+        if (!isset($value)){
+            $this->remove($name);
+            return;
+        }
+
+        $update = [
+            '$set' => [
+                $name => $value,
+                "modified" => new \MongoDB\BSON\UTCDateTime()
+            ]
+        ];
+        $this->update($update);
     }
 
     /**
