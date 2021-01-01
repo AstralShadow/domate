@@ -14,7 +14,7 @@
 (function (containerQuery, formQuery, feedbackQuery, submitQuery) {
     "use strict"
 
-    window.addEventListener("load", function () {
+    function loadDropDownFunctionality () {
         document.querySelectorAll(containerQuery)
             .forEach(function (container) {
                 var form = container.querySelector(formQuery)
@@ -22,8 +22,12 @@
                 var feedbackContainer = container.querySelector(feedbackQuery)
                 new DropDownForm(container, form, submitKey, feedbackContainer)
             })
+    }
 
-    })
+    if (document.readyState === "complete")
+        loadDropDownFunctionality();
+    else
+        window.addEventListener("load", loadDropDownFunctionality)
 
     function DropDownForm (container, hiddenForm, submitKey, feedbackContainer) {
         var self = this

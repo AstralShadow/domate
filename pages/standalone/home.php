@@ -20,7 +20,7 @@ require "include/functions/generateSecureToken.php";
         <link href="./stylesheets/home.css"
               rel="stylesheet" type="text/css" />
 
-        <script src="./scripts/visuals/dropdown_forms.js" ></script>
+        <script async src="./scripts/visuals/dropdown_forms.js" ></script>
     </head>
     <body>
         <div id="home_header">
@@ -74,10 +74,7 @@ require "include/functions/generateSecureToken.php";
             $counter = 0;
             foreach ($contents as $element){
                 $counter++;
-                if (isset($element["position"]))
-                    $position = $element["position"];
-                else
-                    $position = $counter % 2 ? "right" : "left";
+                $position = $element["position"] ?? $counter % 2 ? "right" : "left";
                 ?>
                 <div class="element <?php echo $position; ?>">
                     <div class="topic">
