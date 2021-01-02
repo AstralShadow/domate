@@ -62,8 +62,9 @@ class Session
 
         do{
             $key = "";
-            for ($i = 0; $i < 23; $i++)
+            for ($i = 0; $i < 23; $i++){
                 $key .= $characters[mt_rand(0, $charactersLength)];
+            }
         } while ($this->sessionExists($key));
 
         $sessions->insertOne([

@@ -8,56 +8,57 @@
 
 namespace MathExam;
 
-use \MongoDB\BSON as BSON;
-use \MongoDB\Model as Model;
+use \MongoDB\BSON\ObjectId as ObjectId;
+use \MongoDB\BSON\UTCDateTime as UTCDateTime;
+use \MongoDB\Database as Database;
+use Identification\User as User;
+use \Shared\ModificableMongoDocument as ModificableMongoDocument;
 
 class Test
 {
 
-    /**
-     * @var \MongoDB\BSON\ObjectId $id  this test's id
-     * @var \MongoDB\BSON\ObjectId $owner  owner's id
-     * @var \MongoDB\Model\BSONDocument $data  all data from database about this test
-     */
-    private BSON\ObjectId $id;
-    private Model\BSONDocument $data;
+    use ModificableMongoDocument;
 
-    public function __construct() {
-        
+    public function __construct(Database $database, ObjectId $id) {
+        $this->collection = $database->tests;
+        $this->privateParameters = ["owner"];
+        $this->identificator = $id;
     }
 
-    public function __get(string $name) {
-        $keys = ["name"];
-        if (in_array($name, $keys)){
-            return $this->data[$name] ?? null;
+    public function __get(string $key) {
+        switch ($key){
+            case "owner":
+                return $this->data["owner"];
+
+            case "_id":
+                return $this->identificator;
         }
+        return $this->get($key);
     }
 
-    public function __set(string $name, $value) {
-        $keys = ["name"];
-        if (in_array($name, $keys)){
-            $this->set($name, $value);
+    public static function create(Database $database, User $owner): Test {
+        $collection = $database->tests;
+
+        $result = $collection->insertOne([
+            "owner" => $owner->user,
+            "tasks" => [],
+            "created" => new UTCDateTime(),
+            "modified" => new UTCDateTime()
+        ]);
+
+        if (!$result->isAcknowledged()){
+            return null;
         }
-    }
+        $id = $result->getInsertedId();
 
-    /**
-     * 
-     * @param \MongoDB\Database $db
-     * @param \MongoDB\BSON\ObjectId $id
-     * @return \MathExam\Test
-     */
-    public static function load(Database $db, BSON\ObjectId $id): Test {
-        
-    }
+        $query = [
+            '$push' => [
+                "tests" => $id
+            ]
+        ];
+        $owner->update($query);
 
-    /**
-     * 
-     * @param \MongoDB\Database $db
-     * @param \MongoDB\BSON\ObjectId $id
-     * @return \MathExam\Test
-     */
-    public static function save(Database $db): Test {
-        
+        return new Test($database, $id);
     }
 
 }

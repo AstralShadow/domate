@@ -32,7 +32,7 @@ trait ModificableMongoDocument
      * A key that is used to identify this object
      * @var string
      */
-    private string $databaseIdentifier;
+    private string $databaseIdentifier = "_id";
 
     /**
      * List of database parameters that are private
