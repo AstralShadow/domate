@@ -6,20 +6,15 @@
  * and open the template in the editor.
  */
 
-
 require "include/db.php";
+require "include/shared.php";
 
 /**
- * @global \Main\Session|null $session
+ * @global Identification\Session $session
  */
-if (!defined("SESSION_COOKIE") && isset($db)){
+if (!defined("SESSION_COOKIE")){
     define("SESSION_COOKIE", "MathSession");
-    require "include/classes/Session.php";
-    $session = new Main\Session($db);
-}
+    require "include/Identification/Session.php";
 
-/*
- * Usage:
- * $session->get(string $key);
- * $session->set(string $key, mixed $value);
- */
+    $session = new Identification\Session($db);
+}

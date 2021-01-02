@@ -1,38 +1,38 @@
 {
     "title": "Заглавие",
 
-    "unknown_error": "Възникна някаква грешка.",
+    "unknownError": "Възникна някаква грешка.",
 
-    "login_messages": {
+    "loginMessages": {
         "name": "Потребителско име",
         "password": "Парола",
         "login": "Вход",
 
         "success": "Вие влязохте в профила си."
     },
-    "sign_up_messages": {
+    "signUpMessages": {
         "name": "Потребителско име",
         "password": "Парола",
-        "repeat_password": "Повтори парола",
-        "sign_up": "Регистрация",
+        "repeatPassword": "Повтори парола",
+        "signUp": "Регистрация",
 
         "success": "Вие се регистрирахте успешно. Моля влезте в акаунта си.",
 
-        "different_passwords": "Паролите не съвпадат.",
-        "password_already_used": "Тази парола вече се използва."
+        "differentPasswords": "Паролите не съвпадат.",
+        "passwordAlreadyUsed": "Тази парола вече се използва."
     },
-    "logout_message": "Вие излязохте от профила си",
+    "logoutMessage": "Вие излязохте от профила си",
     "forbidden": "Достъпът отказан.",
-    "form_messages": {
-        "missing_fields": "Не сте попълнили всички полета",
-        "invalid_token": "Невалидна верификация. Презареждане...",
-        "you_are_already_logged_in": "Вие вече сте влезли в профила си.",
-        "you_are_not_logged_in": "Вие не сте влезли в профила си.",
-        "no_action": "Нищо не се случи. [звук на щурец]",
-        "too_fast": "Моля, изчаквайте една-две секунди между действията си, за да не претоварите сървъра. Той не работи само за Вас."
+    "formMessages": {
+        "missingFields": "Не сте попълнили всички полета",
+        "invalidToken": "Невалидна верификация. Презареждане...",
+        "youAreAlreadyLoggedIn": "Вие вече сте влезли в профила си.",
+        "youAreNotLoggedIn": "Вие не сте влезли в профила си.",
+        "noAction": "Нищо не се случи. [звук на щурец]",
+        "tooFast": "Моля, изчаквайте една-две секунди между действията си, за да не претоварите сървъра. Той не работи само за Вас."
     },
 
-    "home_page_contents": [
+    "homePageContents": [
         {
             "topic": "Какво е това?",
             "content": "Нашият велик сайт."
@@ -55,7 +55,7 @@
         }
     ],
 
-    "user_class_error_messages": {
+    "userClassErrorMessage": {
         "USER_ERRCODE_NO_ERROR": "Нямаше грешка.",
         "USER_ERRCODE_USER_ALREADY_EXIST": "Вече съществува такъв потребител.",
         "USER_ERRCODE_USER_DOES_NOT_EXIST": "Такъв потребител не съществува.",

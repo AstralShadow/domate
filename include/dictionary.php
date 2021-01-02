@@ -9,14 +9,11 @@
 require "include/session.php";
 
 if (!defined("DICTIONARY_LANGUAGE")){
-    if (isset($session))
-        $lang = $session->get("lang");
-    if (!isset($lang))
-        $lang = "bg_BG";
+    $lang = $session->lang ?? "bg_BG";
 
-    require "include/classes/Dictionary.php";
+    require "include/MathExam/Dictionary.php";
     define("DICTIONARY_LANGUAGE", $lang);
-    $dictionary = new Main\Dictionary($lang);
+    $dictionary = new MathExam\Dictionary($lang);
 
     unset($lang);
 }

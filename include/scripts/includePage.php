@@ -12,15 +12,19 @@ if (!defined("DETECTED_PAGE")){
 
     $page = "home";
     $pageType = null;
-    if (isset($_GET['p']) && is_string($_GET['p']))
-        if (preg_match("/^[a-zA-Z0-9\_]{5,}$/", $_GET['p']))
+    if (isset($_GET['p']) && is_string($_GET['p'])){
+        if (preg_match("/^[a-zA-Z0-9\_]{5,}$/", $_GET['p'])){
             $page = $_GET['p'];
+        }
+    }
 
     $dirs = ["content", "standalone", "ajax", "test", "files"];
 
-    foreach ($dirs as $dir)
-        if (in_array($page . ".php", scandir("pages/" . $dir)))
+    foreach ($dirs as $dir){
+        if (in_array($page . ".php", scandir("pages/" . $dir))){
             $pageType = $dir;
+        }
+    }
     unset($dirs);
 
     if (!isset($pageType)){
@@ -42,7 +46,7 @@ if (!defined("CHECKED_PAGE_ACCESS_PERMISSIONS") && defined("LOADED_USER_DATA")){
 
     if (in_array($page, $forbiddenNonUserPages) && !isset($user)){
         $forwardTo = $defaultNonUserPage;
-    }else if (in_array($page, $forbiddenUserPages) && isset($user)){
+    } else if (in_array($page, $forbiddenUserPages) && isset($user)){
         $forwardTo = $defaultUserPage;
     }
 
@@ -50,14 +54,14 @@ if (!defined("CHECKED_PAGE_ACCESS_PERMISSIONS") && defined("LOADED_USER_DATA")){
         if ($pageType === "ajax"){
             echo json_encode([
                 "msg" => $dictionary->forbidden,
-                "code" => "forbidden",
+                "code" => "Forbidden",
                 "reload" => false
             ]);
             unset($response);
 
             $page = null;
             $pageType = null;
-        }else{
+        } else{
             $page = $forwardTo;
             $pageType = "standalone";
         }
@@ -76,7 +80,7 @@ if (!defined("INCLUDED_PAGE")){
 
         case "ajax":
             $response = [
-                "msg" => $dictionary->form_messages["no_action"],
+                "msg" => $dictionary->formMessages["noAction"],
                 "code" => null,
                 "reload" => false
             ];

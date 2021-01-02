@@ -2,8 +2,8 @@ So far, used in login, register and logout:
 {
     msg - feedback message, translated.
 
-    code - feedback code. Can be "success"/"failed"/"forbidden" or
-        something about the concrete case, like "missing_fields"/"invalid_token"/etc.
+    code - feedback code. Can be "Success"/"Failed"/"Forbidden" or
+        something about the concrete case, like "MissingFields"/"InvalidToken"/etc.
 
     newToken (optional) - token to use for next request of that kind.
 

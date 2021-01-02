@@ -9,24 +9,24 @@
 require "include/task.php";
 
 if (!defined("CLASS_TASK_INTERPRETER")){
-    require "include/classes/Interpreter/variableTypes.php";
+    require "include/Interpreter/variableTypes.php";
 
-    require "include/classes/Interpreter/TaskVariant.php";
-    require "include/classes/Interpreter/Interpreter.php";
-    require "include/classes/Interpreter/Parsers.php";
-    require "include/classes/Interpreter/Variable.php";
-    require "include/classes/Interpreter/Expression.php";
+    require "include/Interpreter/TaskVariant.php";
+    require "include/Interpreter/Interpreter.php";
+    require "include/Interpreter/Parsers.php";
+    require "include/Interpreter/Variable.php";
+    require "include/Interpreter/Expression.php";
 
-    require "include/classes/Interpreter/Operation.php";
-    require "include/classes/Interpreter/Operations/MathematicOperation.php";
-    // require "include/classes/Interpreter/Operations/Exponentiation.php";
-    // require "include/classes/Interpreter/Operations/Multiplication.php";
-    // require "include/classes/Interpreter/Operations/Division.php";
-    // require "include/classes/Interpreter/Operations/Modulo.php";
-    require "include/classes/Interpreter/Operations/Addition.php";
-    require "include/classes/Interpreter/Operations/Subtraction.php";
+    require "include/Interpreter/Operation.php";
+    require "include/Interpreter/Operations/MathematicOperation.php";
+    // require "include/Interpreter/Operations/Exponentiation.php";
+    // require "include/Interpreter/Operations/Multiplication.php";
+    // require "include/Interpreter/Operations/Division.php";
+    // require "include/Interpreter/Operations/Modulo.php";
+    require "include/Interpreter/Operations/Addition.php";
+    require "include/Interpreter/Operations/Subtraction.php";
 
-    require "include/classes/Interpreter/Exceptions/ParseException.php";
-    require "include/classes/Interpreter/Exceptions/OperationException.php";
+    require "include/Interpreter/Exceptions/ParseException.php";
+    require "include/Interpreter/Exceptions/OperationException.php";
     define("CLASS_TASK_INTERPRETER", true);
 }

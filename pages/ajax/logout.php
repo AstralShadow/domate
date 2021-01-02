@@ -6,16 +6,16 @@
  * and open the template in the editor.
  */
 
-$response["msg"] = $dictionary->unknown_error;
-$response["code"] = "failed";
+$response["msg"] = $dictionary->unknownError;
+$response["code"] = "Failed";
 
 /*
  * Validation
  */
 
 if (!isset($user)){
-    $response["msg"] = $dictionary->form_messages["you_are_not_logged_in"];
-    $response["code"] = "forbidden";
+    $response["msg"] = $dictionary->formMessages["youAreNotLoggedIn"];
+    $response["code"] = "Forbidden";
     $response["reload"] = true;
     unset($data);
     return;
@@ -25,7 +25,7 @@ if (!isset($user)){
  * Action
  */
 
-$response["msg"] = $dictionary->logout_message;
-$response["code"] = "success";
+$response["msg"] = $dictionary->logoutMessage;
+$response["code"] = "Success";
 $response["reload"] = "true";
 $user->logout();

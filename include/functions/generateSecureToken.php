@@ -6,17 +6,14 @@
  * and open the template in the editor.
  */
 
-if (!defined("FUNC_GENERATE_SECURE_TOKEN")){
-    define("FUNC_GENERATE_SECURE_TOKEN", true);
+use Identification\Session as Session;
 
-    function generateSecureToken(\Main\Session $session, string $name) {
-        $token = base64_encode(random_bytes(36));
-        $session->update([
-            '$set' => [
-                "tokens." . $name => $token
-            ]
-        ]);
-        return $token;
-    }
-
+function generateSecureToken(Session $session, string $name) {
+    $token = base64_encode(random_bytes(36));
+    $session->update([
+        '$set' => [
+            "tokens." . $name => $token
+        ]
+    ]);
+    return $token;
 }

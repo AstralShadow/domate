@@ -24,8 +24,9 @@ if (!defined("DEFINED_DB_CLIENT")){
     if (file_exists("data/private/mongodb_authentication.json")){
         $options = json_decode(file_get_contents("data/private/mongodb_authentication.json"), true);
         foreach (array_keys($args) as $key){
-            if (isset($options[$key]) && is_string($options[$key]))
+            if (isset($options[$key]) && is_string($options[$key])){
                 $args[$key] = $options[$key];
+            }
         }
         unset($options);
     }
@@ -38,15 +39,14 @@ if (!defined("DEFINED_DB_CLIENT")){
             "authSource" => $args["db"],
             "db" => $args["db"]
         ]);
+
         $k = $args["db"];
         $db = $dbClient->$k;
+
         $dbClient->listDatabases();
-    }catch (Exception $e){
-        if (!isset($_GET["mock"])){
-            echo "Missing Database.";
-            die;
-        }
-        $db = null;
+    } catch (Exception $e){
+        echo "Database Error <br />\n";
+        throw $e;
     }
 
     unset($args, $dbClient, $k);

@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-require "include/functions/generateSecureToken.php";
+require "include/secureTokens.php";
 ?>
 <html>
     <head>
@@ -29,24 +29,24 @@ require "include/functions/generateSecureToken.php";
             </div>
             <div id="home_forms">
                 <?php
-                $sign_up = $dictionary->sign_up_messages;
-                $login = $dictionary->login_messages;
-                $sign_up_token = generateSecureToken($session, "sign_up");
-                $login_token = generateSecureToken($session, "login");
+                $signUp = $dictionary->signUpMessages;
+                $login = $dictionary->loginMessages;
+                $signUpToken = generateSecureToken($session, "signUp");
+                $loginToken = generateSecureToken($session, "login");
                 ?>
                 <div class="dropdown_form_container" autocomplete="off">
                     <form action="./?p=sign_up" method="post" class="dropdown_form_contents">
-                        <input placeholder="<?php echo $sign_up["name"]; ?>"
+                        <input placeholder="<?php echo $signUp["name"]; ?>"
                                name="user" type="text" >
-                        <input placeholder="<?php echo $sign_up["password"]; ?>"
+                        <input placeholder="<?php echo $signUp["password"]; ?>"
                                name="pwd" type="password" >
-                        <input placeholder="<?php echo $sign_up["repeat_password"]; ?>"
+                        <input placeholder="<?php echo $signUp["repeatPassword"]; ?>"
                                name="pwd2" type="password" >
                         <span class="dropdown_form_feedback"></span>
-                        <input name="token" type="hidden" value="<?php echo $sign_up_token; ?>" />
+                        <input name="token" type="hidden" value="<?php echo $signUpToken; ?>" />
                     </form>
                     <div id="sign_up" class="dropdown_form_submit">
-                        <?php echo $sign_up["sign_up"]; ?>
+                        <?php echo $signUp["signUp"]; ?>
                     </div>
                 </div>
 
@@ -57,20 +57,20 @@ require "include/functions/generateSecureToken.php";
                         <input placeholder="<?php echo $login["password"]; ?>"
                                name="pwd" type="password" >
                         <span class="dropdown_form_feedback"></span>
-                        <input name="token" type="hidden" value="<?php echo $login_token; ?>" />
+                        <input name="token" type="hidden" value="<?php echo $loginToken; ?>" />
                     </form>
                     <div id="login" class="dropdown_form_submit">
                         <?php echo $login["login"]; ?>
                     </div>
                 </div>
                 <?php
-                unset($sign_up, $login, $sign_up_token, $login_token);
+                unset($signUp, $login, $signUpToken, $loginToken);
                 ?>
             </div>
         </div>
         <div id="home_container">
             <?php
-            $contents = $dictionary->home_page_contents;
+            $contents = $dictionary->homePageContents;
             $counter = 0;
             foreach ($contents as $element){
                 $counter++;

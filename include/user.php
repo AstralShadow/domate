@@ -7,7 +7,9 @@
  */
 
 require "include/db.php";
-if (!defined("LOADED_USER_DATA") && isset($db)){
+require "include/shared.php";
+
+if (!defined("LOADED_USER_DATA")){
     define("LOADED_USER_DATA", true);
     define("USER_ERRCODE_NO_ERROR", 0);
     define("USER_ERRCODE_USER_ALREADY_EXIST", 1);
@@ -16,6 +18,6 @@ if (!defined("LOADED_USER_DATA") && isset($db)){
     define("USER_ERRCODE_ILLEGAL_PASSWORD", 8);
     define("USER_ERRCODE_WRONG_PASSWORD", 16);
 
-    require "include/classes/User.php";
+    require "include/Identification/User.php";
     unset($i);
 }

@@ -10,13 +10,12 @@ require "include/session.php";
 require "include/user.php";
 
 /**
- * @global \Main\User|null $user
+ * @global null|Identification\User $user
  */
 if (!defined("AUTHORIZED_USER_BY_SESSION")){
-    if ($session->user === null)
-        return;
-
-    $user = \Main\User::fromSession($db, $session);
-    define("AUTHORIZED_USER_BY_SESSION", true);
+    if ($session->user !== null){
+        define("AUTHORIZED_USER_BY_SESSION", true);
+        $user = Identification\User::fromSession($db, $session);
+    }
 }
 

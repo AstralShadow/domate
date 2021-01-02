@@ -6,13 +6,10 @@
  * and open the template in the editor.
  */
 
-if (!defined("FUNC_VERIFY_SECURE_TOKEN")){
-    define("FUNC_VERIFY_SECURE_TOKEN", true);
+use Identification\Session as Session;
 
-    function verifySecureToken(\Main\Session $session, string $name, string $token) {
-        $tokens = $session->tokens;
-        $session->remove("tokens." . $name);
-        return isset($tokens[$name]) && $token === $tokens[$name];
-    }
-
+function verifySecureToken(Session $session, string $name, string $token) {
+    $tokens = $session->tokens;
+    $session->remove("tokens." . $name);
+    return isset($tokens[$name]) && $token === $tokens[$name];
 }

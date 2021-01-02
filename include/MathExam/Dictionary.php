@@ -6,13 +6,13 @@
  * and open the template in the editor.
  */
 
-namespace Main;
+namespace MathExam;
 
 class Dictionary
 {
 
     private string $language;
-    private $data = [];
+    private $data;
 
     public function __construct($lang = "bg_BG") {
         if (file_exists("data/dictionaries/" . $lang . ".json")){
@@ -23,9 +23,7 @@ class Dictionary
     }
 
     public function __get($name) {
-        if (isset($this->data[$name]))
-            return $this->data[$name];
-        return "";
+        return $this->data[$name] ?? "";
     }
 
 }
