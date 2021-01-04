@@ -1,12 +1,22 @@
-So far, used in login, register and logout:
+OUTPUT for log[i]n, log[o]t and [s]ign_up:
 {
     msg - feedback message, translated.
 
     code - feedback code. Can be "Success"/"Failed"/"Forbidden" or
         something about the concrete case, like "MissingFields"/"InvalidToken"/etc.
 
-    newToken (optional) - token to use for next request of that kind.
+    newToken (*optional*) - token to use for next request of that kind.
 
     reload - whether to reload the page; Some actions require reloading,
         like logging into account
 }
+
+INPUT for log[i]n and [s]ign_up as POST:
+{
+    token - request's secure token. They are actually different for each action
+    user - username
+    pwd - password
+    pwd2[s] - repeat password
+}
+
+INPUTless actions: logout

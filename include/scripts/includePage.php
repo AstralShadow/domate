@@ -33,20 +33,33 @@ if (!defined("DETECTED_PAGE")){
     }
 }
 
-if (!defined("CHECKED_PAGE_ACCESS_PERMISSIONS") && defined("LOADED_USER_DATA")){
-    define("CHECKED_PAGE_ACCESS_PERMISSIONS", true);
+if (!defined("CHECKED_ACCESS_PERMISSIONS") && defined("USER_AUTHORIZED")){
+    define("CHECKED_ACCESS_PERMISSIONS", true);
 
-    $defaultNonUserPage = "home";
-    $forbiddenNonUserPages = ["tests", "logout"];
+    $defaultGuestPage = "home";
+    $userOnlyPages = [];
 
     $defaultUserPage = "tests";
-    $forbiddenUserPages = ["home", "login", "sign_up"];
+    $guestOnlyPages = [];
+
+    if (file_exists("data/accessPermissions.json")){
+        $raw = file_get_contents("data/accessPermissions.json");
+        $data = json_decode($raw, 1);
+
+        $defaultGuestPage = $data["defaultGuestPage"];
+        $userOnlyPages = $data["userOnlyPages"];
+        $defaultUserPage = $data["defaultUserPage"];
+        $guestOnlyPages = $data["guestOnlyPages"];
+
+        unset($raw, $data);
+    }
+
 
     $forwardTo = null;
 
-    if (in_array($page, $forbiddenNonUserPages) && !isset($user)){
-        $forwardTo = $defaultNonUserPage;
-    } else if (in_array($page, $forbiddenUserPages) && isset($user)){
+    if (in_array($page, $userOnlyPages) && !isset($user)){
+        $forwardTo = $defaultGuestPage;
+    } else if (in_array($page, $guestOnlyPages) && isset($user)){
         $forwardTo = $defaultUserPage;
     }
 
@@ -67,7 +80,7 @@ if (!defined("CHECKED_PAGE_ACCESS_PERMISSIONS") && defined("LOADED_USER_DATA")){
         }
     }
 
-    unset($defaultNonUserPage, $forbiddenNonUserPages, $defaultUserPage, $forbiddenUserPages, $forwardTo);
+    unset($defaultGuestPage, $userOnlyPages, $defaultUserPage, $guestOnlyPages, $forwardTo);
 }
 
 if (!defined("INCLUDED_PAGE")){

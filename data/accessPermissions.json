@@ -1,0 +1,19 @@
+{
+    "defaultGuestPage": "home",
+    "guestOnlyPages": [
+        "home",
+
+        "login",
+        "sign_up"
+    ],
+
+    "defaultUserPage": "tests",
+    "userOnlyPages": [
+        "tests",
+
+        "logout",
+        "listExercises",
+        "listExerciseGroups",
+        "listTests"
+    ]
+}

@@ -12,9 +12,9 @@ require "include/user.php";
 /**
  * @global null|Identification\User $user
  */
-if (!defined("AUTHORIZED_USER_BY_SESSION")){
+if (!defined("USER_AUTHORIZED")){
     if ($session->user !== null){
-        define("AUTHORIZED_USER_BY_SESSION", true);
+        define("USER_AUTHORIZED", true);
         $user = Identification\User::fromSession($db, $session);
     }
 }

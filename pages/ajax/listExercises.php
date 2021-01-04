@@ -22,7 +22,12 @@ if (!isset($user)){
  * Action
  */
 
-$response["msg"] = $dictionary->logoutMessage;
+$exercises = $user->exercises ?? [];
+foreach ($exercises as $key => $value){
+    $exercises[$key] = (string) $value;
+}
+
+
+$response["msg"] = $dictionary->success;
+$response["result"] = $exercises;
 $response["code"] = "Success";
-$response["reload"] = "true";
-$user->logout();

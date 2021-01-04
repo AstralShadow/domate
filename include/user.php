@@ -9,8 +9,8 @@
 require "include/db.php";
 require "include/shared.php";
 
-if (!defined("LOADED_USER_DATA")){
-    define("LOADED_USER_DATA", true);
+if (!defined("USER_CLASS")){
+    define("USER_CLASS", true);
     define("USER_ERRCODE_NO_ERROR", 0);
     define("USER_ERRCODE_USER_ALREADY_EXIST", 1);
     define("USER_ERRCODE_USER_DOES_NOT_EXIST", 2);
