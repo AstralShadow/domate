@@ -10,7 +10,7 @@ namespace Identification;
 
 use \MongoDB\Database as Database;
 use \MongoDB\BSON\UTCDateTime as UTCDateTime;
-use \Shared\ModificableMongoDocument as ModificableMongoDocument;
+use Shared\ModificableMongoDocument as ModificableMongoDocument;
 
 /**
  * Handles user session, uses a cookie

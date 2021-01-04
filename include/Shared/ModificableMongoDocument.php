@@ -73,6 +73,10 @@ trait ModificableMongoDocument
     private function load($identificator = null): bool {
         $identificator ??= $this->identificator;
 
+        if (!isset($identificator)){
+            return false;
+        }
+
         $filter = [$this->databaseIdentifier => $identificator];
         $document = $this->collection->findOne($filter);
 
@@ -109,8 +113,8 @@ trait ModificableMongoDocument
             $this->load();
         }
 
-        if (!isset($this->data["_id"])){
-            return false;
+        if (!isset($this->data["_id"]) && !$this->load()){
+            return null;
         }
 
         $value = $this->data ?? null;
@@ -137,7 +141,7 @@ trait ModificableMongoDocument
      * @return bool $success
      */
     public function update($query): bool {
-        if (!isset($this->data["_id"])){
+        if (!isset($this->data["_id"]) && !$this->load()){
             return false;
         }
 

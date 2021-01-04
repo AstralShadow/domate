@@ -10,9 +10,9 @@ namespace Identification;
 
 use \MongoDB\Database as Database;
 use \MongoDB\BSON\UTCDateTime as UTCDateTime;
-use \Shared\ModificableMongoDocument as ModificableMongoDocument;
-use \Identification\Session as Session;
-use \MathExam\Dictionary as Dictionary;
+use Shared\ModificableMongoDocument as ModificableMongoDocument;
+use Identification\Session as Session;
+use MathExam\Dictionary as Dictionary;
 
 /**
  * Handles user account, can be created by authorization or by session.

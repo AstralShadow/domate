@@ -6,9 +6,10 @@
 
 /**
  * Allows drop-down form effect.
- * @param string coontainerQuery
+ * @param string containerQuery
  * @param string formQuery
- * @param string subimtQuery
+ * @param string feedbackQuery
+ * @param string submitQuery
  * @returns void
  */
 (function (containerQuery, formQuery, feedbackQuery, submitQuery) {

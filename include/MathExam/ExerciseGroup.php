@@ -13,15 +13,15 @@ use \MongoDB\BSON\UTCDateTime as UTCDateTime;
 use \MongoDB\Database as Database;
 use Identification\User as User;
 use Shared\ModificableMongoDocument as ModificableMongoDocument;
-use MathExam\ExerciseGroup as ExerciseGroup;
+use MathExam\Exercise as Exercise;
 
-class Test
+class ExerciseGroup
 {
 
     use ModificableMongoDocument;
 
     public function __construct(Database $database, ObjectId $id) {
-        $this->collection = $database->tests;
+        $this->collection = $database->exerciseGroups;
         $this->privateParameters = ["owner"];
         $this->identificator = $id;
     }
@@ -44,8 +44,8 @@ class Test
      * @param User $owner
      * @return Test
      */
-    public static function create(Database $database, User $owner): Test {
-        $collection = $database->tests;
+    public static function create(Database $database, User $owner): ExerciseGroup {
+        $collection = $database->exerciseGroups;
 
         $result = $collection->insertOne([
             "name" => "",
@@ -61,49 +61,40 @@ class Test
         }
         $id = $result->getInsertedId();
 
-        $query = [
+        $owner->update([
             '$push' => [
-                "tests" => $id
+                "exerciseGroups" => $id
             ]
-        ];
-        $owner->update($query);
+        ]);
 
-        return new Test($database, $id);
+        return new ExerciseGroup($database, $id);
     }
 
     /**
-     * Appends exercise-group to the test. Random task will be selected from the group
-     * @param TaskGroup $group
+     * Appends task
+     * @param Task $task
      * @param int $repeat
      * @return void
      */
-    public function addExerciseGroup(ExerciseGroup $group, int $repeat = 1): void {
-        $query = [
+    public function addExercise(Exercise $exercise): void {
+        $this->update([
             '$push' => [
-                "contents" => [
-                    "id" => $group->getId(),
-                    "repeat" => $repeat
-                ]
+                "contents" => $exercise->getId()
             ]
-        ];
-        $this->update($query);
+        ]);
     }
 
     /**
-     * Removes exercise-group to the test. Random task will be selected from the group
-     * @param TaskGroup $group
-     * @param int $repeat
+     * Removes task
+     * @param Exercise $exercise
      * @return void
      */
-    public function removeExerciseGroup(ExerciseGroup $group): void {
-        $query = [
+    public function removeExercise(Exercise $exercise): void {
+        $this->update([
             '$pull' => [
-                "contents" => [
-                    "id" => $group->getId()
-                ]
+                "contents" => $exercise->getId()
             ]
-        ];
-        $this->update($query);
+        ]);
     }
 
 }

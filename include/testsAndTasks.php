@@ -11,5 +11,7 @@ require "include/user.php";
 if (!defined("CLASS_TEST")){
     define("CLASS_TEST", true);
 
+    require "include/MathExam/Exercise.php";
+    require "include/MathExam/ExerciseGroup.php";
     require "include/MathExam/Test.php";
 }
