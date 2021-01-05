@@ -1,0 +1,58 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5.01.2021 г., 19:02:00
+    Author     : tedi
+*/
+
+
+.alignedTextContainer{
+    display: block;
+}
+.alignedTextContainer > .element{
+    margin-bottom: 50px;
+}
+.alignedTextContainer > .element.left{
+    text-align: left;
+}
+.alignedTextContainer > .element.right{
+    text-align: right;
+}
+
+.alignedTextContainer > .element > .topic{
+    display: inline-block;
+    padding: 4px 50px;
+    background-color: rgb(0, 30, 0);
+    border: 3px inset rgb(0, 255, 0);
+    border-bottom: 0px;
+    font-size: 22pt;
+}
+.alignedTextContainer > .element.left > .topic{
+    margin-left: 25px;
+    border-radius: 0px 100px 0px 0px/0px 30px 0px 0px;
+}
+.alignedTextContainer > .element.right > .topic{
+    margin-right: 25px;
+    border-radius: 100px 0px 0px 0px/30px 0px 0px 0px;
+}
+
+.alignedTextContainer > .element > .content{
+    display: inline-block;
+    width: 80%;
+    min-height: 80px;
+    background-color: rgb(0, 60, 0);
+    border: 3px inset rgb(0, 255, 0);
+    text-indent: 40px;
+    padding: 4px;
+}
+.alignedTextContainer > .element.left > .content{
+    margin-left: 25px;
+    border-radius: 0px 100px 0px 100px/0px 30px 0px 30px;
+}
+.alignedTextContainer > .element.right > .content{
+    margin-right: 25px;
+    border-radius: 100px 0px 100px 0px/30px 0px 30px 0px;
+}

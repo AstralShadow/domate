@@ -19,6 +19,8 @@ require "include/secureTokens.php";
               rel="stylesheet" type="text/css" />
         <link href="./stylesheets/home.css"
               rel="stylesheet" type="text/css" />
+        <link href="./stylesheets/alignedText.css"
+              rel="stylesheet" type="text/css" />
 
         <script async src="./scripts/visuals/dropdown_forms.js" ></script>
     </head>
@@ -68,7 +70,7 @@ require "include/secureTokens.php";
                 ?>
             </div>
         </div>
-        <div id="home_container">
+        <div class="alignedTextContainer">
             <?php
             $contents = $dictionary->homePageContents;
             $counter = 0;
@@ -80,6 +82,7 @@ require "include/secureTokens.php";
                     <div class="topic">
                         <?php echo $element["topic"]; ?>
                     </div>
+                    <br />
                     <div class="content">
                         <?php echo $element["content"]; ?>
                     </div>
