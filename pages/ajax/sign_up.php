@@ -40,7 +40,7 @@ $data = [];
 foreach (["user", "pwd", "pwd2", "token"] as $key){
     if (isset($_POST[$key]) && is_string($_POST[$key])){
         $data[$key] = trim($_POST[$key]);
-    }else{
+    } else{
         $response["msg"] = $dictionary->formMessages["missingFields"];
         $response["code"] = "MissingFields";
         unset($data);
@@ -102,7 +102,7 @@ User::create($db, $userData, $errorByte);
 unset($userData);
 
 if ($errorByte !== 0){
-    $response["msg"] = \Main\User::getErrorMessage($dictionary, $errorByte);
+    $response["msg"] = User::getErrorMessage($dictionary, $errorByte);
     $response["code"] = "UserError: " . $errorByte;
     unset($errorByte);
     return;
