@@ -9,6 +9,7 @@
 require "include/secureTokens.php";
 
 use MongoDB\BSON\UTCDateTime as UTCDateTime;
+use Identification\User as User;
 
 $response["msg"] = $dictionary->unknownError;
 $response["code"] = "Failed";
@@ -39,7 +40,7 @@ $data = [];
 foreach (["user", "pwd", "pwd2", "token"] as $key){
     if (isset($_POST[$key]) && is_string($_POST[$key])){
         $data[$key] = trim($_POST[$key]);
-    } else{
+    }else{
         $response["msg"] = $dictionary->formMessages["missingFields"];
         $response["code"] = "MissingFields";
         unset($data);
@@ -59,7 +60,7 @@ if (isset($user)){
     return;
 }
 
-$ok = verifySecureToken($session, "sign_up", $data["token"]);
+$ok = verifySecureToken($session, "signUp", $data["token"]);
 $response["newToken"] = generateSecureToken($session, "signUp");
 if (!$ok){
     $response["msg"] = $dictionary->formMessages["invalidToken"];
@@ -97,7 +98,7 @@ $userData = [
 ];
 unset($data);
 
-\Main\User::create($db, $userData, $errorByte);
+User::create($db, $userData, $errorByte);
 unset($userData);
 
 if ($errorByte !== 0){
