@@ -44,9 +44,6 @@
                     Създай:
                 </div>
                 <div id="opisanie">
-                    <div id="now">
-                        +
-                    </div>
                 </div>
             </div>
             <div id="test">
