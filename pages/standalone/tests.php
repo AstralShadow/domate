@@ -22,26 +22,97 @@
 
     </head>
     <body>
-        You reached user-only space!!!
-        <br />
-        now visit ./?p=logout
-        <br />
-        and then ./?p=home
-        <br />
-        to get back.
-        <br />
+        <div id="nachalo">
+            <div id="logo">
 
-        Our designer will edit this page soon.
-        <div class="alignedTextContainer">
-            <div class="element left">
-                <div class="topic">
-                    asdasd
-                </div>
-                <br />
-                <div class="content">
-                    asdasd
+            </div>
+            <div class="alignedTextContainer">
+                <div class="element left">
+                    <div class="topic">
+                        Как се създава тест? (или н.т.)
+                    </div>
+                    <br />
+                    <div class="content">
+                        Тук виждате създадените от Вас тестове. На всеки тест при съсдаването му можете да напишете заглавие и описание. Като минете с мишката върху даден тест можете да го редактирате или ....(може би да го дават на учениците си?)
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
+        <div id="menu">
+            <div id="test">
+                <div id="testname">
+                    Създай:
+                </div>
+                <div id="opisanie">
+                    <div id="now">
+                        +
+                    </div>
+                </div>
+            </div>
+            <div id="test">
+                <div id="testname">
+                    Заглавие:
+                </div>
+                <div id="opisanie">
+                    Описание:
+                </div>
+            </div>
+            <div id="test">
+                <div id="testname">
+                    Заглавие:
+                </div>
+                <div id="opisanie">
+                    Описание:
+                </div>
+            </div>
+            <div id="test">
+                <div id="testname">
+                    Заглавие:
+                </div>
+                <div id="opisanie">
+                    Описание:
+                </div>
+            </div>
+            <div id="test">
+                <div id="testname">
+                    Заглавие:
+                </div>
+                <div id="opisanie">
+                    Описание:
+                </div>
+            </div>
+            <div id="test">
+                <div id="testname">
+                    Заглавие:
+                </div>
+                <div id="opisanie">
+                    Описание:
+                </div>
+            </div>
+            <div id="test">
+                <div id="testname">
+                    Заглавие:
+                </div>
+                <div id="opisanie">
+                    Описание:
+                </div>
+            </div>
+            <div id="test">
+                <div id="testname">
+                    Заглавие:
+                </div>
+                <div id="opisanie">
+                    Описание:
+                </div>
+            </div>
+            <div id="test">
+                <div id="testname">
+                    Заглавие:
+                </div>
+                <div id="opisanie">
+                    Описание:
+                </div>
+            </div>
+        </menu>
+</body>
 </html>
