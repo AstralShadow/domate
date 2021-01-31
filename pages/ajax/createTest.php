@@ -6,16 +6,14 @@
  * and open the template in the editor.
  */
 
-/*
- * Action
- */
+include "include/testsAndTasks.php";
 
-$tests = $user->tests ?? [];
-foreach ($tests as $key => $value){
-    $tests[$key] = (string) $value;
-}
+use MathExam\Test as Test;
 
+$test = Test::create($db, $user);
 
 $response["msg"] = $dictionary->success;
-$response["result"] = $tests;
+$response["result"] = [
+    "testId" => $test->getId()
+];
 $response["code"] = "Success";

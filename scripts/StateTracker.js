@@ -7,10 +7,13 @@
 (function (window) {
     "use strict"
     var JSON = window.JSON
+    var console = window.console
+    var Object = window.Object
     var URLmap = {
-        "exerciseGroups": "?p=listExerciseGroups",
-        "exercises": "?p=listExercises",
-        "tests": "?p=listTests"
+        "listExerciseGroups": "?p=listExerciseGroups",
+        "listExercises": "?p=listExercises",
+        "listTests": "?p=listTests",
+        "inputTest": "?p=inputTest"
     }
 
     window.StateTracker = new RESTStateTracker()
@@ -18,10 +21,49 @@
     function RESTStateTracker () {
         var _tracking = []
 
+        this.get = function (name, args, callback) {
+            var url = URLmap[name]
+            if (url === undefined) {
+                console.log("Unknown tracked element:", name)
+                return;
+            }
+
+            var p = new Promise(function (resolve, reject) {
+                var request = new XMLHttpRequest()
+
+                request.addEventListener("load", function () {
+                    if (request.status !== 200) {
+                        reject(request)
+                        return;
+                    }
+
+                    var result = {
+                        event: name,
+                        args: args,
+                        timestamp: (new Date()).getTime()
+                    }
+                    Object.assign(result, JSON.parse(request.response))
+                    resolve(result)
+                })
+
+                request.open("post", url)
+                request.setRequestHeader("Content-type", "application/json")
+                request.send(JSON.stringify(args))
+            })
+            if (callback === undefined) {
+                return p
+            } else {
+                p.then(callback)
+            }
+        }
+
         this.track = function (name, args, callback, refreshDelay) {
             if (!URLmap[name]) {
                 console.log("Unknown tracked element:", name)
                 return;
+            }
+            if (!args) {
+                args = {}
             }
             var query = _tracking.find(function (q) {
                 if (q.name !== name) {
@@ -72,7 +114,7 @@
 
             var request = new XMLHttpRequest()
 
-            request.addEventListener("load", function (e) {
+            request.addEventListener("load", function () {
                 query.waiting = false
                 if (request.status === 200) {
                     var argsCopy = {}
@@ -82,9 +124,9 @@
                     if (request.response !== query.lastData) {
                         callbacks.forEach(function (callback) {
                             var result = {
-                                timestamp: query.lastTime,
                                 event: name,
-                                args: argsCopy
+                                args: argsCopy,
+                                timestamp: query.lastTime
                             }
                             Object.assign(result, JSON.parse(request.response))
                             callback(result)
@@ -98,16 +140,6 @@
             request.open("post", url)
             request.setRequestHeader("Content-type", "application/json")
             request.send(JSON.stringify(args))
-            // TODO: insert ajax request to server
-            //  for given url, type post, given args
-            //  then, set lastData to answer object,
-            //  modify lastTime to now and invoke all
-            //  callbacks with {
-            //   data: ajaxRequest,
-            //   time: now,
-            //   event: name,
-            //   args: copy of args
-            //  }
         }
 
         function checkForUpdates () {

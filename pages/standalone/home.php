@@ -39,11 +39,11 @@ require "include/secureTokens.php";
                 <div class="dropdown_form_container" autocomplete="off">
                     <form action="./?p=sign_up" method="post" class="dropdown_form_contents">
                         <input placeholder="<?php echo $signUp["name"]; ?>"
-                               name="user" type="text" >
+                               name="user" class="input" type="text" >
                         <input placeholder="<?php echo $signUp["password"]; ?>"
-                               name="pwd" type="password" >
+                               name="pwd" class="input" type="password" >
                         <input placeholder="<?php echo $signUp["repeatPassword"]; ?>"
-                               name="pwd2" type="password" >
+                               name="pwd2" class="input" type="password" >
                         <span class="dropdown_form_feedback"></span>
                         <input name="token" type="hidden" value="<?php echo $signUpToken; ?>" />
                     </form>
@@ -55,9 +55,9 @@ require "include/secureTokens.php";
                 <div class="dropdown_form_container">
                     <form action="./?p=login" method="post" class="dropdown_form_contents">
                         <input placeholder="<?php echo $login["name"]; ?>"
-                               name="user" type="text" >
+                               name="user" class="input" type="text" >
                         <input placeholder="<?php echo $login["password"]; ?>"
-                               name="pwd" type="password" >
+                               name="pwd" class="input" type="password" >
                         <span class="dropdown_form_feedback"></span>
                         <input name="token" type="hidden" value="<?php echo $loginToken; ?>" />
                     </form>

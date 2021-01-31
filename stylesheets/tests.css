@@ -26,6 +26,9 @@ and open the template in the editor.
 }
 
 /* Elements */
+.contents{
+    display: inline;
+}
 .block{
     display: inline-block;
     margin: 15px;
@@ -59,10 +62,22 @@ and open the template in the editor.
     vertical-align: central;
 }
 
-/* Containers */
+/* Tests container & Editor */
 #testsContainer{
     margin-left: 25px;
     margin-right: 25px;
     display: inline-block;
 }
-
+#editTest{
+    position:absolute;
+    border: 2px solid green;
+    border-radius: 5px;
+    width: 300px;
+    padding:5px;
+}
+#testName{
+    min-height: 31px;
+}
+#testDescription{
+    height: 200px;
+}

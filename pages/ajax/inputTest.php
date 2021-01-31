@@ -7,15 +7,15 @@
  */
 
 /*
+ * Validation
+ */
+
+/*
  * Action
  */
 
-$tests = $user->tests ?? [];
-foreach ($tests as $key => $value){
-    $tests[$key] = (string) $value;
-}
-
-
 $response["msg"] = $dictionary->success;
-$response["result"] = $tests;
+$response["result"] = [
+    "input" => $input
+];
 $response["code"] = "Success";

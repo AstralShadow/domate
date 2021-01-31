@@ -50,24 +50,28 @@
             </div>
         </div>
         <div id="testsContainer">
-            <div style="display:inline">
-                <?php
-                $tests = $user->tests ?? [];
-                foreach ($tests as $key => $value){
-                    ?>
-                    <div class="block">
-                        <div class="name">
-                            <?php echo $value; ?>
-                        </div>
-                        <div class="description">
-                            В разработка
-                        </div>
+            <div class="contents">
+                <div class="block">
+                    <div class="name">
+                        test
                     </div>
-                    <?php
-                }
-                ?>
+                    <div class="description">
+                        В разработка
+                    </div>
+                </div>
             </div>
             <div class="newElementButton"></div>
+        </div>
+        <div id="editTest">
+            <fieldset class="textarea">
+                <legend> Име </legend>
+                <div id="testName" contentEditable="true" ></div>
+            </fieldset>
+            <fieldset class="textarea">
+                <legend> Описание </legend>
+                <div id="testDescription" contentEditable="true" ></div>
+            </fieldset>
+
         </div>
     </body>
 </html>

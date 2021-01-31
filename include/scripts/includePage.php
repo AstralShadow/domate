@@ -74,7 +74,7 @@ if (!defined("CHECKED_ACCESS_PERMISSIONS") && defined("USER_AUTHORIZED")){
 
             $page = null;
             $pageType = null;
-        } else{
+        } else {
             $page = $forwardTo;
             $pageType = "standalone";
         }
@@ -92,6 +92,19 @@ if (!defined("INCLUDED_PAGE")){
             break;
 
         case "ajax":
+            $method = 'get';
+            $contentType = null;
+            if (is_string($_SERVER['REQUEST_METHOD'])){
+                $method = $_SERVER['REQUEST_METHOD'];
+                $contentType = trim($_SERVER["CONTENT_TYPE"] ?? '');
+            }
+            $input = null;
+
+            if ($method === 'POST' && $contentType === 'application/json'){
+                $inputRaw = file_get_contents("php://input");
+                $input = json_decode($inputRaw, true);
+            }
+
             $response = [
                 "msg" => $dictionary->formMessages["noAction"],
                 "code" => null,
