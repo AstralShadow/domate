@@ -31,11 +31,11 @@
             </div>
             <div class="alignedTextContainer" data-dimensions="width: <#nachalo>.offsetWidth - <#logo>.offsetWidth - 75;">
                 <div class="element left">
-                    <div class="topic" data-dimensions="maxWidth: <#description>.offsetWidth - 200;">
+                    <div class="topic">
                         Как се създава тест? (или н.т.)
                     </div>
                     <br />
-                    <div class="content" id="description" style="position:relative;">
+                    <div class="content">
                         <div style="float: right; min-width:50px; min-height:10px;"></div>
                         Тук виждате създадените от Вас тестове.
                         На всеки тест при съсдаването му можете да

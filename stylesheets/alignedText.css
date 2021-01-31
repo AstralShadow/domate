@@ -13,7 +13,7 @@ and open the template in the editor.
     display: block;
 }
 .alignedTextContainer > .element{
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 .alignedTextContainer > .element.left{
     text-align: left;
@@ -29,6 +29,8 @@ and open the template in the editor.
     border: 3px inset rgb(0, 255, 0);
     border-bottom: 0px;
     font-size: 22pt;
+    min-width: 150px;
+    padding-bottom: 30px;
 }
 .alignedTextContainer > .element.left > .topic{
     margin-left: 25px;
@@ -46,6 +48,9 @@ and open the template in the editor.
     border: 3px inset rgb(0, 255, 0);
     text-indent: 40px;
     padding: 4px;
+    min-width: 400px;
+    position: relative;
+    top: -30px;
 }
 .alignedTextContainer > .element.left > .content{
     margin-left: 25px;
