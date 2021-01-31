@@ -23,13 +23,14 @@
         <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
         <script src="./scripts/StateTracker.js"></script>
 
+        <script defer src="./scripts/specific/TestsPageGUI.js"></script>
+
     </head>
     <body>
-        <div id="nachalo">
-            <div id="logo">
-
-            </div>
-            <div class="alignedTextContainer" data-dimensions="width: <#nachalo>.offsetWidth - <#logo>.offsetWidth - 75;">
+        <div id="header">
+            <div id="logo"></div>
+            <div class="alignedTextContainer"
+                 data-dimensions="width: <#header>.offsetWidth - <#logo>.offsetWidth - 75;">
                 <div class="element left">
                     <div class="topic">
                         Как се създава тест? (или н.т.)
@@ -48,79 +49,25 @@
                 </div>
             </div>
         </div>
-        <div id="menu">
-            <div id="test">
-                <div id="testname">
-                    Заглавие:
-                </div>
-                <div id="opisanie">
-                    Описание:
-                </div>
+        <div id="testsContainer">
+            <div style="display:inline">
+                <?php
+                $tests = $user->tests ?? [];
+                foreach ($tests as $key => $value){
+                    ?>
+                    <div class="block">
+                        <div class="name">
+                            <?php echo $value; ?>
+                        </div>
+                        <div class="description">
+                            В разработка
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
-            <div id="test">
-                <div id="testname">
-                    Заглавие:
-                </div>
-                <div id="opisanie">
-                    Описание:
-                </div>
-            </div>
-            <div id="test">
-                <div id="testname">
-                    Заглавие:
-                </div>
-                <div id="opisanie">
-                    Описание:
-                </div>
-            </div>
-            <div id="test">
-                <div id="testname">
-                    Заглавие:
-                </div>
-                <div id="opisanie">
-                    Описание:
-                </div>
-            </div>
-            <div id="test">
-                <div id="testname">
-                    Заглавие:
-                </div>
-                <div id="opisanie">
-                    Описание:
-                </div>
-            </div>
-            <div id="test">
-                <div id="testname">
-                    Заглавие:
-                </div>
-                <div id="opisanie">
-                    Описание:
-                </div>
-            </div>
-            <div id="test">
-                <div id="testname">
-                    Заглавие:
-                </div>
-                <div id="opisanie">
-                    Описание:
-                </div>
-            </div>
-            <div id="test">
-                <div id="testname">
-                    Заглавие:
-                </div>
-                <div id="opisanie">
-                    Описание:
-                </div>
-            </div>
-            <div id="test">
-                <div id="testname">
-                    Създай:
-                </div>
-                <div id="opisanie">
-                    +
-                </div>
-            </div>
+            <div class="newElementButton"></div>
         </div>
     </body>
 </html>
