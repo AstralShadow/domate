@@ -6,11 +6,14 @@
  */
 (function (window) {
     "use strict"
+    var JSON = window.JSON
     var URLmap = {
         "exerciseGroups": "?p=listExerciseGroups",
         "exercises": "?p=listExercises",
         "tests": "?p=listTests"
     }
+
+    window.StateTracker = new RESTStateTracker()
 
     function RESTStateTracker () {
         var _tracking = []
@@ -41,7 +44,7 @@
                     query.refreshDelay = refreshDelay
                 }
                 if (query.lastData !== undefined) {
-                    callback(query.lastData)
+                    callback(JSON.parse(query.lastData))
                 }
             } else {
                 var argsCopy = {}
@@ -53,22 +56,48 @@
                     callbacks: [callback],
                     lastTime: 0,
                     lastData: undefined,
-                    refreshDelay: refreshDelay || 30000
+                    refreshDelay: refreshDelay || 30000,
+                    waiting: false
                 }
                 _tracking.push(query)
             }
         }
 
         function pull (query) {
-            var now = (new Date()).getTime()
+            query.waiting = true
+            var name = query.name
             var url = query.url
             var args = query.args
             var callbacks = query.callbacks
 
             var request = new XMLHttpRequest()
 
+            request.addEventListener("load", function (e) {
+                query.waiting = false
+                if (request.status === 200) {
+                    var argsCopy = {}
+                    Object.assign(argsCopy, args)
+                    query.lastTime = (new Date()).getTime()
+
+                    if (request.response !== query.lastData) {
+                        callbacks.forEach(function (callback) {
+                            var result = {
+                                timestamp: query.lastTime,
+                                event: name,
+                                args: argsCopy
+                            }
+                            Object.assign(result, JSON.parse(request.response))
+                            callback(result)
+                        })
+                    }
+
+                    query.lastData = request.response
+                }
+            })
+
             request.open("post", url)
-            request.send(args)
+            request.setRequestHeader("Content-type", "application/json")
+            request.send(JSON.stringify(args))
             // TODO: insert ajax request to server
             //  for given url, type post, given args
             //  then, set lastData to answer object,
@@ -83,6 +112,9 @@
 
         function checkForUpdates () {
             _tracking.forEach(function (data) {
+                if (data.waiting) {
+                    return;
+                }
                 var now = (new Date()).getTime()
                 var last = data.lastTime
                 var delay = data.refreshDelay
@@ -92,10 +124,8 @@
             })
         }
 
-        setInterval(checkForUpdates, 3000)
+        setInterval(checkForUpdates, 1000)
         checkForUpdates();
     }
-
-    window.StateTracker = new RESTStateTracker()
 
 })(window)

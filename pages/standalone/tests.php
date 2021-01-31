@@ -21,7 +21,7 @@
               rel="stylesheet" type="text/css" />
 
         <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
-        <script defer src="./scripts/StateTracker.js"></script>
+        <script src="./scripts/StateTracker.js"></script>
 
     </head>
     <body>
