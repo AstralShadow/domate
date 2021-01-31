@@ -78,15 +78,17 @@ require "include/secureTokens.php";
                 $counter++;
                 $position = $element["position"] ?? $counter % 2 ? "right" : "left";
                 ?>
+
                 <div class="element <?php echo $position; ?>">
                     <div class="topic">
                         <?php echo $element["topic"]; ?>
                     </div>
                     <br />
-                    <div class="content">
+                    <div class="content"  style="width:80%">
                         <?php echo $element["content"]; ?>
                     </div>
                 </div>
+
                 <?php
             }
             unset($counter, $contents, $element, $position);

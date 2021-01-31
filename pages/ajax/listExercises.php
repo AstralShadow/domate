@@ -7,19 +7,9 @@
  */
 
 /*
- * Validation
- */
-
-if (!isset($user)){
-    $response["msg"] = $dictionary->formMessages["youAreNotLoggedIn"];
-    $response["code"] = "Forbidden";
-    $response["reload"] = true;
-    unset($data);
-    return;
-}
-
-/*
- * Action
+ * Lists accessible exercises
+ * 
+ * User only page
  */
 
 $exercises = $user->exercises ?? [];

@@ -6,22 +6,11 @@
  * and open the template in the editor.
  */
 
-/*
- * Validation
+/**
+ * Lists accessible exercises
+ * 
+ * User only page
  */
-
-if (!isset($user)){
-    $response["msg"] = $dictionary->formMessages["youAreNotLoggedIn"];
-    $response["code"] = "Forbidden";
-    $response["reload"] = true;
-    unset($data);
-    return;
-}
-
-/*
- * Action
- */
-
 $groups = $user->exerciseGroups ?? [];
 foreach ($groups as $key => $value){
     $groups[$key] = (string) $value;

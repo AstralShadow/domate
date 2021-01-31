@@ -20,19 +20,21 @@
         <link href="./stylesheets/alignedText.css"
               rel="stylesheet" type="text/css" />
 
+        <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
+
     </head>
     <body>
         <div id="nachalo">
             <div id="logo">
 
             </div>
-            <div class="alignedTextContainer">
+            <div class="alignedTextContainer" data-dimensions="style.width: <#nachalo>.offsetWidth - <#logo>.offsetWidth - 75;">
                 <div class="element left">
-                    <div class="topic">
+                    <div class="topic" data-dimensions="style.maxWidth: <#description>.offsetWidth - 200;">
                         Как се създава тест? (или н.т.)
                     </div>
                     <br />
-                    <div class="content">
+                    <div class="content" id="description" style="position:relative;">
                         <div style="float: right; min-width:50px; min-height:10px;"></div>
                         Тук виждате създадените от Вас тестове.
                         На всеки тест при съсдаването му можете да
@@ -40,6 +42,7 @@
                         мишката върху даден тест можете да го
                         редактирате или....
                         (може би да го дават на учениците си?)
+                        <div style="float:left; min-width:50px; min-height:10px;"></div>
                     </div>
                 </div>
             </div>

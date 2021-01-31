@@ -1,16 +1,14 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Allows drop-down form effect.
- * @param string containerQuery
- * @param string formQuery
- * @param string feedbackQuery
- * @param string submitQuery
- * @returns void
+ * It sends the selected forms without
+ *  reloading and returns feedback
+ * 
+ * @param {string} containerQuery
+ * @param {string} formQuery
+ * @param {string} feedbackQuery
+ * @param {string} submitQuery
+ * @returns {undefined}
  */
 (function (containerQuery, formQuery, feedbackQuery, submitQuery) {
     "use strict"
@@ -162,5 +160,4 @@
     }
 
 
-})
-    (".dropdown_form_container", ".dropdown_form_contents", ".dropdown_form_feedback", ".dropdown_form_submit");
+})(".dropdown_form_container", ".dropdown_form_contents", ".dropdown_form_feedback", ".dropdown_form_submit")

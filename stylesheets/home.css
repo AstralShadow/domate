@@ -27,6 +27,7 @@ body{
     right: 0px;
     top: 0px;
     margin-right: 2px;
+    white-space: nowrap;
 }
 
 /* Forms */
