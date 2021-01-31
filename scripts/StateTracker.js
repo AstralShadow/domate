@@ -44,7 +44,7 @@
                     callback(query.lastData)
                 }
             } else {
-                var argsCopy
+                var argsCopy = {}
                 Object.assign(argsCopy, args)
                 query = {
                     name: name,
@@ -64,6 +64,11 @@
             var url = query.url
             var args = query.args
             var callbacks = query.callbacks
+
+            var request = new XMLHttpRequest()
+
+            request.open("post", url)
+            request.send(args)
             // TODO: insert ajax request to server
             //  for given url, type post, given args
             //  then, set lastData to answer object,
