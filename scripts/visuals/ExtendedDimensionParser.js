@@ -21,7 +21,7 @@
             Object.keys(data).forEach(function (key) {
                 var value = data[key]
                 var chain = key.split('.')
-                var object = element
+                var object = element.style
                 while (chain.length > 1) {
                     object = object[chain.shift()]
                 }
@@ -58,7 +58,6 @@
             elements[tag] = document.querySelector(query)
             var regex = new RegExp("(?<=\\<" + query + "\\>\\.)([a-zA-Z0-9\.]+)", "g");
             var attributes = command.match(regex)
-            console.log(attributes)
             attributes.forEach(function (attribute) {
                 var key = tag + '.' + attribute
                 var value = elements[tag]

@@ -28,9 +28,9 @@
             <div id="logo">
 
             </div>
-            <div class="alignedTextContainer" data-dimensions="style.width: <#nachalo>.offsetWidth - <#logo>.offsetWidth - 75;">
+            <div class="alignedTextContainer" data-dimensions="width: <#nachalo>.offsetWidth - <#logo>.offsetWidth - 75;">
                 <div class="element left">
-                    <div class="topic" data-dimensions="style.maxWidth: <#description>.offsetWidth - 200;">
+                    <div class="topic" data-dimensions="maxWidth: <#description>.offsetWidth - 200;">
                         Как се създава тест? (или н.т.)
                     </div>
                     <br />
