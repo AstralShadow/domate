@@ -131,7 +131,7 @@ class User
 
     /**
      * Checks if user exists
-     * @global \MongoDB\Client $db
+     * @global \MongoDB\Client $database
      * @param string $username
      * @return bool
      */
@@ -153,7 +153,7 @@ class User
 
         if ($success){
             $this->session->user = $this->identificator;
-        } else{
+        } else {
             $errorByte = $errorByte | USER_ERRCODE_USER_DOES_NOT_EXIST;
         }
 
@@ -217,7 +217,6 @@ class User
 
     /**
      * Changes password.
-     * @global \MongoDB\Client $db
      * @param string $oldPwd
      * @param string $newPwd
      * @return bool
@@ -254,7 +253,6 @@ class User
 
     /**
      * Checks if username and password combination is correct.
-     * @global \MongoDB\Client $db
      * @param string $name
      * @param string $pwd
      * @return bool
