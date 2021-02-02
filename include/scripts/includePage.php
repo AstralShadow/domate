@@ -110,8 +110,16 @@ if (!defined("INCLUDED_PAGE")){
                 "code" => null,
                 "reload" => false
             ];
-            include "pages/ajax/" . $page . ".php";
+            $success = include "pages/ajax/" . $page . ".php";
 
+            if ($success === false){
+                echo json_encode([
+                    "msg" => $dictionary->forbidden,
+                    "code" => "Forbidden",
+                    "reload" => false
+                ]);
+                break;
+            }
             echo json_encode($response);
             unset($response);
             break;

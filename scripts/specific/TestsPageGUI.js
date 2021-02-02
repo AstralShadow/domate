@@ -13,6 +13,7 @@
     var newTestButton = testsBaseContainer.querySelector(".newElementButton")
     var editTestMenu = document.querySelector("#editTest")
 
+    /* Rendering avaliable tests */
     StateTracker.track("listTests", null, renderTests)
 
     function renderTests (event) {
@@ -21,8 +22,15 @@
 
     async function downloadTest (oid) {
         var a = await StateTracker.get('testData', {id: oid})
-        console.log(a)
+        console.log("downloaded", a)
     }
 
+    /* Create new test */
+    newTestButton.addEventListener("click", async function () {
+        var e = await StateTracker.get("createTest")
+        var id = e.result.id
+        console.log(id)
+        downloadTest(id)
+    })
 })()
 

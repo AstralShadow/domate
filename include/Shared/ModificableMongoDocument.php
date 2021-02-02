@@ -11,6 +11,7 @@ namespace Shared;
 use \MongoDB\Model\BSONDocument as BSONDocument;
 use \MongoDB\Collection as Collection;
 use \MongoDB\BSON\UTCDateTime as UTCDateTime;
+use \MongoDB\BSON\ObjectId as ObjectId;
 
 /**
  * An object whose parameters can be modified.
@@ -238,6 +239,27 @@ trait ModificableMongoDocument
             '$set' => [$name => $value]
         ];
         $this->update($update);
+    }
+
+    public function dump() {
+        if (!isset($this->data)){
+            $this->load();
+        }
+        $data = (array) $this->data;
+        foreach ($this->privateParameters as $param){
+            if (isset($data[$param])){
+                unset($data[$param]);
+            }
+        }
+        foreach ($data as $param => $value){
+            if ($value instanceof UTCDateTime){
+                $data[$param] = $value->toDateTime()->getTimestamp();
+            }
+            if ($value instanceof ObjectId){
+                $data[$param] = (string) $value;
+            }
+        }
+        return $data;
     }
 
 }

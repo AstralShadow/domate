@@ -13,7 +13,11 @@
         "listExerciseGroups": "?p=listExerciseGroups",
         "listExercises": "?p=listExercises",
         "listTests": "?p=listTests",
-        "inputTest": "?p=inputTest"
+        "inputTest": "?p=inputTest", // temporary
+        "createTest": "?p=createTest",
+        "modifyTest": "?p=modifyTest",
+        "testData": "?p=testData",
+        "logout": "?p=logout"
     }
 
     window.StateTracker = new RESTStateTracker()

@@ -17,12 +17,14 @@ and open the template in the editor.
     padding: 5px;
 }
 #logo{
-    background: url('logo_600x400.png') 150px 100px;
-    border: 3px inset rgb(0, 255, 0);
+    background-image: url('../img/logo_231x234.png');
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: left center;
     float: right;
-    width: 150px;
-    height: 100px;
-    margin: 40px 25px;
+    width: 130px;
+    height: 130px;
+    margin: 15px 15px;
 }
 
 /* Elements */
