@@ -13,10 +13,10 @@ and open the template in the editor.
     display:block;
 }
 #home_logo{
-    margin: 40px 25px;
-    height: 150px;
-    border: 3px inset;
-    border-color: rgb(0, 255, 0);
+    background: url("../img/logo_1700x600.png") no-repeat; 
+    background-size:auto 100%;
+    margin-left: 25px;
+    height: 150px; 
 }
 #home_forms{
     position: fixed;
