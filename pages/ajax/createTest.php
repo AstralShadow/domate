@@ -14,6 +14,6 @@ $test = Test::create($db, $user);
 
 $response["msg"] = $dictionary->success;
 $response["result"] = [
-    "id" => $test->getId()
+    "id" => (string) $test->getId()
 ];
 $response["code"] = "Success";

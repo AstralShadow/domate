@@ -106,4 +106,13 @@ class Test
         $this->update($query);
     }
 
+    public function getExerciseGroupIds(): array {
+        $contents = (array) $this->contents ?? [];
+        $groups = [];
+        foreach ($contents as $pair){
+            $groups[] = $pair["id"]; // when this explodes, replace with ->id
+        }
+        return $groups;
+    }
+
 }

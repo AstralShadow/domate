@@ -20,3 +20,12 @@ INPUT for log[i]n and [s]ign_up as POST:
 }
 
 INPUTless actions: logout
+
+INPUT for testData: {id}
+INPUT for modifyTest{
+    id, // required
+    name, // string
+    description, // string
+    addExerciseGroups, //   [{id => count}, ...]
+    removeExerciseGroups, //    [id, ...]
+}
