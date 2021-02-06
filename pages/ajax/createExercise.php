@@ -6,16 +6,14 @@
  * and open the template in the editor.
  */
 
-/*
- * Validation
- */
+include "include/testsAndTasks.php";
 
-/*
- * Action
- */
+use MathExam\Exercise as Exercise;
+
+$exercise = Exercise::create($db, $user);
 
 $response["msg"] = $dictionary->success;
 $response["result"] = [
-    "input" => $input
+    "id" => (string) $exercise->getId()
 ];
 $response["code"] = "Success";

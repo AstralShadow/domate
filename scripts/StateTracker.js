@@ -11,9 +11,16 @@
     var Object = window.Object
     var URLmap = {
         "listExerciseGroups": "?p=listExerciseGroups",
+        "createExerciseGroup": "?p=createExerciseGroup",
+        "modifyExerciseGroup": "?p=modifyExerciseGroup",
+        "exerciseGroupData": "?p=exerciseGroupData",
+
         "listExercises": "?p=listExercises",
+        "createExercise": "?p=createExercise",
+        "modifyExercise": "?p=modifyExercise",
+        "exerciseData": "?p=exerciseData",
+
         "listTests": "?p=listTests",
-        "inputTest": "?p=inputTest", // temporary
         "createTest": "?p=createTest",
         "modifyTest": "?p=modifyTest",
         "testData": "?p=testData",
@@ -25,6 +32,13 @@
     function RESTStateTracker () {
         var _tracking = []
 
+        /**
+         * Asynchronously loads a single request once.
+         * @param {string} name
+         * @param {object} args
+         * @param {type} callback
+         * @returns {Promise|undefined}
+         */
         this.get = function (name, args, callback) {
             var url = URLmap[name]
             if (url === undefined) {
@@ -61,6 +75,15 @@
             }
         }
 
+        /**
+         * Asynchronously reloads a given request once per given delay (30s default)
+         * Callback is invoked if there is difference in the contents of the request
+         * @param {string} name
+         * @param {object} args
+         * @param {function} callback
+         * @param {int} refreshDelay
+         * @returns {undefined}
+         */
         this.track = function (name, args, callback, refreshDelay) {
             if (!URLmap[name]) {
                 console.log("Unknown tracked element:", name)
@@ -109,6 +132,44 @@
             }
         }
 
+        /**
+         * Reloads a tracker without care of delay.
+         * @param {string} name
+         * @param {object} args
+         * @returns {undefined}
+         */
+        this.reloadTracker = function (name, args) {
+            if (!URLmap[name]) {
+                console.log("Unknown tracked element:", name)
+                return;
+            }
+            if (!args) {
+                args = {}
+            }
+            var query = _tracking.find(function (q) {
+                if (q.name !== name) {
+                    return false;
+                }
+                var keys = Object.keys(q.args)
+                    .concat(Object.keys(args))
+                for (var i in keys) {
+                    var key = keys[i]
+                    if (args[key] !== q.args[key]) {
+                        return false;
+                    }
+                }
+                return true;
+            })
+            if (query) {
+                pull(query)
+            }
+        }
+
+        /**
+         * Loads a request with XMLHttpRequest
+         * @param {type} query
+         * @returns {undefined}
+         */
         function pull (query) {
             query.waiting = true
             var name = query.name
@@ -146,6 +207,10 @@
             request.send(JSON.stringify(args))
         }
 
+        /**
+         * Invokes pull for all requests that have reached time for reload
+         * @returns {undefined}
+         */
         function checkForUpdates () {
             _tracking.forEach(function (data) {
                 if (data.waiting) {

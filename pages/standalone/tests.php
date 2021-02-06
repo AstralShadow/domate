@@ -62,6 +62,32 @@
             </div>
             <div class="newElementButton"></div>
         </div>
+        <div id="exerciseGroupsContainer">
+            <div class="contents">
+                <div class="block">
+                    <div class="name">
+                        exercise group
+                    </div>
+                    <div class="description">
+                        В разработка
+                    </div>
+                </div>
+            </div>
+            <div class="newElementButton"></div>
+        </div>
+        <div id="exercisesContainer">
+            <div class="contents">
+                <div class="block">
+                    <div class="name">
+                        exercise
+                    </div>
+                    <div class="description">
+                        В разработка
+                    </div>
+                </div>
+            </div>
+            <div class="newElementButton"></div>
+        </div>
         <div id="editTest">
             <fieldset class="textarea">
                 <legend> Име </legend>
