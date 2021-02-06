@@ -1,0 +1,6 @@
+{
+    "author": "azcraft",
+    "pagesToRelocate": {
+        "scripts/MathJax/es5": "mathjax/"
+    }
+}
