@@ -62,6 +62,18 @@
             </div>
             <div class="newElementButton"></div>
         </div>
+        <fieldset id="editTest" style="top: 240px; left: 500px;">
+            <legend> Тест </legend>
+            <fieldset class="textarea">
+                <legend> Име </legend>
+                <div id="testName" contentEditable="true" ></div>
+            </fieldset>
+            <fieldset class="textarea">
+                <legend> Описание </legend>
+                <div id="testDescription" contentEditable="true" ></div>
+            </fieldset>
+
+        </fieldset>
         <div id="exerciseGroupsContainer">
             <div class="contents">
                 <div class="block">
@@ -87,17 +99,6 @@
                 </div>
             </div>
             <div class="newElementButton"></div>
-        </div>
-        <div id="editTest">
-            <fieldset class="textarea">
-                <legend> Име </legend>
-                <div id="testName" contentEditable="true" ></div>
-            </fieldset>
-            <fieldset class="textarea">
-                <legend> Описание </legend>
-                <div id="testDescription" contentEditable="true" ></div>
-            </fieldset>
-
         </div>
     </body>
 </html>

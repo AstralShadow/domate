@@ -75,7 +75,8 @@ and open the template in the editor.
     border: 2px solid green;
     border-radius: 5px;
     width: 300px;
-    padding:5px;
+    padding: 5px;
+    font-size: 16pt;
 }
 #testName{
     min-height: 31px;

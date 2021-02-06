@@ -13,7 +13,7 @@ if (!defined("DETECTED_PAGE")){
     $page = "home";
     $pageType = null;
     if (isset($_GET['p']) && is_string($_GET['p'])){
-        if (preg_match("/^[a-zA-Z0-9\_]{5,}$/", $_GET['p'])){
+        if (preg_match("/^[a-zA-Z0-9\_]{2,}$/", $_GET['p'])){
             $page = $_GET['p'];
         }
     }
@@ -23,6 +23,7 @@ if (!defined("DETECTED_PAGE")){
     foreach ($dirs as $dir){
         if (in_array($page . ".php", scandir("pages/" . $dir))){
             $pageType = $dir;
+            break;
         }
     }
     unset($dirs);
