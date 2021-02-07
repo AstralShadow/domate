@@ -62,18 +62,6 @@
             </div>
             <div class="newElementButton"></div>
         </div>
-        <fieldset id="editTest" style="top: 240px; left: 500px;">
-            <legend> Тест </legend>
-            <fieldset class="textarea">
-                <legend> Име </legend>
-                <div id="testName" contentEditable="true" ></div>
-            </fieldset>
-            <fieldset class="textarea">
-                <legend> Описание </legend>
-                <div id="testDescription" contentEditable="true" ></div>
-            </fieldset>
-
-        </fieldset>
         <div id="exerciseGroupsContainer">
             <div class="contents">
                 <div class="block">
@@ -99,6 +87,73 @@
                 </div>
             </div>
             <div class="newElementButton"></div>
+
+        </div>
+
+        <div id="editTestPage" style="position: relative;">
+            <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
+                <legend> Тест </legend>
+                <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
+                    <legend> Име </legend>
+                    <div id="testName" contentEditable="true"></div>
+                </fieldset>
+                <fieldset class="textarea" style="margin-top: 5px; background-color: rgb(0, 40, 0);">
+                    <legend> Описание </legend>
+                    <div id="testDescription" contentEditable="true"></div>
+                </fieldset>
+                <fieldset class="textarea" style=" overflow-y: scroll;  margin-top: 5px; background-color: rgb(0, 40, 0); height: 300px;">
+                    <legend> Групи в теста </legend>
+                    <div id="testContents">
+                        <div class="SelectedGroup">
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                            <div class="miniselecttest">
+                                Име на избраната група със задачи:...
+                            </div>
+                        </div>
+                        <div class="SelectedGroup">
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                            <div class="miniselecttest">
+                                Име на избраната група със задачи:...
+                            </div>
+                        </div>
+                        <div class="SelectedGroup">
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                            <div class="miniselecttest">
+                                Име на избраната група със задачи:...
+                            </div>
+                        </div>
+                        <div class="SelectedGroup">
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                            <div class="miniselecttest">
+                                Име на избраната група със задачи:...
+                            </div>
+                        </div>
+                        <div class="SelectedGroup">
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                            <div class="miniselecttest">
+                                Име на избраната група със задачи:...
+                            </div>
+                        </div>
+                        <div class="SelectedGroup">
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                            <div class="miniselecttest">
+                                Име на избраната група със задачи:...
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </fieldset>
+            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; float: left;"
+                      data-dimensions="width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
+                <legend> Налични групи </legend>
+                gghgh
+            </fieldset>
         </div>
     </body>
 </html>
