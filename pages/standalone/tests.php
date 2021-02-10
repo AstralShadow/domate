@@ -62,19 +62,7 @@
             </div>
             <div class="newElementButton"></div>
         </div>
-        <div id="exerciseGroupsContainer">
-            <div class="contents">
-                <div class="block">
-                    <div class="name">
-                        exercise group
-                    </div>
-                    <div class="description">
-                        В разработка
-                    </div>
-                </div>
-            </div>
-            <div class="newElementButton"></div>
-        </div>
+
         <div id="exercisesContainer">
             <div class="contents">
                 <div class="block">
@@ -104,55 +92,36 @@
                 <fieldset class="textarea" style=" overflow-y: scroll;  margin-top: 5px; background-color: rgb(0, 40, 0); height: 300px;">
                     <legend> Групи в теста </legend>
                     <div id="testContents">
-                        <div class="SelectedGroup">
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
-                            <div class="miniselecttest">
-                                Име на избраната група със задачи:...
+                        <?php
+                        for ($i = 0; $i < 15; $i++){
+                            ?>
+                            <div class="SelectedGroup">
+                                <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                                <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                                <div class="miniselecttest">
+                                    Име на избраната група със задачи:...
+                                </div>
                             </div>
-                        </div>
-                        <div class="SelectedGroup">
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
-                            <div class="miniselecttest">
-                                Име на избраната група със задачи:...
-                            </div>
-                        </div>
-                        <div class="SelectedGroup">
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
-                            <div class="miniselecttest">
-                                Име на избраната група със задачи:...
-                            </div>
-                        </div>
-                        <div class="SelectedGroup">
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
-                            <div class="miniselecttest">
-                                Име на избраната група със задачи:...
-                            </div>
-                        </div>
-                        <div class="SelectedGroup">
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
-                            <div class="miniselecttest">
-                                Име на избраната група със задачи:...
-                            </div>
-                        </div>
-                        <div class="SelectedGroup">
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                            <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
-                            <div class="miniselecttest">
-                                Име на избраната група със задачи:...
-                            </div>
-                        </div>
+                        <?php } ?>
                     </div>
                 </fieldset>
             </fieldset>
-            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; float: left;"
-                      data-dimensions="width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
+            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; float: left; background-color: rgb(0, 20, 0);"
+                      data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
                 <legend> Налични групи </legend>
-                gghgh
+                <div id="exerciseGroupsContainer">
+                    <div class="contents">
+                        <div class="block">
+                            <div class="name" style="background-color: rgb(0, 10, 0);">
+                                exercise group
+                            </div>
+                            <div class="description"  style="background-color: black;">
+                                В разработка
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newElementButton"></div>
+                </div>
             </fieldset>
         </div>
     </body>
