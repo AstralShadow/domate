@@ -92,7 +92,7 @@
                     </div>
                 </fieldset>
             </fieldset>
-            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; float: left; background-color: rgb(0, 20, 0);"
+            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; background-color: rgb(0, 20, 0);"
                       data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
                 <legend> Налични групи </legend>
                 <div id="exerciseGroupsContainer">
@@ -138,7 +138,7 @@
                     </div>
                 </fieldset>
             </fieldset>
-            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; float: left; background-color: rgb(0, 20, 0);"
+            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; background-color: rgb(0, 20, 0);"
                       data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
                 <legend> Налични задачи </legend>
                 <div id="exercisesContainer">
