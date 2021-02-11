@@ -83,8 +83,8 @@
                         for ($i = 0; $i < 15; $i++){
                             ?>
                             <div class="SelectedGroup">
-                                <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                                <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                                <img src="img/drackbutton.png" style="vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                                <img  src="img/delete.png" style="vertical-align: middle; height: 32px; width: 32px; float: right;"/>
                                 <div class="miniselecttest">
                                     Име на избраната група със задачи:...
                                 </div>
@@ -129,8 +129,8 @@
                         for ($i = 0; $i < 15; $i++){
                             ?>
                             <div class="SelectedGroup">
-                                <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                                <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                                <img src="img/drackbutton.png" style="vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                                <img src="img/delete.png" style="vertical-align: middle; height: 32px; width: 32px; float: right;"/>
                                 <div class="miniselecttest">
                                     Име на избраната задача:...
                                 </div>
