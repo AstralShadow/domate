@@ -25,13 +25,15 @@
 
     </head>
     <body class="nomathjax">
-        Задача:
-        <span class="mathjax" style="height:500px;width:500px;">
-            `x=(-b +- sqrt(b^2 – 4ac))/(2a)`
-        </span>
+        <fieldset class="textarea" style="width: 500px;">
+            <legend> Условие </legend>
+            <span class="mathjax" style="height:500px;width:500px;">
+                `x=(-b +- sqrt(b^2 – 4ac))/(2a)`
+            </span>
+        </fieldset>
 
         <fieldset class="textarea" style="width: 500px;">
-            <legend> Задача </legend>
+            <legend> Редактор </legend>
             <br />
             <div id="testDescription" contentEditable="true">
                 `x=(-b +- sqrt(b^2 - 4ac))/(2a)`
@@ -41,5 +43,7 @@
                 Моля оградете уравнението с `
             </span>
         </fieldset>
+        <div style="width:500px;">
+        </div>
     </body>
 </html>
