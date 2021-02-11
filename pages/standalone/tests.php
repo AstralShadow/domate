@@ -156,5 +156,25 @@
                 </div>
             </fieldset>
         </div>
+        <div id="editTestPage" style="position: relative;">
+            <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
+                <legend> Задача </legend>
+                <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
+                    <legend> Име </legend>
+                    <div id="testName" contentEditable="true"></div>
+                </fieldset>
+                <fieldset class="textarea" style="margin-top: 5px; background-color: rgb(0, 40, 0);">
+                    <legend> Описание </legend>
+                    <div id="testDescription" contentEditable="true"></div>
+                </fieldset>
+                <fieldset class="textarea" style=" overflow-y: scroll;  margin-top: 5px; background-color: rgb(0, 40, 0); height: 300px;">
+                    <legend> Формули или нещо такова </legend>
+                </fieldset>
+            </fieldset>
+            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; background-color: rgb(0, 20, 0);"
+                      data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
+                <legend> Направи задача </legend>
+            </fieldset>
+        </div>
     </body>
 </html>
