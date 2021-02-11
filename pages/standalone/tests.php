@@ -50,20 +50,6 @@
                 </div>
             </div>
         </div>
-        <div id="testsContainer">
-            <div class="contents">
-                <div class="block">
-                    <div class="name">
-                        test
-                    </div>
-                    <div class="description">
-                        В разработка
-                    </div>
-                </div>
-            </div>
-            <div class="newElementButton"></div>
-        </div>
-
 
         <div id="editTestPage" style="width: 100%;">
             <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
@@ -176,6 +162,20 @@
                       data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
                 <legend> Направи задача </legend>
             </fieldset>
+        </div>
+
+        <div id="testsContainer">
+            <div class="contents">
+                <div class="block">
+                    <div class="name">
+                        test
+                    </div>
+                    <div class="description">
+                        В разработка
+                    </div>
+                </div>
+            </div>
+            <div class="newElementButton"></div>
         </div>
     </body>
 </html>

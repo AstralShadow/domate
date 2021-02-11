@@ -37,19 +37,21 @@ function SwidingBoard (element, direction) {
     }
 
     this.show = function (delay) {
+        delay = Math.abs(delay || 0)
         if (hidden) {
             hidden = false
-            animationStart = (new Date()).getTime()
-            animationDuration = Math.abs(delay || 0) * (1 - visible)
+            animationStart = (new Date()).getTime() - delay * visible
+            animationDuration = delay * (1 - visible)
             element.style.display = "block"
         }
     }
 
     this.hide = function (delay) {
+        delay = Math.abs(delay || 0)
         if (!hidden) {
             hidden = true
-            animationStart = (new Date()).getTime()
-            animationDuration = Math.abs(delay || 0) * (visible)
+            animationStart = (new Date()).getTime() - delay * (1 - visible)
+            animationDuration = delay * visible
         }
     }
 
@@ -80,8 +82,8 @@ function SwidingBoard (element, direction) {
                 element.style.display = "none"
             }
         } else {
-            var progress = visible
-            progress *= progress
+            var p = visible
+            var progress = Math.sin(p * Math.PI / 2) ** 3
             var distance = (progress - 1) * window.innerWidth
             element.style[direction] = distance + "px"
         }
