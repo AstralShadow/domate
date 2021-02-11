@@ -21,6 +21,7 @@
               rel="stylesheet" type="text/css" />
 
         <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
+        <script defer src="./scripts/visuals/SwidingBoard.js"></script>
         <script src="./scripts/StateTracker.js"></script>
 
         <script defer src="./scripts/specific/TestsPageGUI.js"></script>
@@ -64,7 +65,7 @@
         </div>
 
 
-        <div id="editTestPage" style="position: relative;">
+        <div id="editTestPage" style="width: 100%;">
             <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
                 <legend> Тест </legend>
                 <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
@@ -110,7 +111,7 @@
                 </div>
             </fieldset>
         </div>
-        <div id="editTestPage" style="position: relative;">
+        <div id="editTestPage" style="position: relative; display:none;">
             <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
                 <legend> Група </legend>
                 <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
@@ -156,7 +157,7 @@
                 </div>
             </fieldset>
         </div>
-        <div id="editTestPage" style="position: relative;">
+        <div id="editTestPage" style="position: relative; display:none;">
             <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
                 <legend> Задача </legend>
                 <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
