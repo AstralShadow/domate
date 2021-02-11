@@ -22,7 +22,7 @@ window.MathJax = {
         ignoreHtmlClass: "nomathjax"
     },
     chtml: {
-        minScale: 1.5
+        minScale: 1
     }
 };
 
@@ -32,7 +32,10 @@ window.MathJax = {
     var display = document.querySelector('.mathjax')
 
     function render () {
-        display.innerText = input.innerText
+        var a = input.innerText
+        while (a.indexOf('<') !== - 1)
+            a = a.replace('<', '&lt;')
+        display.innerText = a
         if (MathJax.typeset) {
             MathJax.typeset()
         }
@@ -42,4 +45,14 @@ window.MathJax = {
         render();
     })
     render();
-})()
+})();
+
+(function () {
+    var shortcuts = [
+        'sqrt(x)',
+        'root(x)(y)',
+        'sum_(i=1)^n i^y',
+        'int_i^a(b)',
+        'log_i^a(b)'
+    ]
+})();
