@@ -63,20 +63,6 @@
             <div class="newElementButton"></div>
         </div>
 
-        <div id="exercisesContainer">
-            <div class="contents">
-                <div class="block">
-                    <div class="name">
-                        exercise
-                    </div>
-                    <div class="description">
-                        В разработка
-                    </div>
-                </div>
-            </div>
-            <div class="newElementButton"></div>
-
-        </div>
 
         <div id="editTestPage" style="position: relative;">
             <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
@@ -116,6 +102,52 @@
                                 exercise group
                             </div>
                             <div class="description"  style="background-color: black;">
+                                В разработка
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newElementButton"></div>
+                </div>
+            </fieldset>
+        </div>
+        <div id="editTestPage" style="position: relative;">
+            <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
+                <legend> Група </legend>
+                <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
+                    <legend> Име </legend>
+                    <div id="testName" contentEditable="true"></div>
+                </fieldset>
+                <fieldset class="textarea" style="margin-top: 5px; background-color: rgb(0, 40, 0);">
+                    <legend> Описание </legend>
+                    <div id="testDescription" contentEditable="true"></div>
+                </fieldset>
+                <fieldset class="textarea" style=" overflow-y: scroll;  margin-top: 5px; background-color: rgb(0, 40, 0); height: 300px;">
+                    <legend> Задачи в групата </legend>
+                    <div id="testContents">
+                        <?php
+                        for ($i = 0; $i < 15; $i++){
+                            ?>
+                            <div class="SelectedGroup">
+                                <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: left;"/>
+                                <img style="background:black;vertical-align: middle; height: 32px; width: 32px; float: right;"/>
+                                <div class="miniselecttest">
+                                    Име на избраната задача:...
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </fieldset>
+            </fieldset>
+            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; float: left; background-color: rgb(0, 20, 0);"
+                      data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
+                <legend> Налични задачи </legend>
+                <div id="exercisesContainer">
+                    <div class="contents">
+                        <div class="block">
+                            <div class="name">
+                                exercise
+                            </div>
+                            <div class="description">
                                 В разработка
                             </div>
                         </div>

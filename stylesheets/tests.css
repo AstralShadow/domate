@@ -68,7 +68,6 @@ and open the template in the editor.
 #testsContainer{
     margin-left: 25px;
     margin-right: 25px;
-    display: none;
 }
 #editTest{
     position:absolute;
@@ -90,7 +89,6 @@ and open the template in the editor.
 
 }
 #exercisesContainer{
-    display: none;
 
 }
 
