@@ -133,6 +133,52 @@
         }
 
         /**
+         * Removes a single tracker.
+         * If none are present for the event,
+         * removes the event itself
+         * @param {string} name
+         * @param {object} args
+         * @param {function} callback
+         * @returns {undefined}
+         */
+        this.untrack = function (name, args, callback) {
+            if (!URLmap[name]) {
+                console.log("Unknown tracked element:", name)
+                return;
+            }
+            if (!args) {
+                args = {}
+            }
+            var query = _tracking.find(function (q) {
+                if (q.name !== name) {
+                    return false;
+                }
+                var keys = Object.keys(q.args)
+                    .concat(Object.keys(args))
+                for (var i in keys) {
+                    var key = keys[i]
+                    if (args[key] !== q.args[key]) {
+                        return false;
+                    }
+                }
+                return true;
+            })
+
+            if (query) {
+                var callbackIndex = query.callbacks.indexOf(callback)
+                if (callbackIndex !== -1) {
+                    query.callbacks.splice(callbackIndex, 1)
+                }
+                if (query.callbacks.length < 1) {
+                    var queryIndex = _tracking.indexOf(query)
+                    if (queryIndex !== -1) {
+                        _tracking.splice(queryIndex, 1)
+                    }
+                }
+            }
+        }
+
+        /**
          * Reloads a tracker without care of delay.
          * @param {string} name
          * @param {object} args

@@ -90,5 +90,3 @@ function SwidingBoard (element, direction) {
     }
 
 }
-
-var a = new SwidingBoard(document.querySelector("#editTestPage"), "right")

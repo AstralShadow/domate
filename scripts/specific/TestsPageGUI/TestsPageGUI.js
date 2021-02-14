@@ -120,9 +120,6 @@
         trackExercise(oid)
     }
 
-    newTestButton.addEventListener("click", function () {
-        createTest()
-    })
     newExerciseGroupButton.addEventListener("click", function () {
         createExerciseGroup()
     })

@@ -6,6 +6,11 @@
  * and open the template in the editor.
  */
 
+
+/*
+ * Note: front-end respects array order
+ */
+
 /*
  * Action
  */

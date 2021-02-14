@@ -7,6 +7,10 @@
  */
 
 /*
+ * Note: front-end respects array order
+ */
+
+/*
  * Lists accessible exercises
  * 
  * User only page

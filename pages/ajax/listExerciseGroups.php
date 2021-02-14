@@ -6,11 +6,16 @@
  * and open the template in the editor.
  */
 
-/**
+/*
+ * Note: front-end respects array order
+ */
+
+/*
  * Lists accessible exercises
  * 
  * User only page
  */
+
 $groups = $user->exerciseGroups ?? [];
 foreach ($groups as $key => $value){
     $groups[$key] = (string) $value;

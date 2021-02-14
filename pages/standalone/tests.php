@@ -24,7 +24,14 @@
         <script defer src="./scripts/visuals/SwidingBoard.js"></script>
         <script src="./scripts/StateTracker.js"></script>
 
-        <script defer src="./scripts/specific/TestsPageGUI.js"></script>
+        <script>
+            var logDownloadData = true
+            var logCreateCommands = true
+            var noTestName = "<i>Неименуван тест</i>"
+            var noTestDescription = "<i>Няма описание на теста</i>"
+        </script>
+
+        <script defer src="./scripts/specific/TestsPageGUI/testsContainer.js"></script>
 
     </head>
     <body>
@@ -170,18 +177,9 @@
         </div>
 
         <div id="testsContainer">
-            <!-- Tests here -->
             <div class="contents">
-                <div class="block">
-                    <div class="name">
-                        test
-                    </div>
-                    <div class="description">
-                        В разработка
-                    </div>
-                </div>
-            </div>
 
+            </div>
             <div class="newElementButton"></div>
         </div>
     </body>
