@@ -176,11 +176,10 @@
             </fieldset>
         </div>
 
-        <div id="testsContainer">
-            <div class="contents">
-
-            </div>
-            <div class="newElementButton"></div>
+        <div id="testsContainer" class="contents">
+            <noscript>
+            Разрешете JavaScript за правилното функциониране на сайта.
+            <noscript>
         </div>
     </body>
 </html>

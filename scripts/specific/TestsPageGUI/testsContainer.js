@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global logDownloadData, logCreateCommands, noTestDescription, noTestName */
+/* global logDownloadTestData, logCreateCommands, noTestDescription, noTestName */
 
 /**
  * Updates and renders list of tests.
@@ -15,16 +15,16 @@
 (function (window) {
     'use strict'
 
-    const logDownloadData = window.logDownloadData || false
+    const logDownloadTestData = window.logDownloadTestData || false
     const logCreateCommands = window.logCreateCommands || false
     const noName = window.noTestName || "..."
     const noDescription = window.noTestDescription || "..."
 
     const StateTracker = window.StateTracker
 
-    var testsBaseContainer = document.querySelector("#testsContainer")
-    var testsContainer = testsBaseContainer.querySelector(".contents")
-    var newTestButton = testsBaseContainer.querySelector(".newElementButton")
+    var testsContainer = document.querySelector("#testsContainer")
+    var newTestButton = document.createElement("div")
+    newTestButton.className = "newElementButton"
 
     /**
      * Data from server for tests, indexed by oid
@@ -58,7 +58,7 @@
     function handleTestUpdate (e) {
         var test = e.result
         trackedTests[test._id] = test
-        if (logDownloadData) {
+        if (logDownloadTestData) {
             console.log("test", test._id, test)
         }
         if (testNodes[test._id]) {
@@ -88,6 +88,7 @@
             updateTestCell(oid)
             testsContainer.appendChild(testNodes[oid].cell)
         })
+        testsContainer.appendChild(newTestButton)
     }
     function createTestCell () {
         var parentNode = document.createElement("div")

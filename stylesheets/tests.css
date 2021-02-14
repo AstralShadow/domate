@@ -29,10 +29,13 @@ and open the template in the editor.
 
 /* Elements */
 .contents{
-    display: inline;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .block{
     display: inline-block;
+    width: 200px;
     margin: 15px;
     padding: 2px;
     font-size: 14pt;
@@ -41,7 +44,7 @@ and open the template in the editor.
 }
 .block > .name{
     background: black;
-    width: 200px;
+    width: 100%;
     height: 30px;
     border: 2px inset rgb(0, 255, 0);
     border-bottom: 0px;
@@ -49,7 +52,7 @@ and open the template in the editor.
 }
 .block > .description{
     background: black;
-    width: 200px;
+    width: 100%;
     height: 130px;
     border-radius: 0px 0px 0px 40px/0px 0px 0px 25px;
     border: 2px inset rgb(0, 255, 0);
@@ -57,9 +60,11 @@ and open the template in the editor.
 .newElementButton{
     background-image: url("../img/plus.png");
     background-size: 150px;
+    background-position: center;
+    background-repeat: no-repeat;
     display: inline-block;
-    margin: 31px;
-    min-width: 150px;
+    margin: 15px;
+    min-width: 200px;
     min-height: 150px;
     vertical-align: central;
 }
