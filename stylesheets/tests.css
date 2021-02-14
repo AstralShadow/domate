@@ -40,20 +40,20 @@ and open the template in the editor.
     vertical-align: top;
 }
 .block > .name{
+    background: black;
+    width: 200px;
+    height: 30px;
     border: 2px inset rgb(0, 255, 0);
     border-bottom: 0px;
     border-radius: 0px 40px 0px 0px/0px 25px 0px 0px;
-    width: 200px;
-    height: 30px;
 }
 .block > .description{
-    border-radius: 0px 0px 0px 40px/0px 0px 0px 25px;
-    border: 2px inset rgb(0, 255, 0);
+    background: black;
     width: 200px;
     height: 130px;
+    border-radius: 0px 0px 0px 40px/0px 0px 0px 25px;
+    border: 2px inset rgb(0, 255, 0);
 }
-
-/* New Element Button */
 .newElementButton{
     background-image: url("../img/plus.png");
     background-size: 150px;
@@ -64,71 +64,96 @@ and open the template in the editor.
     vertical-align: central;
 }
 
-/* Tests container & Editor */
+/* Containers */
 #testsContainer{
     margin-left: 25px;
     margin-right: 25px;
 }
-#editTest{
+#exerciseGroupsContainer{}
+#exercisesContainer{}
+
+/* Common */
+.page{
+    position: fixed; /* js */
+    display: none;
+    width: 100%;
+}
+.page > *{
+    background-color: rgb(0, 20, 0);
+}
+.page > .details{
     position:absolute;
-    border: 2px solid green;
-    border-radius: 5px;
-    width: 300px;
-    padding: 5px;
-    font-size: 16pt;
     top: 0px;
     right: 0px;
+    width: 300px;
+    padding: 5px;
+    border: 2px solid green;
+    border-radius: 5px;
+    font-size: 16pt;
 }
-#testName{
+.page > .details > * {
+    margin-bottom: 5px;
+}
+.title{
     min-height: 31px;
 }
-#testDescription{
+.description{
     height: 200px;
 }
-#exerciseGroupsContainer{
-
+.page > .editorContents{
+    border-radius: 5px;
+    border: 2px solid green;
+    font-size: 16pt;
 }
-#exercisesContainer{
 
+/* Element list */
+.selectedElementsList{
+    overflow-y: auto;
+    margin-top: 5px;
+    height: 300px;
 }
-
-.miniselecttest{
+.selectedElement{
+    min-height:40px;
+    overflow:hidden;
     vertical-align: middle;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.selectedElement > img{
+    height: 32px;
+    width: 32px;
+    margin: 0px 2px;
+}
+.selectedElement > .move{}
+.selectedElement > .close{}
+.selectedElement > .name{
+    flex: 1;
     font-size: 12pt;
     border: 2px solid rgb(0, 200, 0);
-    min-height: 68px;
-    margin-left:36px;
-    margin-right:36px;
     padding: 3px;
     border-radius: 5px;
     background-color: rgb(0, 20, 0);
 }
 
-.SelectedGroup{
-    min-height:40px;
-    overflow:hidden;
-    vertical-align: middle;
-    margin-top: 10px;
-}
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
+/* Test editor */
+#testEditorPage{}
+#testDetails{}
+#testName{}
+#testDescription{}
+#testContents{}
 
+/* Exercise group editor */
+#groupEditorPage{}
+#groupDetails{}
+#groupName{}
+#groupDescription{}
+#groupContents{}
 
-/* Track */
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
-    border-radius: 5px;
-}
+/* Exercise editor */
+#exerciseExitorPage{}
+#exerciseDetails{}
+#exerciseExitorPage{}
+#exerciseExitorPage{}
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: rgb(0, 200, 0); 
-    border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: rgb(0, 240, 0); 
-}

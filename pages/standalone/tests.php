@@ -51,44 +51,45 @@
             </div>
         </div>
 
-        <div id="editTestPage" style="width: 100%;">
-            <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
+        <div id="testEditorPage" class="page">
+            <fieldset id="testDetails" class="details">
                 <legend> Тест </legend>
-                <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
+                <fieldset class="textarea">
                     <legend> Име </legend>
-                    <div id="testName" contentEditable="true"></div>
+                    <div id="testName" class="title"
+                         contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea" style="margin-top: 5px; background-color: rgb(0, 40, 0);">
+                <fieldset class="textarea">
                     <legend> Описание </legend>
-                    <div id="testDescription" contentEditable="true"></div>
+                    <div id="testDescription" class="description"
+                         contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea" style=" overflow-y: scroll;  margin-top: 5px; background-color: rgb(0, 40, 0); height: 300px;">
+                <fieldset class="textarea selectedElementsList">
                     <legend> Групи в теста </legend>
                     <div id="testContents">
                         <?php
                         for ($i = 0; $i < 15; $i++){
                             ?>
-                            <div class="SelectedGroup">
-                                <img src="img/drackbutton.png" style="vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                                <img  src="img/delete.png" style="vertical-align: middle; height: 32px; width: 32px; float: right;"/>
-                                <div class="miniselecttest">
-                                    Име на избраната група със задачи:...
-                                </div>
+                            <div class="selectedElement">
+                                <img class="move" src="img/drackbutton.png"/>
+                                <div class="name"> Име </div>
+                                <img class="close" src="img/delete.png"/>
                             </div>
                         <?php } ?>
                     </div>
                 </fieldset>
             </fieldset>
-            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; background-color: rgb(0, 20, 0);"
-                      data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
+            <fieldset class="editorContents"
+                      data-dimensions="height: <#testDetails>.offsetHeight - 24;
+                      width: <#testEditorPage>.offsetWidth - <#testDetails>.offsetWidth - 42;">
                 <legend> Налични групи </legend>
                 <div id="exerciseGroupsContainer">
                     <div class="contents">
                         <div class="block">
-                            <div class="name" style="background-color: rgb(0, 10, 0);">
+                            <div class="name">
                                 exercise group
                             </div>
-                            <div class="description"  style="background-color: black;">
+                            <div class="description">
                                 В разработка
                             </div>
                         </div>
@@ -97,36 +98,37 @@
                 </div>
             </fieldset>
         </div>
-        <div id="editTestPage" style="position: relative; display:none;">
-            <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
+        <div id="groupEditorPage" class="page">
+            <fieldset id="groupDetails" class="details">
                 <legend> Група </legend>
-                <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
+                <fieldset class="textarea">
                     <legend> Име </legend>
-                    <div id="testName" contentEditable="true"></div>
+                    <div id="groupName" class="title"
+                         contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea" style="margin-top: 5px; background-color: rgb(0, 40, 0);">
+                <fieldset class="textarea">
                     <legend> Описание </legend>
-                    <div id="testDescription" contentEditable="true"></div>
+                    <div id="groupDescription" class="description"
+                         contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea" style=" overflow-y: scroll;  margin-top: 5px; background-color: rgb(0, 40, 0); height: 300px;">
+                <fieldset class="textarea selectedElementsList">
                     <legend> Задачи в групата </legend>
-                    <div id="testContents">
+                    <div id="groupContents">
                         <?php
                         for ($i = 0; $i < 15; $i++){
                             ?>
-                            <div class="SelectedGroup">
-                                <img src="img/drackbutton.png" style="vertical-align: middle; height: 32px; width: 32px; float: left;"/>
-                                <img src="img/delete.png" style="vertical-align: middle; height: 32px; width: 32px; float: right;"/>
-                                <div class="miniselecttest">
-                                    Име на избраната задача:...
-                                </div>
+                            <div class="selectedElement">
+                                <img class="move" src="img/drackbutton.png"/>
+                                <div class="name"> Име </div>
+                                <img class="close" src="img/delete.png"/>
                             </div>
                         <?php } ?>
                     </div>
                 </fieldset>
             </fieldset>
-            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; background-color: rgb(0, 20, 0);"
-                      data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
+            <fieldset class="editorContents"
+                      data-dimensions="height: <#groupDetails>.offsetHeight - 24;
+                      width: <#groupEditorPage>.offsetWidth - <#groupDetails>.offsetWidth - 42;">
                 <legend> Налични задачи </legend>
                 <div id="exercisesContainer">
                     <div class="contents">
@@ -143,28 +145,32 @@
                 </div>
             </fieldset>
         </div>
-        <div id="editTestPage" style="position: relative; display:none;">
-            <fieldset id="editTest" style="background-color: rgb(0, 20, 0);">
+        <div id="exerciseExitorPage" class="page" >
+            <fieldset id="exerciseDetails" class="details">
                 <legend> Задача </legend>
-                <fieldset class="textarea" style="background-color: rgb(0, 40, 0);">
+                <fieldset class="textarea">
                     <legend> Име </legend>
-                    <div id="testName" contentEditable="true"></div>
+                    <div id="exerciseName" class="title"
+                         contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea" style="margin-top: 5px; background-color: rgb(0, 40, 0);">
+                <fieldset class="textarea">
                     <legend> Описание </legend>
-                    <div id="testDescription" contentEditable="true"></div>
+                    <div id="exerciseDescription" class="description"
+                         contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea" style=" overflow-y: scroll;  margin-top: 5px; background-color: rgb(0, 40, 0); height: 300px;">
-                    <legend> Формули или нещо такова </legend>
+                <fieldset class="textarea selectedElementsList">
+                    <legend> Поле за селекция на формули тук. </legend>
                 </fieldset>
             </fieldset>
-            <fieldset style="border-radius: 5px; border: 2px solid green;font-size: 16pt; height: 100%; background-color: rgb(0, 20, 0);"
-                      data-dimensions="height: <#editTest>.offsetHeight - 24; width: <#editTestPage>.offsetWidth - <#editTest>.offsetWidth - 42;">
+            <fieldset class="editorContents"
+                      data-dimensions="height: <#exerciseDetails>.offsetHeight - 24;
+                      width: <#exerciseExitorPage>.offsetWidth - <#exerciseDetails>.offsetWidth - 42;">
                 <legend> Направи задача </legend>
             </fieldset>
         </div>
 
         <div id="testsContainer">
+            <!-- Tests here -->
             <div class="contents">
                 <div class="block">
                     <div class="name">
@@ -175,6 +181,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="newElementButton"></div>
         </div>
     </body>
