@@ -25,12 +25,18 @@
         <script src="./scripts/StateTracker.js"></script>
 
         <script>
-            var logDownloadData = true
-            var logCreateCommands = true
-            var noTestName = "<i>Неименуван тест</i>"
-            var noTestDescription = "<i>Няма описание на теста</i>"
+            var TestsPageGUI = {
+                logDownloadTestData: false,
+                logCreateCommands: true,
+                swidingDirection: "right",
+                animationSpeed: 830,
+
+                noTestName: "<i>Неименуван тест</i>",
+                noTestDescription: "<i>Няма описание на теста</i>"
+            }
         </script>
 
+        <script defer src="./scripts/specific/TestsPageGUI/testEditor.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/testsContainer.js"></script>
 
     </head>

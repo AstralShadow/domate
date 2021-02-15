@@ -217,7 +217,7 @@ trait ModificableMongoDocument
      * @return void
      */
     public function __set(string $name, $value) {
-        if (!isset($this->data["_id"])){
+        if (!isset($this->data["_id"]) && !$this->load()){
             return;
         }
 

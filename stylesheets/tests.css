@@ -49,6 +49,8 @@ and open the template in the editor.
     border: 2px inset rgb(0, 255, 0);
     border-bottom: 0px;
     border-radius: 0px 40px 0px 0px/0px 25px 0px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .block > .description{
     background: black;
@@ -56,6 +58,8 @@ and open the template in the editor.
     height: 130px;
     border-radius: 0px 0px 0px 40px/0px 0px 0px 25px;
     border: 2px inset rgb(0, 255, 0);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .newElementButton{
     background-image: url("../img/plus.png");

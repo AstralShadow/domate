@@ -29,7 +29,8 @@ function SwidingBoard (element, direction) {
 
     function init () {
         element.style.position = "fixed"
-        if (element.style.display === "none") {
+        console.log(element.style.display)
+        if (window.getComputedStyle(element).display === "none") {
             hidden = true
             visible = 0
         }

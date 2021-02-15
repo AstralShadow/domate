@@ -4,23 +4,28 @@
  * and open the template in the editor.
  */
 
-/* global logDownloadTestData, logCreateCommands, noTestDescription, noTestName */
+/* global StateTracker, logDownloadTestData, logCreateCommands, noTestDescription, noTestName */
+
+/* Dependencies and constants */
+if (!window.TestsPageGUI) {
+    window.TestsPageGUI = {}
+}
+if (!window.StateTracker) {
+    console.throw("StateTracker is a dependency of TestsPageGUI")
+}
 
 /**
  * Updates and renders list of tests.
- * TODO: Provide window.getTestData if necessary
  * @param {type} window
  * @returns {undefined}
  */
 (function (window) {
     'use strict'
-
-    const logDownloadTestData = window.logDownloadTestData || false
-    const logCreateCommands = window.logCreateCommands || false
-    const noName = window.noTestName || "..."
-    const noDescription = window.noTestDescription || "..."
-
-    const StateTracker = window.StateTracker
+    const TestsPageGUI = window.TestsPageGUI
+    const logDownloadTestData = TestsPageGUI.logDownloadTestData || false
+    const logCreateCommands = TestsPageGUI.logCreateCommands || false
+    const noTestName = TestsPageGUI.noTestName || ""
+    const noTestDescription = TestsPageGUI.noTestDescription || ""
 
     var testsContainer = document.querySelector("#testsContainer")
     var newTestButton = document.createElement("div")
@@ -118,12 +123,12 @@
         if (data.name) {
             reference.name.innerText = data.name
         } else {
-            reference.name.innerHTML = noName
+            reference.name.innerHTML = noTestName
         }
         if (data.name) {
             reference.description.innerText = data.description
         } else {
-            reference.description.innerHTML = noDescription
+            reference.description.innerHTML = noTestDescription
         }
     }
 
@@ -150,5 +155,6 @@
     /* Context menu */
     function cellClickHandler (e, oid) {
         console.log("TODO: implement click handler", oid, e)
+        TestsPageGUI.editTest(oid)
     }
 })(window)
