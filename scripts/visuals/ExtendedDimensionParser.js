@@ -49,7 +49,10 @@
     function parseValue (command) {
         var elementQueries = command.match(/(?<=\<)([-_#\.a-zA-Z0-9]*?)(?=\>)/g)
         var elements = {}
-        var variables = {}
+        var variables = {
+            windowHeight: window.innerHeight,
+            windowWidth: window.innerWidth
+        }
         elementQueries.forEach(function (query) {
             var tag = "<" + query + ">"
             if (query.length === 0 || elements[tag] !== undefined) {

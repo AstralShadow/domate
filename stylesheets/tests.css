@@ -28,10 +28,11 @@ and open the template in the editor.
 }
 
 /* Elements */
-.contents{
+.container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    overflow-y: auto;
 }
 .block{
     display: inline-block;
@@ -77,6 +78,17 @@ and open the template in the editor.
 #testsContainer{
     margin-left: 25px;
     margin-right: 25px;
+    z-index: 0;
+}
+#testsShadow{
+    position: fixed;
+    pointer-events: none;
+    -webkit-box-shadow: inset 0px 0px 15px 15px black;
+    -moz-box-shadow: inset 0px 0px 15px 15px black;
+    box-shadow: inset 0px 0px 15px 15px black;
+    width: 100%;
+    left: 0px;
+    z-index: 10;
 }
 #exerciseGroupsContainer{}
 #exercisesContainer{}
@@ -147,22 +159,31 @@ and open the template in the editor.
 }
 
 /* Test editor */
-#testEditorPage{}
+#testEditorPage{
+    z-index: 20;
+}
 #testDetails{}
 #testName{}
 #testDescription{}
 #testContents{}
 
 /* Exercise group editor */
-#groupEditorPage{}
+#groupEditorPage{
+    z-index: 40;
+}
 #groupDetails{}
 #groupName{}
 #groupDescription{}
 #groupContents{}
 
 /* Exercise editor */
-#exerciseExitorPage{}
+#exerciseExitorPage{
+    z-index: 40;
+}
 #exerciseDetails{}
 #exerciseExitorPage{}
 #exerciseExitorPage{}
 
+.FancyContextMenu_Icon{
+    z-index: 100;
+}

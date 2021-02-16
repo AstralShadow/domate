@@ -104,19 +104,7 @@
                       data-dimensions="height: <#testDetails>.offsetHeight - 24;
                       width: <#testEditorPage>.offsetWidth - <#testDetails>.offsetWidth - 42;">
                 <legend> Налични групи </legend>
-                <div id="exerciseGroupsContainer">
-                    <div class="contents">
-                        <div class="block">
-                            <div class="name">
-                                exercise group
-                            </div>
-                            <div class="description">
-                                В разработка
-                            </div>
-                        </div>
-                    </div>
-                    <div class="newElementButton"></div>
-                </div>
+                <div id="exerciseGroupsContainer" class="container"></div>
             </fieldset>
         </div>
         <div id="groupEditorPage" class="page">
@@ -190,10 +178,15 @@
             </fieldset>
         </div>
 
-        <div id="testsContainer" class="contents">
+        <div id="testsContainer" class="container"
+             data-dimensions="height: windowHeight - <#header>.offsetHeight - 10;" >
             <noscript>
             Разрешете JavaScript за правилното функциониране на сайта.
-            <noscript>
+            </noscript>
+        </div>
+        <div id="testsShadow"
+             data-dimensions="height: <#testsContainer>.offsetHeight;
+             top: <#testsContainer>.offsetTop;" >
         </div>
     </body>
 </html>

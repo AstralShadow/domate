@@ -35,6 +35,10 @@ function FancyContextMenu (element, optionsList) {
                 }, 0)
             }
         })
+
+        element.addEventListener("scroll", function () {
+            self.close()
+        })
     }
     document.addEventListener("click", function () {
         self.close()
