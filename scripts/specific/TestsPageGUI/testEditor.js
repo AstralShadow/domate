@@ -37,12 +37,13 @@ if (!window.StateTracker) {
     var show = () => swider.show(TestsPageGUI.animationSpeed)
     var hide = () => swider.hide(TestsPageGUI.animationSpeed)
 
+    var selfClick = null
     container.addEventListener("click", function (e) {
-        e.stopPropagation()
+        selfClick = e
     })
 
     document.addEventListener("click", function (e) {
-        if (activeEditor) {
+        if (activeEditor && selfClick !== e) {
             activeEditor.deactivate()
         }
     })

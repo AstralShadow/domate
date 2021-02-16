@@ -35,10 +35,15 @@
                 animationSpeed: 830,
 
                 noTestName: "<i>Неименуван тест</i>",
-                noTestDescription: "<i>Няма описание на теста</i>"
+                noTestDescription: "<i>Няма описание на теста</i>",
+
+                noGroupName: "<i>Неименуван тест</i>",
+                noGroupDescription: "<i>Няма описание на теста</i>"
             }
         </script>
 
+        <script defer src="./scripts/specific/TestsPageGUI/Container.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/groupsContainer.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/testEditor.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/testsContainer.js"></script>
 

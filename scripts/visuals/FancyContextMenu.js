@@ -14,7 +14,7 @@ function FancyContextMenu (element, optionsList) {
     'use strict'
     var self = this
     this.options = optionsList || []
-    var defaultDelay = 120
+    var defaultDelay = 200
 
     /* Target */
     if (element !== undefined) {
@@ -24,9 +24,12 @@ function FancyContextMenu (element, optionsList) {
         })
 
         element.addEventListener("click", function (e) {
-            var x = e.pageX
-            var y = e.pageY
-            if (!visible) {
+            var x = e.clientX
+            var y = e.clientY
+            var clickedIcon = self.options.find(function (a) {
+                return a.icon === e.target
+            })
+            if (!visible && !clickedIcon) {
                 setTimeout(function () {
                     self.open(x, y)
                 }, 0)
@@ -34,6 +37,9 @@ function FancyContextMenu (element, optionsList) {
         })
     }
     document.addEventListener("click", function () {
+        self.close()
+    })
+    document.addEventListener("scroll", function () {
         self.close()
     })
 
@@ -65,7 +71,7 @@ function FancyContextMenu (element, optionsList) {
                 if (option.lastContextMenu) {
                     await option.lastContextMenu.close()
                 }
-                document.body.append(option.icon)
+                (element || document.body).append(option.icon)
                 option.lastContextMenu = self
             }
 
@@ -123,8 +129,14 @@ function FancyContextMenu (element, optionsList) {
             if (!visible) {
                 self.options.forEach(function (option) {
                     if (option.lastContextMenu === self) {
-                        document.body.removeChild(option.icon)
+                        (element || document.body).removeChild(option.icon)
                         option.lastContextMenu = null
+                    }
+                })
+            } else {
+                self.options.forEach(function (option) {
+                    if (option.lastContextMenu === self) {
+                        option.icon.style.opacity = 1
                     }
                 })
             }
@@ -143,6 +155,7 @@ function FancyContextMenu (element, optionsList) {
                 var y = yPos + Math.sin(direction) * radius * p
                 icon.style.top = Math.round(y) + "px"
                 icon.style.left = Math.round(x) + "px"
+                option.icon.style.opacity = p
             }
         })
     }

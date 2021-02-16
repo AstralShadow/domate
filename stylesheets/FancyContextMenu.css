@@ -9,13 +9,14 @@ and open the template in the editor.
 */
 
 .FancyContextMenu_Icon{
+    position: fixed;
     /* background-image defined by js */
     background-position: center center;
     background-size: auto 48px;
     background-repeat: no-repeat;
-    position: absolute;
     width: 48px;
     height: 48px;
+    transform: translate(-24px, -24px);
 }
 
 
