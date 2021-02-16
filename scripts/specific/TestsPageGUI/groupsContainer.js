@@ -64,11 +64,6 @@ if (!window.FancyContextMenu) {
         StateTracker.untrack('testData', {id: oid}, handleTestUpdate)
     }
     function handleTestUpdate (e) {
-        if (e.code !== "Success") {
-            // TODO: implement some kind of feedback
-            console.log("Couldn't load test");
-            return;
-        }
         var test = e.result
         trackedTests[test._id] = test
         if (logDownloadTestData) {
@@ -164,17 +159,11 @@ if (!window.FancyContextMenu) {
     /* Context menu */
     var Button = FancyContextMenu.Option
     var ctxOptions = [
-        new Button("img/icon_231x234.png", editTest),
+        new Button("img/icon_231x234.png", editClickHandler),
         new Button("img/icon_231x234.png", editClickHandler),
         new Button("img/icon_231x234.png", editClickHandler)
     ]
-    function editTest (menu) {
-        TestsPageGUI.editTest(menu.oid)
-    }
-    function removeTest (menu) {
-        TestsPageGUI.editTest(menu.oid)
-    }
-    function editClickHandler (menu) {
-        TestsPageGUI.editTest(menu.oid)
+    function editClickHandler (oid) {
+        TestsPageGUI.editTest(oid)
     }
 })(window)
