@@ -34,7 +34,6 @@ function SwidingBoard (element, direction) {
             hidden = true
             visible = 0
         }
-        window.requestAnimationFrame(animation)
     }
 
     this.show = function (delay) {
@@ -44,6 +43,7 @@ function SwidingBoard (element, direction) {
             animationStart = (new Date()).getTime() - delay * visible
             animationDuration = delay * (1 - visible)
             element.style.display = "block"
+            window.requestAnimationFrame(animation)
         }
     }
 
@@ -53,14 +53,15 @@ function SwidingBoard (element, direction) {
             hidden = true
             animationStart = (new Date()).getTime() - delay * (1 - visible)
             animationDuration = delay * visible
+            window.requestAnimationFrame(animation)
         }
     }
 
     function animation () {
-        window.requestAnimationFrame(animation)
         if (animationStart === -1) {
             return;
         }
+        window.requestAnimationFrame(animation)
 
         var now = (new Date()).getTime()
 

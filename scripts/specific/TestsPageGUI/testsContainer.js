@@ -4,14 +4,17 @@
  * and open the template in the editor.
  */
 
-/* global StateTracker, logDownloadTestData, logCreateCommands, noTestDescription, noTestName */
+/* global StateTracker, logDownloadTestData, logCreateCommands, noTestDescription, noTestName, FancyContextMenu */
 
 /* Dependencies and constants */
 if (!window.TestsPageGUI) {
-    window.TestsPageGUI = {}
+    TestsPageGUI = {}
 }
 if (!window.StateTracker) {
-    console.throw("StateTracker is a dependency of TestsPageGUI")
+    throw "StateTracker is a dependency of TestsPageGUI"
+}
+if (!window.FancyContextMenu) {
+    throw "FancyContextMenu is a dependency of TestsPageGUI"
 }
 
 /**
@@ -86,9 +89,7 @@ if (!window.StateTracker) {
         list.forEach(function (oid) {
             if (testNodes[oid] === undefined) {
                 testNodes[oid] = createTestCell()
-                testNodes[oid].cell.addEventListener("click", function (e) {
-                    return cellClickHandler(e, oid)
-                })
+                testNodes[oid].contextMenu.oid = oid
             }
             updateTestCell(oid)
             testsContainer.appendChild(testNodes[oid].cell)
@@ -110,7 +111,8 @@ if (!window.StateTracker) {
         var references = {
             cell: parentNode,
             name: nameNode,
-            description: descriptionNode
+            description: descriptionNode,
+            contextMenu: new FancyContextMenu(parentNode, ctxOptions)
         }
         return references
     }
@@ -140,6 +142,7 @@ if (!window.StateTracker) {
         var e = await StateTracker.get("createTest")
 
         if (e.code !== "Success") {
+            // TODO: implement some kind of feedback
             console.log("Couldn't create test");
             return;
         }
@@ -154,8 +157,13 @@ if (!window.StateTracker) {
     }
 
     /* Context menu */
-    function cellClickHandler (e, oid) {
-        console.log("TODO: implement click handler", oid, e)
+    var Button = FancyContextMenu.Option
+    var ctxOptions = [
+        new Button("img/icon_231x234.png", editClickHandler),
+        new Button("img/icon_231x234.png", editClickHandler),
+        new Button("img/icon_231x234.png", editClickHandler)
+    ]
+    function editClickHandler (oid) {
         TestsPageGUI.editTest(oid)
     }
 })(window)

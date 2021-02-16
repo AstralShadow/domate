@@ -27,6 +27,10 @@
         "logout": "?p=logout"
     }
 
+    // TODO: Modifying can return status, use this.
+    //       Also schedule force-reloads for at least
+    //       one second after last reload.
+
     window.StateTracker = new RESTStateTracker()
 
     function RESTStateTracker () {

@@ -1,0 +1,21 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 16, 2021, 2:05:32 PM
+    Author     : azcraft
+*/
+
+.FancyContextMenu_Icon{
+    /* background-image defined by js */
+    background-position: center center;
+    background-size: auto 48px;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 48px;
+    height: 48px;
+}
+
+

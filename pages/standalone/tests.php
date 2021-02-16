@@ -19,9 +19,12 @@
               rel="stylesheet" type="text/css" />
         <link href="./stylesheets/alignedText.css"
               rel="stylesheet" type="text/css" />
+        <link href="./stylesheets/FancyContextMenu.css"
+              rel="stylesheet" type="text/css" />
 
         <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
         <script defer src="./scripts/visuals/SwidingBoard.js"></script>
+        <script defer src="./scripts/visuals/FancyContextMenu.js"></script>
         <script src="./scripts/StateTracker.js"></script>
 
         <script>

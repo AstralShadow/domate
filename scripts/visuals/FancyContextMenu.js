@@ -7,29 +7,174 @@
 /**
  * A nice visual menu that opens on left click.
  * @param {type} element
- * @param {type} options - array of objects of type FancyContextMenu.Option
+ * @param {type} optionsList - array of objects of type FancyContextMenu.Option
  * @returns {undefined}
  */
-function FancyContextMenu (element, options) {
+function FancyContextMenu (element, optionsList) {
     'use strict'
-    Object.defineProperty(this, "element", {
-        value: element,
-        writable: false
+    var self = this
+    this.options = optionsList || []
+    var defaultDelay = 120
+
+    /* Target */
+    if (element !== undefined) {
+        Object.defineProperty(this, "element", {
+            value: element,
+            writable: false
+        })
+
+        element.addEventListener("click", function (e) {
+            var x = e.pageX
+            var y = e.pageY
+            if (!visible) {
+                setTimeout(function () {
+                    self.open(x, y)
+                }, 0)
+            }
+        })
+    }
+    document.addEventListener("click", function () {
+        self.close()
     })
 
-    element.addEventListener("click", function (e) {
+    /* Animation */
+    var visible = false
+    var progress = 1
+    var animationStart = -1
+    var animationDuration = 0
+    var xPos = 0
+    var yPos = 0
+    var radius = 50
+    var onAnimationEnd = null
+    var lastOpenAnimation = null
+    var lastCloseAnimation = null
+    this.open = async function (x, y, duration) {
+        if (duration === undefined) {
+            duration = defaultDelay
+        }
+        if (lastCloseAnimation) {
+            await lastCloseAnimation
+        }
+        if (!visible && onAnimationEnd === null) {
+            visible = true
+            xPos = x
+            yPos = y
 
-    })
+            for (var i = 0; i < self.options.length; i++) {
+                var option = self.options[i]
+                if (option.lastContextMenu) {
+                    await option.lastContextMenu.close()
+                }
+                document.body.append(option.icon)
+                option.lastContextMenu = self
+            }
+
+            var now = (new Date()).getTime()
+            animationDuration = duration * progress
+            progress = 0
+            animationStart = now
+            requestAnimationFrame(animation)
+
+            lastOpenAnimation = new Promise(function (resolve) {
+                onAnimationEnd = function () {
+                    resolve()
+                    onAnimationEnd = null
+                }
+            })
+            await lastOpenAnimation
+        }
+    }
+    this.close = async function (duration) {
+        if (duration === undefined) {
+            duration = defaultDelay
+        }
+        if (lastOpenAnimation) {
+            await lastOpenAnimation
+        }
+        if (visible && onAnimationEnd === null) {
+            visible = false
+
+            var now = (new Date()).getTime()
+            animationDuration = duration * progress
+            progress = 0
+            animationStart = now
+            requestAnimationFrame(animation)
+            lastCloseAnimation = new Promise(function (resolve) {
+                onAnimationEnd = function () {
+                    resolve()
+                    onAnimationEnd = null
+                }
+            })
+            await lastCloseAnimation
+        }
+    }
+
+    function animation () {
+        if (animationStart === -1) {
+            return;
+        }
+        requestAnimationFrame(animation)
+
+        var now = (new Date()).getTime()
+        progress = (now - animationStart) / animationDuration
+        if (progress > 1) {
+            progress = 1
+            animationStart = -1;
+            if (!visible) {
+                self.options.forEach(function (option) {
+                    if (option.lastContextMenu === self) {
+                        document.body.removeChild(option.icon)
+                        option.lastContextMenu = null
+                    }
+                })
+            }
+            if (onAnimationEnd !== null) {
+                onAnimationEnd()
+            }
+        }
+
+        var count = self.options.length
+        var p = visible ? progress : 1 - progress
+        self.options.forEach(function (option, i) {
+            if (option.lastContextMenu === self) {
+                var icon = option.icon
+                var direction = Math.PI * (2 * i * p / count - p / 2)
+                var x = xPos + Math.cos(direction) * radius * p
+                var y = yPos + Math.sin(direction) * radius * p
+                icon.style.top = Math.round(y) + "px"
+                icon.style.left = Math.round(x) + "px"
+            }
+        })
+    }
+
 }
 
 /**
  * A single option, contains circle icon and callback.
  * The callback is invoked with FancyContextMenu object as parameter
- * @param {type} image
+ * @param {type} imageSrc
  * @param {type} callback
  * @returns {undefined}
  */
 FancyContextMenu.Option = function (imageSrc, callback) {
     'use strict'
+    this.icon = document.createElement("div")
+    this.icon.className = "FancyContextMenu_Icon"
+    this.icon.style.backgroundImage = `url("${imageSrc}")`
 
+    var lastContextMenu = null
+
+    Object.defineProperty(this, "lastContextMenu", {
+        get: function () {
+            return lastContextMenu
+        },
+        set: function (v) {
+            lastContextMenu = v
+        }
+    })
+
+    this.icon.addEventListener("click", function () {
+        lastContextMenu.close()
+        callback(lastContextMenu)
+    })
 }

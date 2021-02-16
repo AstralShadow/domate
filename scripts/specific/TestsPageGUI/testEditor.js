@@ -11,10 +11,10 @@ if (!window.TestsPageGUI) {
     window.TestsPageGUI = {}
 }
 if (!window.SwidingBoard) {
-    console.throw("SwidingBoard is a dependency of TestsPageGUI")
+    throw "SwidingBoard is a dependency of TestsPageGUI"
 }
 if (!window.StateTracker) {
-    console.throw("StateTracker is a dependency of TestsPageGUI")
+    throw "StateTracker is a dependency of TestsPageGUI"
 }
 
 /**
@@ -68,6 +68,11 @@ if (!window.StateTracker) {
             StateTracker.reloadTracker('testData', {id: oid})
         }
         function updateHandler (e) {
+            if (e.code !== "Success") {
+                // TODO: implement some kind of feedback
+                console.log("Failed to load test", oid)
+                return;
+            }
             var test = e.result
             nameInput.innerText = test.name
             descriptionInput.innerText = test.description
