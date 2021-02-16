@@ -146,6 +146,7 @@ if (!window.StateTracker) {
 
         var oid = e.result.id
         StateTracker.reloadTracker('listTests')
+        TestsPageGUI.editTest(oid)
 
         if (logCreateCommands) {
             console.log("created test", oid)

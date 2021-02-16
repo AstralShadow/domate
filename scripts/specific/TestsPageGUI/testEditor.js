@@ -122,6 +122,7 @@ if (!window.StateTracker) {
 
         setTimeout(function () {
             activeEditor = new TestEditor(oid)
+            window.ExetendedDimensionParser.parse()
         }, 0)
 
     }

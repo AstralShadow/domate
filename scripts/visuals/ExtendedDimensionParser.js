@@ -92,6 +92,9 @@
     }
 
     window.addEventListener("resize", loop)
+    window.ExetendedDimensionParser = {
+        parse: loop
+    }
     setInterval(loop, 1500)
     loop()
 })()
