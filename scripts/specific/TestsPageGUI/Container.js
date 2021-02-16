@@ -24,6 +24,8 @@ if (!window.FancyContextMenu) {
  */
 TestsPageGUI.Container = function (options) {
     'use strict'
+    var self = this
+
     const TestsPageGUI = window.TestsPageGUI
     const logDownloadData = TestsPageGUI.logDownloadGroupData || false
     const logCreateCommands = TestsPageGUI.logCreateCommands || false
@@ -35,16 +37,19 @@ TestsPageGUI.Container = function (options) {
     var listURL = options.listURL
     var dataURL = options.dataURL
     var createURL = options.createURL
-    if (!type || !containerQuery || !listURL || !dataURL || !createURL) {
-        throw "Missing TestPageGUI.Container option!"
+    var removeURL = options.removeURL
+    var options = options.options
+    if (!type || !containerQuery || !listURL || !dataURL || !createURL || !options) {
+
+        throw ["Missing TestPageGUI.Container option!", options]
     }
     /* Functionality */
-    async function create () {
+    this.create = async function () {
         var e = await StateTracker.get(createURL)
 
         if (e.code !== "Success") {
             // TODO: implement some kind of feedback
-            console.log("Couldn't create " + type);
+            console.log("Couldn't create " + type, e);
             return;
         }
 
@@ -56,21 +61,19 @@ TestsPageGUI.Container = function (options) {
             console.log("created " + type, oid)
         }
     }
-    async function edit (oid) {
-        if (options.edit) {
-            options.edit(oid)
-        } else {
-            console.log(`*${type}.edit* not implemented`)
+    this.remove = async function (oid) {
+        var e = await StateTracker.get(removeURL, {id: oid})
+
+        if (e.code !== "Success") {
+            // TODO: implement some kind of feedback
+            console.log("Couldn't remove " + type, e);
+            return;
         }
-    }
-    async function remove (oid) {
-        console.log("*remove* not implemented")
-    }
-    async function use (oid) {
-        if (options.use) {
-            options.use(oid)
-        } else {
-            console.log(`*${type}.use* not implemented`)
+
+        StateTracker.reloadTracker(listURL)
+
+        if (logCreateCommands) {
+            console.log("removed " + type, oid)
         }
     }
 
@@ -79,7 +82,7 @@ TestsPageGUI.Container = function (options) {
     var newElementButton = document.createElement("div")
     newElementButton.className = "newElementButton"
     newElementButton.addEventListener("click", function () {
-        create()
+        self.create()
     })
 
     /**
@@ -185,12 +188,11 @@ TestsPageGUI.Container = function (options) {
     /* Context menu */
     function optionFactory (img, cb) {
         return new FancyContextMenu.Option(img, function (menu) {
-            cb(menu.oid)
+            cb.apply(self, [menu.oid])
         })
     }
-    var ctxOptions = [
-        optionFactory("img/icon_231x234.png", edit),
-        optionFactory("img/icon_231x234.png", remove),
-        optionFactory("img/icon_231x234.png", use)
-    ]
+    var ctxOptions = []
+    options.forEach(function (e) {
+        ctxOptions.push(optionFactory(e[0], e[1]))
+    })
 }
