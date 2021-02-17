@@ -29,6 +29,9 @@ class Test
     public function __get(string $key) {
         switch ($key){
             case "owner":
+                if (!isset($this->data)){
+                    $this->load();
+                }
                 return $this->data["owner"];
         }
         return $this->get($key);
@@ -69,34 +72,6 @@ class Test
         $owner->update($query);
 
         return new Test($database, $id);
-    }
-
-    /**
-     * Removes a test
-     * @param Database $database
-     * @param User $owner
-     * @param ObjectId $oid
-     * @return bool
-     */
-    public static function remove(Database $database, User $owner, ObjectId $oid): bool {
-        $collection = $database->tests;
-
-        $result = $collection->deleteOne([
-            "_id" => $oid,
-            "owner" => $owner->user
-        ]);
-        if (!$result->isAcknowledged()){
-            return false;
-        }
-
-        $query = [
-            '$pull' => [
-                "tests" => $oid
-            ]
-        ];
-        $owner->update($query);
-
-        return true;
     }
 
     /**

@@ -25,11 +25,14 @@ if (!in_array($input["id"], $tests)){
     return false;
 }
 
+$test = new Test($db, new ObjectId($input["id"]));
+if (!$test || $test->owner !== $user->user){
+    return false;
+}
+
 /*
  * Action
  */
-
-$test = new Test($db, new ObjectId($input["id"]));
 
 if (isset($input["name"]) && is_string($input["name"])){
     $test->name = $input["name"];

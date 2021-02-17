@@ -25,11 +25,14 @@ if (!in_array($input["id"], $groups)){
     return false;
 }
 
+$group = new ExerciseGroup($db, new ObjectId($input["id"]));
+if (!$group || $group->owner !== $group->user){
+    return false;
+}
+
 /*
  * Action
  */
-
-$group = new ExerciseGroup($db, new ObjectId($input["id"]));
 
 if (isset($input["name"]) && is_string($input["name"])){
     $group->name = $input["name"];

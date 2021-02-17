@@ -28,6 +28,9 @@ class Exercise
     public function __get(string $key) {
         switch ($key){
             case "owner":
+                if (!isset($this->data)){
+                    $this->load();
+                }
                 return $this->data["owner"];
         }
         return $this->get($key);

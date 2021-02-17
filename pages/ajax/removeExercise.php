@@ -17,9 +17,9 @@ use MongoDB\BSON\ObjectId;
 if (!isset($input) || !is_array($input) || !isset($input["id"])){
     return false;
 }
-$tests = (array) $user->tests ?? [];
+$exercises = (array) $user->exercises ?? [];
 
-if (!in_array($input["id"], $tests)){
+if (!in_array($input["id"], $exercises)){
     return false;
 }
 $id = new ObjectId($input["id"]);
@@ -29,7 +29,7 @@ $id = new ObjectId($input["id"]);
  */
 $removeUserAccess = [
     '$pull' => [
-        "tests" => $id
+        "exercises" => $id
     ]
 ];
 $user->update($removeUserAccess);
