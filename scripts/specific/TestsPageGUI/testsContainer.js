@@ -23,14 +23,30 @@ if (!window.TestsPageGUI.Container) {
         listURL: 'listTests',
         dataURL: 'testData',
         createURL: 'createTest',
+        removeURL: 'removeTest',
         noName: TestsPageGUI.noTestName,
         noDescription: TestsPageGUI.noTestDescription,
 
         /* Functionality */
-        edit: TestsPageGUI.editTest,
-        use: undefined,
-        editIcon: "img/icon_231x234.png",
-        removeIcon: "img/icon_231x234.png",
-        useIcon: "img/icon_231x234.png"
+        options: [
+            ["img/icon_231x234.png",
+                function (oid) {
+                    TestsPageGUI.editTest(oid)
+                }
+            ],
+            ["img/icon_231x234.png",
+                function (oid) {
+                    // TODO: use some more nice askbox
+                    if (confirm("You sure want to remove?"))
+                        this.remove(oid)
+                }
+            ],
+            ["img/icon_231x234.png",
+                function (oid) {
+                    console.log("use not used yet")
+                    // *use* function
+                }
+            ]
+        ]
     })
 })()

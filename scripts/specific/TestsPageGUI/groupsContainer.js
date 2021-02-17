@@ -23,15 +23,33 @@ if (!window.TestsPageGUI.Container) {
         listURL: 'listExerciseGroups',
         dataURL: 'exerciseGroupData',
         createURL: 'createExerciseGroup',
+        removeURL: 'removeExerciseGroup',
         noName: TestsPageGUI.noGroupName,
         noDescription: TestsPageGUI.noGroupDescription,
 
         /* Functionality */
-        edit: TestsPageGUI.editGroup,
-        use: undefined,
-        editIcon: "img/icon_231x234.png",
-        removeIcon: "img/icon_231x234.png",
-        useIcon: "img/icon_231x234.png"
+        options: [
+            ["img/icon_231x234.png",
+                function (oid) {
+                    console.log("edit grouop not used yet")
+                    //TestsPageGUI.editTest(oid)
+                }
+            ],
+            ["img/icon_231x234.png",
+                function (oid) {
+                    console.log("remove grouop not used yet")
+                    // TODO: use some more nice askbox
+                    //if (confirm("You sure want to remove?"))
+                    //this.remove(oid)
+                }
+            ],
+            ["img/icon_231x234.png",
+                function (oid) {
+                    console.log("use not used yet")
+                    // *use* function
+                }
+            ]
+        ]
     }
     )
 })()

@@ -72,6 +72,34 @@ class Test
     }
 
     /**
+     * Removes a test
+     * @param Database $database
+     * @param User $owner
+     * @param ObjectId $oid
+     * @return bool
+     */
+    public static function remove(Database $database, User $owner, ObjectId $oid): bool {
+        $collection = $database->tests;
+
+        $result = $collection->deleteOne([
+            "_id" => $oid,
+            "owner" => $owner->user
+        ]);
+        if (!$result->isAcknowledged()){
+            return false;
+        }
+
+        $query = [
+            '$pull' => [
+                "tests" => $oid
+            ]
+        ];
+        $owner->update($query);
+
+        return true;
+    }
+
+    /**
      * Appends exercise-group to the test. Random task will be selected from the group
      * @param TaskGroup $group
      * @param int $repeat

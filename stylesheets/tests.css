@@ -65,13 +65,12 @@ and open the template in the editor.
 .newElementButton{
     background-image: url("../img/plus.png");
     background-size: 150px;
-    background-position: center;
+    background-position: top center;
     background-repeat: no-repeat;
     display: inline-block;
     margin: 15px;
     min-width: 200px;
     min-height: 150px;
-    vertical-align: central;
 }
 
 /* Containers */

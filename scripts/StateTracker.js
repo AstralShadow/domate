@@ -13,17 +13,21 @@
         "listExerciseGroups": "?p=listExerciseGroups",
         "createExerciseGroup": "?p=createExerciseGroup",
         "modifyExerciseGroup": "?p=modifyExerciseGroup",
+        "removeExerciseGroup": "?p=removeExerciseGroup",
         "exerciseGroupData": "?p=exerciseGroupData",
 
         "listExercises": "?p=listExercises",
         "createExercise": "?p=createExercise",
         "modifyExercise": "?p=modifyExercise",
+        "removeExercise": "?p=removeExercise",
         "exerciseData": "?p=exerciseData",
 
         "listTests": "?p=listTests",
         "createTest": "?p=createTest",
         "modifyTest": "?p=modifyTest",
+        "removeTest": "?p=removeTest",
         "testData": "?p=testData",
+
         "logout": "?p=logout"
     }
 
