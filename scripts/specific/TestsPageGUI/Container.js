@@ -38,9 +38,8 @@ TestsPageGUI.Container = function (options) {
     var dataURL = options.dataURL
     var createURL = options.createURL
     var removeURL = options.removeURL
-    var options = options.options
-    if (!type || !containerQuery || !listURL || !dataURL || !createURL || !options) {
-
+    var functions = options.functions
+    if (!type || !containerQuery || !listURL || !dataURL || !createURL || !functions) {
         throw ["Missing TestPageGUI.Container option!", options]
     }
     /* Functionality */
@@ -55,7 +54,9 @@ TestsPageGUI.Container = function (options) {
 
         var oid = e.result.id
         StateTracker.reloadTracker(listURL)
-        edit(oid)
+        if (options.oncreate) {
+            options.oncreate(oid)
+        }
 
         if (logCreateCommands) {
             console.log("created " + type, oid)
@@ -69,6 +70,7 @@ TestsPageGUI.Container = function (options) {
             console.log("Couldn't remove " + type, e);
             return;
         }
+        untrack(oid)
 
         StateTracker.reloadTracker(listURL)
 
@@ -99,6 +101,11 @@ TestsPageGUI.Container = function (options) {
 
     /* Tracking */
     StateTracker.track(listURL, null, function (event) {
+        Object.keys(tracked).forEach(function (oid) {
+            if (event.result.indexOf(oid) === -1) {
+                untrack(oid)
+            }
+        })
         event.result.forEach(track)
         render(event.result)
     })
@@ -106,15 +113,20 @@ TestsPageGUI.Container = function (options) {
 
     function track (oid) {
         if (Object.keys(tracked).indexOf(oid) === -1) {
-            StateTracker.track(dataURL, {id: oid}, handleUpdate)
             tracked[oid] = null
+            StateTracker.track(dataURL, {id: oid}, handleUpdate)
         }
         StateTracker.reloadTracker(dataURL, {id: oid})
     }
     function untrack (oid) {
         StateTracker.untrack(dataURL, {id: oid}, handleUpdate)
+        delete tracked[oid]
     }
     function handleUpdate (e) {
+        if (e.code !== "Success") {
+            console.log("Update not successful")
+            return;
+        }
         var object = e.result
         tracked[object._id] = object
         if (logDownloadData) {
@@ -192,7 +204,7 @@ TestsPageGUI.Container = function (options) {
         })
     }
     var ctxOptions = []
-    options.forEach(function (e) {
+    functions.forEach(function (e) {
         ctxOptions.push(optionFactory(e[0], e[1]))
     })
 }

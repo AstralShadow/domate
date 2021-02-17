@@ -245,18 +245,25 @@ trait ModificableMongoDocument
         if (!isset($this->data)){
             $this->load();
         }
-        $data = (array) $this->data;
+        $data = self::parseMongoObjects($this->data);
         foreach ($this->privateParameters as $param){
             if (isset($data[$param])){
                 unset($data[$param]);
             }
         }
-        foreach ($data as $param => $value){
-            if ($value instanceof UTCDateTime){
-                $data[$param] = $value->toDateTime()->getTimestamp();
-            }
-            if ($value instanceof ObjectId){
-                $data[$param] = (string) $value;
+        return $data;
+    }
+
+    private static function parseMongoObjects($data) {
+        if ($data instanceof UTCDateTime){
+            $data = $data->toDateTime()->getTimestamp();
+        }
+        if ($data instanceof ObjectId){
+            $data = (string) $data;
+        }
+        if (is_object($data) || is_array($data)){
+            foreach ((array) $data as $param => $value){
+                $data[$param] = self::parseMongoObjects($value);
             }
         }
         return $data;

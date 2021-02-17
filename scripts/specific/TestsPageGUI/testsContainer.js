@@ -11,7 +11,7 @@ if (!window.TestsPageGUI) {
     TestsPageGUI = {}
 }
 if (!window.TestsPageGUI.Container) {
-    throw "TestsPageGUI.Container is a dependency for displaying groups"
+    throw "TestsPageGUI.Container is a dependency of displaying groups"
 }
 
 (function () {
@@ -28,16 +28,15 @@ if (!window.TestsPageGUI.Container) {
         noDescription: TestsPageGUI.noTestDescription,
 
         /* Functionality */
-        options: [
+        functions: [
             ["img/icon_231x234.png",
                 function (oid) {
                     TestsPageGUI.editTest(oid)
-                }
-            ],
-            ["img/icon_231x234.png",
+                }],
+            ["img/delete_in_domate_95x100.png",
                 function (oid) {
                     // TODO: use some more nice askbox
-                    if (confirm("You sure want to remove?"))
+                    if (confirm("Are you sure you\nwant to remove this?"))
                         this.remove(oid)
                 }
             ],
@@ -47,6 +46,7 @@ if (!window.TestsPageGUI.Container) {
                     // *use* function
                 }
             ]
-        ]
+        ],
+        oncreate: TestsPageGUI.editTest
     })
 })()

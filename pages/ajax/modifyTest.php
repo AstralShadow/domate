@@ -24,13 +24,13 @@ $tests = (array) $user->tests ?? [];
 if (!in_array($input["id"], $tests)){
     return false;
 }
-$id = new ObjectId($input["id"]);
 
 /*
  * Action
  */
 
-$test = new Test($db, $id);
+$test = new Test($db, new ObjectId($input["id"]));
+
 if (isset($input["name"]) && is_string($input["name"])){
     $test->name = $input["name"];
 }
@@ -39,30 +39,29 @@ if (isset($input["description"]) && is_string($input["description"])){
     $test->description = $input["description"];
 }
 
-if (isset($input["addExerciseGroups"]) && is_array($input["addExerciseGroups"])){
+if (isset($input["addContents"]) && is_array($input["addContents"])){
     $accessibleGroups = (array) $user->exerciseGroups ?? [];
-    foreach ($input["addExerciseGroups"] as $groupId => $count){
+    foreach ($input["addContents"] as $groupId => $count){
         if (!is_string($groupId) || !is_int($count) || $count < 1){
             continue;
         }
         if (in_array($groupId, $accessibleGroups)){
-            $group = new ExerciseGroup($db, ObjectId($groupId));
+            $group = new ExerciseGroup($db, new ObjectId($groupId));
             $test->addExerciseGroup($group, (int) $count);
         }
     }
 }
 
-if (isset($input["removeExerciseGroups"]) && is_array($input["removeExerciseGroups"])){
-    $containedGroupIds = $test->getExerciseGroupIds();
-    foreach ($containedGroupIds as $groupId){
-        if (in_array($groupId, $input["removeExerciseGroups"])){
-            $group = new ExerciseGroup($db, new ObjectId($groupId));
-            $test->removeExerciseGroup($group);
+if (isset($input["removeContents"]) && is_array($input["removeContents"])){
+    $containedGroupIds = $test->getContentTokens();
+    foreach ($containedGroupIds as $token){
+        if (in_array($token, $input["removeContents"])){
+            $test->removeExerciseGroup(new ObjectId($token));
         }
     }
 }
 
 $response["msg"] = $dictionary->success;
-$response["result"] = $test->dump();
+// $response["result"] = $test->dump();
 $response["code"] = "Success";
 

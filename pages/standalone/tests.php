@@ -44,8 +44,11 @@
 
         <script defer src="./scripts/specific/TestsPageGUI/Container.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/groupsContainer.js"></script>
-        <script defer src="./scripts/specific/TestsPageGUI/testEditor.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/testsContainer.js"></script>
+
+        <script defer src="./scripts/specific/TestsPageGUI/DefaultEditor.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/ContentListEditor.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/editTest.js"></script>
 
     </head>
     <body>
@@ -87,17 +90,7 @@
                 </fieldset>
                 <fieldset class="textarea selectedElementsList">
                     <legend> Групи в теста </legend>
-                    <div id="testContents">
-                        <?php
-                        for ($i = 0; $i < 15; $i++){
-                            ?>
-                            <div class="selectedElement">
-                                <img class="move" src="img/drackbutton.png"/>
-                                <div class="name"> Име </div>
-                                <img class="close" src="img/delete.png"/>
-                            </div>
-                        <?php } ?>
-                    </div>
+                    <div id="testContents"></div>
                 </fieldset>
             </fieldset>
             <fieldset class="editorContents"

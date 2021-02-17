@@ -110,7 +110,8 @@ class Test
             '$push' => [
                 "contents" => [
                     "id" => $group->getId(),
-                    "repeat" => $repeat
+                    "token" => new ObjectId(),
+                    "repeat" => min($repeat, 1)
                 ]
             ]
         ];
@@ -123,22 +124,22 @@ class Test
      * @param int $repeat
      * @return void
      */
-    public function removeExerciseGroup(ExerciseGroup $group): void {
+    public function removeExerciseGroup(ObjectId $token): void {
         $query = [
             '$pull' => [
                 "contents" => [
-                    "id" => $group->getId()
+                    "token" => $token
                 ]
             ]
         ];
         $this->update($query);
     }
 
-    public function getExerciseGroupIds(): array {
+    public function getContentTokens(): array {
         $contents = (array) $this->contents ?? [];
         $groups = [];
         foreach ($contents as $pair){
-            $groups[] = $pair["id"]; // when this explodes, replace with ->id
+            $groups[] = (string) $pair["token"];
         }
         return $groups;
     }

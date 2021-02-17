@@ -147,7 +147,7 @@ and open the template in the editor.
     margin: 0px 2px;
 }
 .selectedElement > .move{}
-.selectedElement > .close{}
+.selectedElement > .remove{}
 .selectedElement > .name{
     flex: 1;
     font-size: 12pt;
