@@ -25,6 +25,7 @@ if (!window.StateTracker) {
  */
 TestsPageGUI.DefaultEditor = function (oid, options) {
     'use strict'
+    var self = this
     const TestsPageGUI = window.TestsPageGUI
     const SwidingBoard = window.SwidingBoard
 
@@ -35,6 +36,7 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
     const nameQuery = options.nameQuery
     const descriptionQuery = options.descriptionQuery
     const contentsRenderer = options.contentsRenderer
+    const onclose = options.onclose
 
     if (!type || !dataURL || !modifyURL || !contentsRenderer) {
         throw ["Missing TestPageGUI.Container option!", options]
@@ -104,17 +106,17 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
     })
 
     document.addEventListener("click", function (e) {
-        if (TestsPageGUI.activeEditor && selfClick !== e) {
+        if (TestsPageGUI.activeEditor === self && selfClick !== e) {
             TestsPageGUI.activeEditor.deactivate()
         }
     })
     nameInput.addEventListener("blur", function () {
-        if (TestsPageGUI.activeEditor) {
+        if (TestsPageGUI.activeEditor === self) {
             TestsPageGUI.activeEditor.setName(this.innerText)
         }
     })
     descriptionInput.addEventListener("blur", function () {
-        if (TestsPageGUI.activeEditor) {
+        if (TestsPageGUI.activeEditor === self) {
             TestsPageGUI.activeEditor.setDescription(this.innerText)
         }
     })
@@ -136,6 +138,9 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
         var animationPromise = new Promise(function (resolve) {
             hide()
             setTimeout(function () {
+                if (onclose) {
+                    onclose()
+                }
                 resolve()
             }, TestsPageGUI.animationSpeed)
         })

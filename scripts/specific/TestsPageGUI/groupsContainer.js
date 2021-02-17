@@ -31,8 +31,7 @@ if (!window.TestsPageGUI.Container) {
         functions: [
             ["img/icon_231x234.png",
                 function (oid) {
-                    console.log("edit grouop not used yet")
-                    //TestsPageGUI.editTest(oid)
+                    TestsPageGUI.editGroup(oid)
                 }
             ],
             ["img/delete_in_domate_95x100.png",

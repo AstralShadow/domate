@@ -49,6 +49,7 @@
         <script defer src="./scripts/specific/TestsPageGUI/DefaultEditor.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/ContentListEditor.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/editTest.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/editGroup.js"></script>
 
     </head>
     <body>

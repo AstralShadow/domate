@@ -27,9 +27,15 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     const modifyURL = options.modifyURL
     const contentsQuery = options.contentsQuery
     const noContentName = options.noContentName || ""
+    const getId = options.parseContentRealId
+    const getToken = options.parseContentInListId
+    // TODO: implament count when design is ready
 
     if (!type || !dataURL || !modifyURL || !elementDataURL || !contentsQuery) {
         throw ["Missing TestPageGUI.ContentListEditor option!", options]
+    }
+    if (!getId || !getToken) {
+        throw ["Missing TestPageGUI.ContentListEditor parser!", options]
     }
 
     /* Modifiers */
@@ -98,14 +104,17 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
 
         /* Track contents */
         data.contents.forEach(function (entry) {
-            track(entry.id)
-            updateNodes(entry.id)
+            if (!getId(entry)) {
+                console.log("err", entry)
+            }
+            track(getId(entry))
+            updateNodes(getId(entry))
         })
 
         /* Untrack old contents */
         Object.keys(tracked).forEach(function (oid) {
             var entry = data.contents.find(function (entry) {
-                return entry.id === oid
+                return getId(entry) === oid
             })
             if (!entry) {
                 console.log("untrack", oid)
@@ -116,7 +125,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         /* Remove old nodes */
         Object.keys(nodes).forEach(function (token) {
             var entry = data.contents.find(function (entry) {
-                return entry.token === token
+                return getToken(entry) === token
             })
             if (!entry) {
                 removeNode(token)
@@ -125,15 +134,15 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         lastContents = data.contents
     }
     function appendNode (entry) {
-        if (!nodes[entry.token]) {
+        if (!nodes[getToken(entry)]) {
             var node = createNode()
             node.entry = entry
-            nodes[entry.token] = node
+            nodes[getToken(entry)] = node
             node.remove.addEventListener("click", function () {
-                self.removeContent(entry.token)
+                self.removeContent(getToken(entry))
             })
         }
-        container.appendChild(nodes[entry.token].base)
+        container.appendChild(nodes[getToken(entry)].base)
     }
     function createNode () {
         var container = document.createElement("div")
@@ -170,7 +179,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
             return;
         }
         Object.values(nodes).forEach(function (node) {
-            if (node.entry.id === c_oid) {
+            if (getId(node.entry) === c_oid) {
                 if (data.name) {
                     node.name.innerText = data.name
                 } else {

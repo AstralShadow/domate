@@ -22,32 +22,39 @@ if (!window.TestsPageGUI.ContentListEditor) {
     const ContentListEditor = TestPageGUI.ContentListEditor
 
     var options = {
-        type: "test",
-        dataURL: "testData",
-        modifyURL: "modifyTest",
-        pageQuery: "#testEditorPage",
-        nameQuery: "#testName",
-        descriptionQuery: "#testDescription",
-        contentsQuery: "#testContents",
-        elementDataURL: "exerciseGroupData",
+        type: "group",
+        dataURL: "exerciseGroupData",
+        modifyURL: "modifyExerciseGroup",
+        pageQuery: "#groupEditorPage",
+        nameQuery: "#groupName",
+        descriptionQuery: "#groupDescription",
+        contentsQuery: "#groupContents",
+        elementDataURL: "exerciseData",
         noContentName: TestPageGUI.noGroupName,
-        parseContentRealId: (e) => e.id,
-        parseContentInListId: (e) => e.token
+        parseContentRealId: (e) => e,
+        parseContentInListId: (e) => e
     }
 
     function createEditor (oid) {
-        TestPageGUI.lastFocusedTest = oid
-        return new TestsPageGUI.ContentListEditor(oid, options)
+        var copyOptions = {}
+        Object.assign(copyOptions, options)
+        copyOptions.onclose = function () {
+            if (TestPageGUI.lastFocusedTest) {
+                TestsPageGUI.editTest(TestPageGUI.lastFocusedTest)
+            }
+        }
+        TestPageGUI.lastFocusedGroup = oid
+        return new TestsPageGUI.ContentListEditor(oid, copyOptions)
     }
 
     /* Initialization */
-    TestsPageGUI.editTest = async function (oid) {
+    TestsPageGUI.editGroup = async function (oid, callerTestId) {
         if (TestsPageGUI.activeEditor) {
             await TestsPageGUI.activeEditor.deactivate()
         }
 
         setTimeout(function () {
-            TestsPageGUI.activeEditor = createEditor(oid)
+            TestsPageGUI.activeEditor = createEditor(oid, callerTestId)
             window.ExetendedDimensionParser.parse()
         }, 0)
     }

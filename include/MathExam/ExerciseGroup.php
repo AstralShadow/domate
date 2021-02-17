@@ -97,4 +97,13 @@ class ExerciseGroup
         ]);
     }
 
+    public function getContentTokens(): array {
+        $contents = (array) $this->contents ?? [];
+        $groups = [];
+        foreach ($contents as $c_oid){
+            $groups[] = (string) $c_oid;
+        }
+        return $groups;
+    }
+
 }
