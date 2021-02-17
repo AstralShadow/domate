@@ -32,7 +32,8 @@ if (!window.TestsPageGUI.ContentListEditor) {
         elementDataURL: "exerciseGroupData",
         noContentName: TestPageGUI.noGroupName,
         parseContentRealId: (e) => e.id,
-        parseContentInListId: (e) => e.token
+        parseContentInListId: (e) => e.token,
+        swidingDirection: "right"
     }
 
     function createEditor (oid) {

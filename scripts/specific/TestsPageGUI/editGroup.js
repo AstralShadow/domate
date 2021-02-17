@@ -32,7 +32,8 @@ if (!window.TestsPageGUI.ContentListEditor) {
         elementDataURL: "exerciseData",
         noContentName: TestPageGUI.noGroupName,
         parseContentRealId: (e) => e,
-        parseContentInListId: (e) => e
+        parseContentInListId: (e) => e,
+        swidingDirection: "left"
     }
 
     function createEditor (oid) {
@@ -50,7 +51,11 @@ if (!window.TestsPageGUI.ContentListEditor) {
     /* Initialization */
     TestsPageGUI.editGroup = async function (oid, callerTestId) {
         if (TestsPageGUI.activeEditor) {
-            await TestsPageGUI.activeEditor.deactivate()
+            var type = TestsPageGUI.activeEditor.type
+            var promise = TestsPageGUI.activeEditor.deactivate()
+            if (type === "group") {
+                await promise
+            }
         }
 
         setTimeout(function () {

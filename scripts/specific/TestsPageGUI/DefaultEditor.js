@@ -37,6 +37,7 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
     const descriptionQuery = options.descriptionQuery
     const contentsRenderer = options.contentsRenderer
     const onclose = options.onclose
+    const swidingDirection = options.swidingDirection || "right"
 
     if (!type || !dataURL || !modifyURL || !contentsRenderer) {
         throw ["Missing TestPageGUI.Container option!", options]
@@ -122,7 +123,7 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
     })
 
     /* Rendering */
-    var swider = new SwidingBoard(container, TestsPageGUI.swidingDirection)
+    var swider = new SwidingBoard(container, swidingDirection)
     var show = () => swider.show(TestsPageGUI.animationSpeed)
     var hide = () => swider.hide(TestsPageGUI.animationSpeed)
     show()
@@ -138,12 +139,12 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
         var animationPromise = new Promise(function (resolve) {
             hide()
             setTimeout(function () {
-                if (onclose) {
-                    onclose()
-                }
                 resolve()
             }, TestsPageGUI.animationSpeed)
         })
+        if (onclose) {
+            onclose(animationPromise)
+        }
         return animationPromise
     }
 }
