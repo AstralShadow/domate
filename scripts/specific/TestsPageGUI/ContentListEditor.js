@@ -83,6 +83,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     var container = document.querySelector(contentsQuery)
     var lastContents
     var nodes = {}
+
     function renderContents (data) {
         if (JSON.stringify(data.contents) === JSON.stringify(lastContents)) {
             return;
@@ -132,39 +133,43 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     }
     function appendNode (entry) {
         if (!nodes[getToken(entry)]) {
-            var node = createNode()
-            node.entry = entry
+            var node = createNode(entry)
             nodes[getToken(entry)] = node
-            node.remove.addEventListener("click", function () {
-                self.removeContent(getToken(entry))
-            })
         }
         container.appendChild(nodes[getToken(entry)].base)
     }
-    function createNode () {
+    function createNode (entry) {
         var container = document.createElement("div")
         container.className = "selectedElement"
 
-        var moveKey = new Image()
-        moveKey.className = "move"
-        moveKey.src = "img/dragbutton.png"
+        var moveKey = document.createElement("div")
+        moveKey.className = "move contentButton"
         container.appendChild(moveKey)
 
         var nameContainer = document.createElement("div")
         nameContainer.className = "name"
         container.appendChild(nameContainer)
 
-        var removeKey = new Image()
-        removeKey.className = "remove"
-        removeKey.src = "img/delete.png"
+        var removeKey = document.createElement("div")
+        removeKey.className = "remove contentButton"
         container.appendChild(removeKey)
 
         var ref = {
             base: container,
             move: moveKey,
             name: nameContainer,
-            remove: removeKey
+            remove: removeKey,
+            entry: entry
         }
+
+        moveKey.addEventListener("mousedown", function (e) {
+            mousedownHandler(e, ref)
+            return false
+        })
+        removeKey.addEventListener("click", function () {
+            self.removeContent(getToken(entry))
+        })
+
         return ref
     }
     function removeNode (token) {
@@ -184,6 +189,76 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
                 }
             }
         })
+    }
+
+    /* Drag to order */
+    var dragging = null
+    var layerY = 0
+    var baseY = 0
+    var firstTop = 0
+    var deltaY = 0
+    var lastTop = 0
+    document.addEventListener("mouseup", function (e) {
+        if (dragging) {
+            mouseupHandler(e)
+            dragging = null
+            return false
+        }
+    })
+    document.addEventListener("mousemove", function (e) {
+        if (dragging) {
+            deltaY += e.movementY
+        }
+    })
+    function mousedownHandler (e, nodeRef) {
+        requestAnimationFrame(dragAnimation)
+        dragging = nodeRef
+        layerY = e.layerY
+        baseY = nodeRef.base.offsetTop
+        deltaY = 0
+        lastTop = container.lastChild.offsetTop
+        firstTop = container.firstChild.offsetTop
+        document.body.style.userSelect = "none"
+    }
+    function mouseupHandler (e) {
+        document.body.style.userSelect = "auto"
+        container.childNodes.forEach(function (node, i) {
+            node.style.top = "0px"
+            node.style.transform = "translate(0px, 0px)"
+        })
+    }
+    function dragAnimation () {
+        if (!dragging) {
+            return;
+        }
+        requestAnimationFrame(dragAnimation)
+        var localDelta = Math.max(firstTop - baseY, deltaY)
+        localDelta = Math.min(lastTop - baseY, localDelta)
+        var margins = 10
+
+        var baseI = Array.prototype.indexOf.call(container.childNodes, dragging.base)
+        container.childNodes.forEach(function (node, i) {
+            node.style.top = "0px"
+            node.style.transform = "translate(0px, 0px)"
+        })
+        container.childNodes.forEach(function (node, i) {
+            if (dragging.base === node) {
+                return;
+            }
+            var baseDelta = node.offsetTop - baseY
+            var height = node.offsetHeight + margins
+            var cursorDelta = baseDelta - localDelta
+            var y = 0
+            if (i < baseI) {
+                y = height + Math.min(0, Math.max(cursorDelta, -height))
+            } else {
+                y = -height + Math.max(0, Math.min(cursorDelta, height))
+            }
+            node.style.transform = "translate(0px, " + y + "px)"
+        })
+
+        dragging.base.style.top = localDelta + "px"
+
     }
 
     options.contentsRenderer = renderContents
