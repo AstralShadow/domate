@@ -29,6 +29,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     const noContentName = options.noContentName || ""
     const getId = options.parseContentRealId
     const getToken = options.parseContentInListId
+    const moving = !(options.disableMove || false)
     // TODO: implament count when design is ready
 
     if (!type || !dataURL || !modifyURL || !elementDataURL || !contentsQuery) {
@@ -54,6 +55,17 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         }
         var result = await StateTracker.get(modifyURL, query)
         StateTracker.reloadTracker(dataURL, {id: oid})
+    }
+    if (moving) {
+        this.move = async function (token, index) {
+            var query = {
+                id: oid,
+                move: token,
+                position: index
+            }
+            var result = await StateTracker.get(modifyURL, query)
+            StateTracker.reloadTracker(dataURL, {id: oid})
+        }
     }
 
     /* Tracking subelements */
@@ -96,9 +108,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
 
         /* Create nodes */
         data.contents.forEach(function (entry) {
-            //for (var i = 0; i < entry.repeat; i++) {
             appendNode(entry)
-            //}
         })
 
         /* Track contents */
@@ -142,9 +152,11 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         var container = document.createElement("div")
         container.className = "selectedElement"
 
-        var moveKey = document.createElement("div")
-        moveKey.className = "move contentButton"
-        container.appendChild(moveKey)
+        if (moving) {
+            var moveKey = document.createElement("div")
+            moveKey.className = "move contentButton"
+            container.appendChild(moveKey)
+        }
 
         var nameContainer = document.createElement("div")
         nameContainer.className = "name"
@@ -156,16 +168,18 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
 
         var ref = {
             base: container,
-            move: moveKey,
+            move: moving ? moveKey : null,
             name: nameContainer,
             remove: removeKey,
             entry: entry
         }
 
-        moveKey.addEventListener("mousedown", function (e) {
-            mousedownHandler(e, ref)
-            return false
-        })
+        if (moving) {
+            moveKey.addEventListener("mousedown", function (e) {
+                mousedownHandler(e, ref)
+                return false
+            })
+        }
         removeKey.addEventListener("click", function () {
             self.removeContent(getToken(entry))
         })
@@ -191,6 +205,10 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         })
     }
 
+    /* Init core */
+    options.contentsRenderer = renderContents
+    TestsPageGUI.DefaultEditor.apply(this, [oid, options])
+
     /* Drag to order */
     var dragging = null
     var layerY = 0
@@ -198,18 +216,21 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     var firstTop = 0
     var deltaY = 0
     var lastTop = 0
-    document.addEventListener("mouseup", function (e) {
-        if (dragging) {
-            mouseupHandler(e)
-            dragging = null
-            return false
-        }
-    })
-    document.addEventListener("mousemove", function (e) {
-        if (dragging) {
-            deltaY += e.movementY
-        }
-    })
+
+    if (moving) {
+        document.addEventListener("mouseup", function (e) {
+            if (dragging) {
+                mouseupHandler(e)
+                dragging = null
+                return false
+            }
+        })
+        document.addEventListener("mousemove", function (e) {
+            if (dragging) {
+                deltaY += e.movementY
+            }
+        })
+    }
     function mousedownHandler (e, nodeRef) {
         requestAnimationFrame(dragAnimation)
         dragging = nodeRef
@@ -222,10 +243,35 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     }
     function mouseupHandler (e) {
         document.body.style.userSelect = "auto"
+
+        var localDelta = Math.max(firstTop - baseY, deltaY)
+        localDelta = Math.min(lastTop - baseY, localDelta)
+        var margins = 10
+
+        reestPositions()
+        var baseI = Array.prototype.indexOf.call(container.childNodes, dragging.base)
+        var array = []
         container.childNodes.forEach(function (node, i) {
-            node.style.top = "0px"
-            node.style.transform = "translate(0px, 0px)"
+            if (dragging.base === node) {
+                return;
+            }
+            var baseDelta = node.offsetTop - baseY
+            var height = node.offsetHeight + margins
+            var cursorDelta = baseDelta - localDelta
+            var y = 0
+            if (i < baseI) {
+                y = Math.max(0, Math.min(height, cursorDelta + height))
+            } else {
+                y = Math.max(-height, Math.min(0, cursorDelta - height))
+            }
+            array[i + Math.round(y / height)] = getToken(lastContents[i])
         })
+        for (var i = 0; i < container.childNodes.length; i++) {
+            if (array[i] === undefined) {
+                self.move(getToken(dragging.entry), i)
+                break;
+            }
+        }
     }
     function dragAnimation () {
         if (!dragging) {
@@ -236,11 +282,8 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         localDelta = Math.min(lastTop - baseY, localDelta)
         var margins = 10
 
+        reestPositions()
         var baseI = Array.prototype.indexOf.call(container.childNodes, dragging.base)
-        container.childNodes.forEach(function (node, i) {
-            node.style.top = "0px"
-            node.style.transform = "translate(0px, 0px)"
-        })
         container.childNodes.forEach(function (node, i) {
             if (dragging.base === node) {
                 return;
@@ -250,17 +293,20 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
             var cursorDelta = baseDelta - localDelta
             var y = 0
             if (i < baseI) {
-                y = height + Math.min(0, Math.max(cursorDelta, -height))
+                y = Math.max(0, Math.min(height, cursorDelta + height))
             } else {
-                y = -height + Math.max(0, Math.min(cursorDelta, height))
+                y = Math.max(-height, Math.min(0, cursorDelta - height))
             }
             node.style.transform = "translate(0px, " + y + "px)"
         })
 
         dragging.base.style.top = localDelta + "px"
-
     }
 
-    options.contentsRenderer = renderContents
-    TestsPageGUI.DefaultEditor.apply(this, [oid, options])
+    function reestPositions () {
+        container.childNodes.forEach(function (node, i) {
+            node.style.top = "0px"
+            node.style.transform = "translate(0px, 0px)"
+        })
+    }
 }

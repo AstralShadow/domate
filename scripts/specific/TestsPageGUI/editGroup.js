@@ -38,7 +38,8 @@ if (!window.TestsPageGUI.ContentListEditor) {
         },
         parseContentInListId: (e) => {
             return e
-        }
+        },
+        disableMove: true
     }
 
     function createEditor (oid) {
