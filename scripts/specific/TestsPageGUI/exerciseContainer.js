@@ -18,20 +18,20 @@ if (!window.TestsPageGUI.Container) {
     'use strict'
     new TestsPageGUI.Container({
         /* Constants */
-        type: 'group',
-        containerQuery: "#exerciseGroupsContainer",
-        listURL: 'listExerciseGroups',
-        dataURL: 'exerciseGroupData',
-        createURL: 'createExerciseGroup',
-        removeURL: 'removeExerciseGroup',
-        noName: TestsPageGUI.noGroupName,
-        noDescription: TestsPageGUI.noGroupDescription,
+        type: 'exercise',
+        containerQuery: "#exercisesContainer",
+        listURL: 'listExercises',
+        dataURL: 'exerciseData',
+        createURL: 'createExercise',
+        removeURL: 'removeExercise',
+        noName: TestsPageGUI.noExerciseName,
+        noDescription: TestsPageGUI.noExerciseDescription,
 
         /* Functionality */
         functions: [
             ["img/icon_231x234.png",
                 function (oid) {
-                    TestsPageGUI.editGroup(oid)
+                    TestsPageGUI.editExercise(oid)
                 }
             ],
             ["img/delete_in_domate_95x100.png",
@@ -44,10 +44,8 @@ if (!window.TestsPageGUI.Container) {
             ["img/icon_231x234.png",
                 function (oid) {
                     var active = TestsPageGUI.activeEditor
-                    if (active && active.type === "test") {
-                        var object = {}
-                        object[oid] = 1
-                        active.addContent(object)
+                    if (active && active.type === "group") {
+                        active.addContent([oid])
                     }
                 }
             ]

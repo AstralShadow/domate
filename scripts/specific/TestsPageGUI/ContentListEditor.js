@@ -39,9 +39,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     }
 
     /* Modifiers */
-    this.addContent = async function (c_oid) {
-        var object = {}
-        object[c_oid] = 1
+    this.addContent = async function (object) {
         var query = {
             id: oid,
             addContents: object
@@ -97,9 +95,9 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
 
         /* Create nodes */
         data.contents.forEach(function (entry) {
-            for (var i = 0; i < entry.repeat; i++) {
-                appendNode(entry)
-            }
+            //for (var i = 0; i < entry.repeat; i++) {
+            appendNode(entry)
+            //}
         })
 
         /* Track contents */
@@ -117,7 +115,6 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
                 return getId(entry) === oid
             })
             if (!entry) {
-                console.log("untrack", oid)
                 untrack(oid)
             }
         })

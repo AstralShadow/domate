@@ -100,13 +100,13 @@ class ExerciseGroup
         ]);
     }
 
-    public function getContentTokens(): array {
+    public function getContents(): array {
         $contents = (array) $this->contents ?? [];
-        $groups = [];
+        $exercises = [];
         foreach ($contents as $c_oid){
-            $groups[] = (string) $c_oid;
+            $exercises[] = (string) $c_oid;
         }
-        return $groups;
+        return $exercises;
     }
 
 }

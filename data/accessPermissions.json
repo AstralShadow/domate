@@ -14,6 +14,16 @@
         "logout",
         "listExercises",
         "listExerciseGroups",
-        "listTests"
+        "listTests",
+        "modifyExercise",
+        "modifyExerciseGroup",
+        "modifyTest",
+        "removeExercise",
+        "removeExerciseGroup",
+        "removeTest",
+        "exerciseData",
+        "removeExerciseGroup",
+        "removeTest"
+
     ]
 }

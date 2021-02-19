@@ -26,8 +26,9 @@ if (!in_array($input["id"], $groups)){
 }
 
 $group = new ExerciseGroup($db, new ObjectId($input["id"]));
-if (!$group || $group->owner !== $group->user){
-    return false;
+if (!$group || $group->owner !== $user->user){
+    $response["msg"] = "You lack owhership here.";
+    return;
 }
 
 /*
@@ -44,22 +45,23 @@ if (isset($input["description"]) && is_string($input["description"])){
 
 if (isset($input["addContents"]) && is_array($input["addContents"])){
     $accessibleExercises = (array) $user->exercises ?? [];
-    foreach ($input["addContents"] as $exerciseId => $count){
-        if (!is_string($exerciseId) || !is_int($count) || $count < 1){
+    foreach ($input["addContents"] as $exerciseId){
+        if (!is_string($exerciseId)){
             continue;
         }
         if (in_array($exerciseId, $accessibleExercises)){
             $exercise = new Exercise($db, new ObjectId($exerciseId));
-            $group->addExercise($exercise, (int) $count);
+            $group->addExercise($exercise);
         }
     }
 }
 
 if (isset($input["removeContents"]) && is_array($input["removeContents"])){
-    $containedExerciseIds = $test->getContentTokens();
-    foreach ($containedExerciseIds as $token){
-        if (in_array($token, $input["removeContents"])){
-            $group->removeExercise(new ObjectId($token));
+    $containedExerciseIds = $group->getContents();
+    foreach ($containedExerciseIds as $oid){
+        if (in_array($oid, $input["removeContents"])){
+            $exercise = new Exercise($db, new ObjectId($oid));
+            $group->removeExercise($exercise);
         }
     }
 }

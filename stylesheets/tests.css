@@ -31,7 +31,7 @@ and open the template in the editor.
 .container{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     overflow-y: auto;
 }
 .block{
@@ -124,6 +124,7 @@ and open the template in the editor.
     border-radius: 5px;
     border: 2px solid green;
     font-size: 16pt;
+    overflow-y: auto;
 }
 
 /* Element list */

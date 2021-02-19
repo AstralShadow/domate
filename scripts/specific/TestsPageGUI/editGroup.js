@@ -30,9 +30,13 @@ if (!window.TestsPageGUI.ContentListEditor) {
         descriptionQuery: "#groupDescription",
         contentsQuery: "#groupContents",
         elementDataURL: "exerciseData",
-        noContentName: TestPageGUI.noGroupName,
-        parseContentRealId: (e) => e,
-        parseContentInListId: (e) => e,
+        noContentName: TestPageGUI.noExerciseName,
+        parseContentRealId: (e) => {
+            return e
+        },
+        parseContentInListId: (e) => {
+            return e
+        },
         swidingDirection: "left"
     }
 
@@ -45,6 +49,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
             }
         }
         TestPageGUI.lastFocusedGroup = oid
+        console.log(copyOptions)
         return new TestsPageGUI.ContentListEditor(oid, copyOptions)
     }
 

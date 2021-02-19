@@ -31,18 +31,21 @@
             var TestsPageGUI = {
                 logDownloadTestData: false,
                 logCreateCommands: true,
-                swidingDirection: "right",
                 animationSpeed: 830,
 
                 noTestName: "<i>Неименуван тест</i>",
                 noTestDescription: "<i>Няма описание на теста</i>",
 
                 noGroupName: "<i>Неименуван тест</i>",
-                noGroupDescription: "<i>Няма описание на теста</i>"
+                noGroupDescription: "<i>Няма описание на теста</i>",
+
+                noExerciseName: "<i>Неименувана задача</i>",
+                noExerciseDescription: "<i>Няма описание за тази задача</i>"
             }
         </script>
 
         <script defer src="./scripts/specific/TestsPageGUI/Container.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/exerciseContainer.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/groupsContainer.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/testsContainer.js"></script>
 
@@ -116,36 +119,14 @@
                 </fieldset>
                 <fieldset class="textarea selectedElementsList">
                     <legend> Задачи в групата </legend>
-                    <div id="groupContents">
-                        <?php
-                        for ($i = 0; $i < 15; $i++){
-                            ?>
-                            <div class="selectedElement">
-                                <img class="move" src="img/drackbutton.png"/>
-                                <div class="name"> Име </div>
-                                <img class="close" src="img/delete.png"/>
-                            </div>
-                        <?php } ?>
-                    </div>
+                    <div id="groupContents"></div>
                 </fieldset>
             </fieldset>
             <fieldset class="editorContents"
                       data-dimensions="height: <#groupDetails>.offsetHeight - 24;
                       width: <#groupEditorPage>.offsetWidth - <#groupDetails>.offsetWidth - 42;">
                 <legend> Налични задачи </legend>
-                <div id="exercisesContainer">
-                    <div class="contents">
-                        <div class="block">
-                            <div class="name">
-                                exercise
-                            </div>
-                            <div class="description">
-                                В разработка
-                            </div>
-                        </div>
-                    </div>
-                    <div class="newElementButton"></div>
-                </div>
+                <div id="exercisesContainer" class="container"></div>
             </fieldset>
         </div>
         <div id="exerciseExitorPage" class="page" >
