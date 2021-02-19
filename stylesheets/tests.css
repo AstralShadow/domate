@@ -132,7 +132,7 @@ and open the template in the editor.
     max-width: 266px;
 }
 .description{
-    height: 200px;
+    height: 100px;
     max-width: 266px;
     text-indent: 20px;
 }
@@ -207,8 +207,55 @@ and open the template in the editor.
     z-index: 40;
 }
 #exerciseDetails{}
-#exerciseWorkspace{}
+#exerciseAnswer{
+    height: 50px;
+    max-width: 266px;
+    text-indent: 20px;
+}
+#exerciseSettings{
+    height: 50px;
+    max-width: 266px;
+    text-indent: 20px;
+}
+#exerciseWorkspace{
+    position: relative;
+    height: 100%;
+}
 #exerciseSideboard{}
+#exerciseInput{
+    position: absolute;
+    height: 34%; 
+    border: 1px solid rgb(0, 250, 0);
+    bottom: 3px;
+    width: 100%;
+    background: black;
+}
+.notification{
+    display: none;
+    background: black;
+    padding: 7px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 16pt;
+    border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
+    border: 3px solid rgb(0, 250, 0);
+    width: 340px;
+    z-index: 110;
+    box-shadow: 0px 0px 60px 60px black;
+}
+.buttonNotification{
+    display: none;
+    background: black;
+    width: 100px;
+    margin-left: 30px;
+    margin-right: 30px;
+    cursor: pointer;
+    border: 2px solid rgb(0, 250, 0);
+}
 
 .FancyContextMenu_Icon{
     z-index: 100;

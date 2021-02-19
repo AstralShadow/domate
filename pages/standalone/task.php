@@ -20,7 +20,7 @@
 
         <script src="./scripts/StateTracker.js"></script>
 
-        <script defer src="./scripts/specific/TaskPageUI.js"></script>
+        <script src="./scripts/specific/TaskPageUI.js"></script>
         <script async src="./mathjax/startup.js"id="MathJax-script"></script>
 
     </head>

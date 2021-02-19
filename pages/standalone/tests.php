@@ -39,31 +39,56 @@
         <script defer src="./scripts/specific/TestsPageGUI/editGroup.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/editExercise.js"></script>
 
+        <script defer src="./scripts/specific/TestsPageGUI/tmp.js"></script>
+        <script defer src="./mathjax/startup.js"id="MathJax-script"></script>
+
     </head>
-    <body>
+    <body class="nomathjax">
         <div id="header">
             <div id="logo"></div>
             <div class="alignedTextContainer"
                  data-dimensions="width: <#header>.offsetWidth - <#logo>.offsetWidth - 75;">
                 <div class="element left">
                     <div class="topic">
-                        Как се създава тест? (или н.т.)
+                        Здравейте, <?php echo $user->user; ?>
+                        <!---Как да създадем тест?-->
                     </div>
                     <br />
                     <div class="content">
                         <div style="float: right; min-width:50px; min-height:10px;"></div>
-                        Тук виждате създадените от Вас тестове.
-                        На всеки тест при съсдаването му можете да
-                        напишете заглавие и описание. Като минете с
-                        мишката върху даден тест можете да го
-                        редактирате или....
-                        (може би да го дават на учениците си?)
+                        Тук можете да създавате, редактирате, 
+                        стартирате и оценявате тестове.    
+                        За да се получат различни варианти за всеки
+                        ученик е необхгодимо да въведете колекция от
+                        въпроси.<br />
+                        Още инструкции можете да намерите тук.
+                        <!---Тук виждате създадените от Вас тестове.
+                        Във всеки тест виждате групите задачи от който
+                        се състои, а във всяка граупа можете да видите 
+                        задачите от който се състои. Като изберете даден
+                        тест можете да редактирате съдържанието, 
+                        изтриете или пуснете теста на Вашите ученици. 
+                        Като изберете дадена група задачи можете да 
+                        редактирате съдържанието, изтриете или 
+                        добавите към избрания тест. Като изберете 
+                        дадена задача можете да 
+                        редактирате условието, изтриете или 
+                        добавите към избраната група. -->
                         <div style="float:left; min-width:50px; min-height:10px;"></div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="notification">
+            Сигурни ли сте, че искате да изтриете това?
+            <p/> Ако го изтриете повече няма да можете да го възстановите.
+            <div class="buttonNotification" style="float: right;">
+                Отказ
+            </div>
+            <div class="buttonNotification" style="float: left;">
+                Изтрии
+            </div>
+        </div>
         <!-- Test editor -->
         <div id="testEditorPage" class="page">
             <fieldset id="testDetails" class="details">
@@ -152,6 +177,16 @@
                     <div id="exerciseDescription" class="description"
                          contentEditable="true"></div>
                 </fieldset>
+                <fieldset class="textarea">
+                    <legend> Настройки на задача </legend>
+                    <div id="exerciseSettings"
+                         contentEditable="true"></div>
+                </fieldset>
+                <fieldset class="textarea">
+                    <legend> Отговор на задачата </legend>
+                    <div id="exerciseAnswer"
+                         contentEditable="true"></div>
+                </fieldset>
                 <fieldset class="textarea selectedElementsList"
                           data-dimensions="
                           height: windowHeight
@@ -159,7 +194,7 @@
                           - <#exerciseExitorPage>.offsetHeight
                           + <#exerciseSideboard>.parentElement.offsetHeight - 20;"
                           >
-                    <legend> Поле за селекция на формули тук. </legend>
+                    <legend> Формули </legend>
                     <div id="exerciseSideboard">
 
                     </div>
@@ -171,7 +206,10 @@
                       width: <#exerciseExitorPage>.offsetWidth - <#exerciseDetails>.offsetWidth - 42;">
                 <legend> Направи задача </legend>
                 <div id="exerciseWorkspace">
-
+                    <div id="a"  class="mathjax"></div>
+                    <div id="exerciseInput" contentEditable="true">
+                        `x=(-b +- sqrt(b^2 - 4ac))/(2a)`
+                    </div>
                 </div>
             </fieldset>
         </div>
