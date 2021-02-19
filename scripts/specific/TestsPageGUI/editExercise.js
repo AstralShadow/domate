@@ -22,50 +22,47 @@ if (!window.TestsPageGUI.ContentListEditor) {
     const ContentListEditor = TestPageGUI.ContentListEditor
 
     var options = {
-        type: "group",
-        dataURL: "exerciseGroupData",
-        modifyURL: "modifyExerciseGroup",
-        pageQuery: "#groupEditorPage",
-        nameQuery: "#groupName",
-        descriptionQuery: "#groupDescription",
-        swidingDirection: "left",
+        type: "exercise",
+        dataURL: "exerciseData",
+        modifyURL: "modifyExercise",
+        pageQuery: "#exerciseExitorPage",
+        nameQuery: "#exerciseName",
+        descriptionQuery: "#exerciseDescription",
+        swidingDirection: "right",
 
-        contentsQuery: "#groupContents",
-        elementDataURL: "exerciseData",
-        noContentName: TestPageGUI.noExerciseName,
-        parseContentRealId: (e) => {
-            return e
-        },
-        parseContentInListId: (e) => {
-            return e
-        }
+        workspaceQuery: "#exerciseWorkspace",
+        sideboardQuery: "#exerciseSideboard"
     }
 
     function createEditor (oid) {
         var copyOptions = {}
         Object.assign(copyOptions, options)
         copyOptions.onclose = function () {
-            if (TestPageGUI.lastFocusedTest) {
-                TestsPageGUI.editTest(TestPageGUI.lastFocusedTest)
+            if (TestPageGUI.lastFocusedGroup) {
+                TestsPageGUI.editGroup(TestPageGUI.lastFocusedGroup)
+                TestsPageGUI.lastFocusedGroup.onclose = TestsPageGUI.lastFocusedGroup.oncloseMemory
             }
         }
-        TestPageGUI.lastFocusedGroup = oid
-        console.log(copyOptions)
-        return new TestsPageGUI.ContentListEditor(oid, copyOptions)
+        TestPageGUI.lastFocusedExercise = oid
+        return new TestsPageGUI.ExerciseEditor(oid, copyOptions)
     }
 
     /* Initialization */
-    TestsPageGUI.editGroup = async function (oid, callerTestId) {
+    TestsPageGUI.editExercise = async function (oid) {
         if (TestsPageGUI.activeEditor) {
             var type = TestsPageGUI.activeEditor.type
-            var promise = TestsPageGUI.activeEditor.deactivate()
             if (type === "group") {
+                TestsPageGUI.activeEditor.oncloseMemory = TestsPageGUI.activeEditor.onclose
+                TestsPageGUI.activeEditor.onclose = null
+            }
+            var promise = TestsPageGUI.activeEditor.deactivate()
+            if (type === "exercise") {
                 await promise
             }
         }
 
         setTimeout(function () {
-            TestsPageGUI.activeEditor = createEditor(oid, callerTestId)
+            TestsPageGUI.activeEditor = createEditor(oid)
             window.ExetendedDimensionParser.parse()
         }, 0)
     }

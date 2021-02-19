@@ -28,12 +28,13 @@ if (!window.TestsPageGUI.ContentListEditor) {
         pageQuery: "#testEditorPage",
         nameQuery: "#testName",
         descriptionQuery: "#testDescription",
+        swidingDirection: "right",
+
         contentsQuery: "#testContents",
         elementDataURL: "exerciseGroupData",
         noContentName: TestPageGUI.noGroupName,
         parseContentRealId: (e) => e.id,
-        parseContentInListId: (e) => e.token,
-        swidingDirection: "right"
+        parseContentInListId: (e) => e.token
     }
 
     function createEditor (oid) {

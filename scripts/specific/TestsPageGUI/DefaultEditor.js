@@ -36,7 +36,6 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
     const nameQuery = options.nameQuery
     const descriptionQuery = options.descriptionQuery
     const contentsRenderer = options.contentsRenderer
-    const onclose = options.onclose
     const swidingDirection = options.swidingDirection || "right"
 
     if (!type || !dataURL || !modifyURL || !contentsRenderer) {
@@ -45,6 +44,8 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
     if (!pageQuery || !nameQuery || !descriptionQuery) {
         throw ["Missing TestPageGUI.Container option: query!", options]
     }
+
+    this.onclose = options.onclose
 
     /* Init */
     TestsPageGUI.activeEditor = this
@@ -142,8 +143,8 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
                 resolve()
             }, TestsPageGUI.animationSpeed)
         })
-        if (onclose) {
-            onclose(animationPromise)
+        if (this.onclose) {
+            this.onclose(animationPromise)
         }
         return animationPromise
     }

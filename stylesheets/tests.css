@@ -181,8 +181,8 @@ and open the template in the editor.
     z-index: 40;
 }
 #exerciseDetails{}
-#exerciseExitorPage{}
-#exerciseExitorPage{}
+#exerciseWorkspace{}
+#exerciseSideboard{}
 
 .FancyContextMenu_Icon{
     z-index: 100;

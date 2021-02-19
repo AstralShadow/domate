@@ -51,8 +51,10 @@
 
         <script defer src="./scripts/specific/TestsPageGUI/DefaultEditor.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/ContentListEditor.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/ExerciseEditor.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/editTest.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/editGroup.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/editExercise.js"></script>
 
     </head>
     <body>
@@ -144,12 +146,18 @@
                 </fieldset>
                 <fieldset class="textarea selectedElementsList">
                     <legend> Поле за селекция на формули тук. </legend>
+                    <div id="exerciseSideboard">
+
+                    </div>
                 </fieldset>
             </fieldset>
             <fieldset class="editorContents"
                       data-dimensions="height: <#exerciseDetails>.offsetHeight - 24;
                       width: <#exerciseExitorPage>.offsetWidth - <#exerciseDetails>.offsetWidth - 42;">
                 <legend> Направи задача </legend>
+                <div id="exerciseWorkspace">
+
+                </div>
             </fieldset>
         </div>
 
