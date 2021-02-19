@@ -121,7 +121,7 @@
                           - <#header>.offsetHeight
                           - <#groupEditorPage>.offsetHeight
                           + <#groupContents>.parentElement.offsetHeight - 20;"
-                          >>
+                          >
                     <legend> Задачи в групата </legend>
                     <div id="groupContents"></div>
                 </fieldset>
