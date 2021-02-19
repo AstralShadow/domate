@@ -158,7 +158,7 @@
                           - <#header>.offsetHeight
                           - <#exerciseExitorPage>.offsetHeight
                           + <#exerciseSideboard>.parentElement.offsetHeight - 20;"
-                          >>>
+                          >
                     <legend> Поле за селекция на формули тук. </legend>
                     <div id="exerciseSideboard">
 
