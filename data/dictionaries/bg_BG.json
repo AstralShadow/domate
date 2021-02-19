@@ -55,6 +55,16 @@
             "content": "Защото вложихме много усилия и неуморим труд за да го постигнем."
         }
     ],
+    "contentPlaceholders": {
+        "noTestName": "<i style=\"opacity:0.5;\">Неименуван тест</i>",
+        "noTestDescription": "<i style=\"opacity:0.5;\">Липсва описание</i>",
+
+        "noGroupName": "<i style=\"opacity:0.5;\">Неименувана категория</i>",
+        "noGroupDescription": "<i style=\"opacity:0.5;\">Липсва описание</i>",
+
+        "noExerciseName": "<i style=\"opacity:0.5;\">Неименувана задача</i>",
+        "noExerciseDescription": "<i style=\"opacity:0.5;\">Липсва описание</i>"
+    },
 
     "userClassErrorMessage": {
         "USER_ERRCODE_NO_ERROR": "Нямаше грешка.",

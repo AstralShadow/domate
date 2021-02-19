@@ -50,7 +50,6 @@ if (!window.TestsPageGUI.ContentListEditor) {
             }
         }
         TestPageGUI.lastFocusedGroup = oid
-        console.log(copyOptions)
         return new TestsPageGUI.ContentListEditor(oid, copyOptions)
     }
 

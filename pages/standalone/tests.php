@@ -27,23 +27,6 @@
         <script defer src="./scripts/visuals/FancyContextMenu.js"></script>
         <script src="./scripts/StateTracker.js"></script>
 
-        <script>
-            var TestsPageGUI = {
-                logDownloadTestData: false,
-                logCreateCommands: true,
-                animationSpeed: 830,
-
-                noTestName: "<i>Неименуван тест</i>",
-                noTestDescription: "<i>Няма описание на теста</i>",
-
-                noGroupName: "<i>Неименуван тест</i>",
-                noGroupDescription: "<i>Няма описание на теста</i>",
-
-                noExerciseName: "<i>Неименувана задача</i>",
-                noExerciseDescription: "<i>Няма описание за тази задача</i>"
-            }
-        </script>
-
         <script defer src="./scripts/specific/TestsPageGUI/Container.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/exerciseContainer.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/groupsContainer.js"></script>
@@ -81,6 +64,7 @@
             </div>
         </div>
 
+        <!-- Test editor -->
         <div id="testEditorPage" class="page">
             <fieldset id="testDetails" class="details">
                 <legend> Тест </legend>
@@ -94,18 +78,30 @@
                     <div id="testDescription" class="description"
                          contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea selectedElementsList">
+                <fieldset class="textarea selectedElementsList"
+                          data-dimensions="
+                          height: windowHeight
+                          - <#header>.offsetHeight
+                          - <#testEditorPage>.offsetHeight
+                          + <#testContents>.parentElement.offsetHeight - 20;"
+                          >
                     <legend> Групи в теста </legend>
                     <div id="testContents"></div>
                 </fieldset>
             </fieldset>
+            <!-- Exercise-Groups container -->
             <fieldset class="editorContents"
                       data-dimensions="height: <#testDetails>.offsetHeight - 24;
                       width: <#testEditorPage>.offsetWidth - <#testDetails>.offsetWidth - 42;">
                 <legend> Налични групи </legend>
+                <div id="exerciseGroupsShadow" class="shadow"
+                     data-dimensions="height: <#exerciseGroupsContainer>.offsetHeight;
+                     width: <#exerciseGroupsContainer>.offsetWidth + 10;" >
+                </div>
                 <div id="exerciseGroupsContainer" class="container"></div>
             </fieldset>
         </div>
+        <!-- Exercise-Group editor -->
         <div id="groupEditorPage" class="page">
             <fieldset id="groupDetails" class="details">
                 <legend> Група </legend>
@@ -119,18 +115,30 @@
                     <div id="groupDescription" class="description"
                          contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea selectedElementsList">
+                <fieldset class="textarea selectedElementsList"
+                          data-dimensions="
+                          height: windowHeight
+                          - <#header>.offsetHeight
+                          - <#groupEditorPage>.offsetHeight
+                          + <#groupContents>.parentElement.offsetHeight - 20;"
+                          >>
                     <legend> Задачи в групата </legend>
                     <div id="groupContents"></div>
                 </fieldset>
             </fieldset>
+            <!-- Exercises container -->
             <fieldset class="editorContents"
                       data-dimensions="height: <#groupDetails>.offsetHeight - 24;
                       width: <#groupEditorPage>.offsetWidth - <#groupDetails>.offsetWidth - 42;">
                 <legend> Налични задачи </legend>
+                <div id="exerciseGroupsShadow" class="shadow"
+                     data-dimensions="height: <#exercisesContainer>.offsetHeight;
+                     width: <#exercisesContainer>.offsetWidth + 10;" >
+                </div>
                 <div id="exercisesContainer" class="container"></div>
             </fieldset>
         </div>
+        <!-- Exercise editor -->
         <div id="exerciseExitorPage" class="page" >
             <fieldset id="exerciseDetails" class="details">
                 <legend> Задача </legend>
@@ -144,13 +152,20 @@
                     <div id="exerciseDescription" class="description"
                          contentEditable="true"></div>
                 </fieldset>
-                <fieldset class="textarea selectedElementsList">
+                <fieldset class="textarea selectedElementsList"
+                          data-dimensions="
+                          height: windowHeight
+                          - <#header>.offsetHeight
+                          - <#exerciseExitorPage>.offsetHeight
+                          + <#exerciseSideboard>.parentElement.offsetHeight - 20;"
+                          >>>
                     <legend> Поле за селекция на формули тук. </legend>
                     <div id="exerciseSideboard">
 
                     </div>
                 </fieldset>
             </fieldset>
+            <!-- Exercise workspace -->
             <fieldset class="editorContents"
                       data-dimensions="height: <#exerciseDetails>.offsetHeight - 24;
                       width: <#exerciseExitorPage>.offsetWidth - <#exerciseDetails>.offsetWidth - 42;">
@@ -161,15 +176,40 @@
             </fieldset>
         </div>
 
+        <!-- Tests container -->
+        <div id="testsShadow" class="shadow"
+             data-dimensions="height: <#testsContainer>.offsetHeight;
+             width: <#testsContainer>.offsetWidth + 10;" >
+        </div>
         <div id="testsContainer" class="container"
-             data-dimensions="height: windowHeight - <#header>.offsetHeight - 10;" >
+             data-dimensions="maxHeight: windowHeight - <#header>.offsetHeight - 10;" >
             <noscript>
             Разрешете JavaScript за правилното функциониране на сайта.
             </noscript>
         </div>
-        <div id="testsShadow"
-             data-dimensions="height: <#testsContainer>.offsetHeight;
-             top: <#testsContainer>.offsetTop;" >
-        </div>
+
+        <!-- GUI initalization -->
+        <?php
+        $TestsPageGUI_init = [
+            "logDownloadTestData" => false,
+            "logCreateCommands" => false,
+            "animationSpeed" => 830
+        ];
+        $placeholders = $dictionary->contentPlaceholders;
+
+        $keys = [
+            "noTestName", "noTestDescription",
+            "noGroupName", "noGroupDescription",
+            "noExerciseName", "noExerciseDescription"
+        ];
+        foreach ($keys as $key){
+            $TestsPageGUI_init[$key] = $placeholders[$key];
+        }
+        $json = json_encode($TestsPageGUI_init);
+
+        echo "<script>var TestsPageGUI = " . $json . "</script>";
+
+        unset($TestsPageGUI_init, $placeholders, $keys, $key, $json);
+        ?>
     </body>
 </html>

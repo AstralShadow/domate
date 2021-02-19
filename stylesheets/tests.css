@@ -33,6 +33,7 @@ and open the template in the editor.
     flex-wrap: wrap;
     justify-content: space-around;
     overflow-y: auto;
+    max-height: 100%;
 }
 .block{
     display: inline-block;
@@ -79,18 +80,29 @@ and open the template in the editor.
     margin-right: 25px;
     z-index: 0;
 }
-#testsShadow{
-    position: fixed;
-    pointer-events: none;
-    -webkit-box-shadow: inset 0px 0px 15px 15px black;
-    -moz-box-shadow: inset 0px 0px 15px 15px black;
-    box-shadow: inset 0px 0px 15px 15px black;
-    width: 100%;
-    left: 0px;
-    z-index: 10;
-}
 #exerciseGroupsContainer{}
 #exercisesContainer{}
+
+#testsShadow{
+    z-index: 10;
+    -webkit-box-shadow: inset 0px 30px 15px -15px black, inset 0px -30px 15px -15px black;
+    -moz-box-shadow: inset 0px 30px 15px -15px black, inset 0px -30px 15px -15px black;
+    box-shadow: inset 0px 30px 15px -15px black, inset 0px -30px 15px -15px black;
+    margin-left: 25px;
+}
+#exerciseGroupsShadow{
+    z-index: 30;
+}
+#exercisesShadow{
+    z-index: 50;
+}
+.shadow{
+    position: absolute;
+    pointer-events: none;
+    -webkit-box-shadow: inset 0px 30px 15px -15px rgb(0, 20, 0), inset 0px -30px 15px -15px rgb(0, 20, 0);
+    -moz-box-shadow: inset 0px 30px 15px -15px rgb(0, 20, 0), inset 0px -30px 15px -15px rgb(0, 20, 0);
+    box-shadow: inset 0px 30px 15px -15px rgb(0, 20, 0), inset 0px -30px 15px -15px rgb(0, 20, 0);
+}
 
 /* Common */
 .page{
@@ -116,15 +128,18 @@ and open the template in the editor.
 }
 .title{
     min-height: 31px;
+    max-width: 266px;
 }
 .description{
     height: 200px;
+    max-width: 266px;
+    text-indent: 20px;
 }
 .page > .editorContents{
     border-radius: 5px;
     border: 2px solid green;
     font-size: 16pt;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 /* Element list */

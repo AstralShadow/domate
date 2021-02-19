@@ -125,7 +125,10 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
 
     /* Rendering */
     var swider = new SwidingBoard(container, swidingDirection)
-    var show = () => swider.show(TestsPageGUI.animationSpeed)
+    var show = function () {
+        swider.show(TestsPageGUI.animationSpeed)
+        window.ExetendedDimensionParser.parse()
+    }
     var hide = () => swider.hide(TestsPageGUI.animationSpeed)
     show()
     function renderContents () {

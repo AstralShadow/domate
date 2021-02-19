@@ -40,7 +40,6 @@ if (!window.TestsPageGUI.ContentListEditor) {
         copyOptions.onclose = function () {
             if (TestPageGUI.lastFocusedGroup) {
                 TestsPageGUI.editGroup(TestPageGUI.lastFocusedGroup)
-                TestsPageGUI.lastFocusedGroup.onclose = TestsPageGUI.lastFocusedGroup.oncloseMemory
             }
         }
         TestPageGUI.lastFocusedExercise = oid
@@ -52,7 +51,6 @@ if (!window.TestsPageGUI.ContentListEditor) {
         if (TestsPageGUI.activeEditor) {
             var type = TestsPageGUI.activeEditor.type
             if (type === "group") {
-                TestsPageGUI.activeEditor.oncloseMemory = TestsPageGUI.activeEditor.onclose
                 TestsPageGUI.activeEditor.onclose = null
             }
             var promise = TestsPageGUI.activeEditor.deactivate()

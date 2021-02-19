@@ -45,6 +45,9 @@ body{
 [contenteditable]:focus{
     outline: 0px solid transparent;
 }
+[contenteditable]{
+    overflow: auto;
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar {

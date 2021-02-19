@@ -190,7 +190,7 @@ TestsPageGUI.Container = function (options) {
         } else {
             reference.name.innerHTML = namePlaceholder
         }
-        if (data.name) {
+        if (data.description) {
             reference.description.innerText = data.description
         } else {
             reference.description.innerHTML = descriptionPlaceholder
