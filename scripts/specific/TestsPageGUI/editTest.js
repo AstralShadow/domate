@@ -34,7 +34,11 @@ if (!window.TestsPageGUI.ContentListEditor) {
         elementDataURL: "exerciseGroupData",
         noContentName: TestPageGUI.noGroupName,
         parseContentRealId: (e) => e.id,
-        parseContentInListId: (e) => e.token
+        parseContentInListId: (e) => e.token,
+
+        onclose: function () {
+            window.TestsPageGUI.deactivateGroupsContainer()
+        }
     }
 
     function createEditor (oid) {
@@ -50,6 +54,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
 
         setTimeout(function () {
             TestsPageGUI.activeEditor = createEditor(oid)
+            window.TestsPageGUI.activateGroupsContainer()
             window.ExetendedDimensionParser.parse()
         }, 0)
     }

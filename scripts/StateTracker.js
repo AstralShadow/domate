@@ -38,6 +38,7 @@
     window.StateTracker = new RESTStateTracker()
 
     function RESTStateTracker () {
+        var self = this
         var _tracking = []
 
         /**
@@ -117,6 +118,7 @@
 
             if (query) {
                 query.callbacks.push(callback)
+                query.active = true
                 if (refreshDelay && refreshDelay < query.refreshDelay) {
                     query.refreshDelay = refreshDelay
                 }
@@ -128,6 +130,7 @@
                 Object.assign(argsCopy, args)
                 query = {
                     name: name,
+                    active: true,
                     url: URLmap[name],
                     args: argsCopy,
                     callbacks: [callback],
@@ -137,6 +140,7 @@
                     waiting: false
                 }
                 _tracking.push(query)
+                self.reloadTracker(name, argsCopy)
             }
         }
 
@@ -178,10 +182,7 @@
                     query.callbacks.splice(callbackIndex, 1)
                 }
                 if (query.callbacks.length < 1) {
-                    var queryIndex = _tracking.indexOf(query)
-                    if (queryIndex !== -1) {
-                        _tracking.splice(queryIndex, 1)
-                    }
+                    query.active = false
                 }
             }
         }
@@ -267,7 +268,7 @@
          */
         function checkForUpdates () {
             _tracking.forEach(function (data) {
-                if (data.waiting) {
+                if (data.waiting || !data.active) {
                     return;
                 }
                 var now = (new Date()).getTime()

@@ -88,11 +88,6 @@ TestsPageGUI.Container = function (options) {
     })
 
     /**
-     * Data from server, indexed by oid
-     * @type object
-     */
-    const tracked = {}
-    /**
      * Objects of references, indexed by oid. Contains
      * {cell, name, description}
      * @type object
@@ -100,7 +95,13 @@ TestsPageGUI.Container = function (options) {
     const nodes = {}
 
     /* Tracking */
-    StateTracker.track(listURL, null, function (event) {
+    /**
+     * Data from server, indexed by oid
+     * @type object
+     */
+    const tracked = {}
+
+    function contentUpdateHandler (event) {
         Object.keys(tracked).forEach(function (oid) {
             if (event.result.indexOf(oid) === -1) {
                 untrack(oid)
@@ -108,15 +109,13 @@ TestsPageGUI.Container = function (options) {
         })
         event.result.forEach(track)
         render(event.result)
-    })
-    StateTracker.reloadTracker(listURL)
 
+    }
     function track (oid) {
         if (Object.keys(tracked).indexOf(oid) === -1) {
             tracked[oid] = null
             StateTracker.track(dataURL, {id: oid}, handleUpdate)
         }
-        StateTracker.reloadTracker(dataURL, {id: oid})
     }
     function untrack (oid) {
         StateTracker.untrack(dataURL, {id: oid}, handleUpdate)
@@ -136,6 +135,24 @@ TestsPageGUI.Container = function (options) {
             updateCell(object._id)
         } else {
             render()
+        }
+    }
+
+    /* Activation & Deactivation */
+    var active = false;
+    this.activate = function () {
+        if (!active) {
+            active = true
+            StateTracker.track(listURL, null, contentUpdateHandler)
+        }
+    }
+    this.deactivate = function () {
+        if (active) {
+            active = false
+            StateTracker.untrack(listURL, null, contentUpdateHandler)
+            Object.keys(tracked).forEach(function (oid) {
+                untrack(oid)
+            })
         }
     }
 

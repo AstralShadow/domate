@@ -16,7 +16,7 @@ if (!window.TestsPageGUI.Container) {
 
 (function () {
     'use strict'
-    new TestsPageGUI.Container({
+    var container = new TestsPageGUI.Container({
         /* Constants */
         type: 'test',
         containerQuery: "#testsContainer",
@@ -49,4 +49,6 @@ if (!window.TestsPageGUI.Container) {
         ],
         oncreate: TestsPageGUI.editTest
     })
+
+    container.activate()
 })()

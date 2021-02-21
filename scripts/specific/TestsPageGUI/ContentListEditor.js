@@ -75,7 +75,6 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
             tracked[oid] = null
             StateTracker.track(elementDataURL, {id: oid}, handleUpdate)
         }
-        StateTracker.reloadTracker(elementDataURL, {id: oid})
     }
     function untrack (oid) {
         StateTracker.untrack(elementDataURL, {id: oid}, handleUpdate)

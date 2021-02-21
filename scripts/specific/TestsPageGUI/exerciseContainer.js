@@ -16,7 +16,7 @@ if (!window.TestsPageGUI.Container) {
 
 (function () {
     'use strict'
-    new TestsPageGUI.Container({
+    var container = new TestsPageGUI.Container({
         /* Constants */
         type: 'exercise',
         containerQuery: "#exercisesContainer",
@@ -50,6 +50,13 @@ if (!window.TestsPageGUI.Container) {
                 }
             ]
         ]
+    })
+
+    window.TestsPageGUI.activateExercisesContainer = function () {
+        container.activate()
     }
-    )
+
+    window.TestsPageGUI.deactivateExercisesContainer = function () {
+        container.deactivate()
+    }
 })()

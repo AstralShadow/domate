@@ -16,7 +16,7 @@ if (!window.TestsPageGUI.Container) {
 
 (function () {
     'use strict'
-    new TestsPageGUI.Container({
+    var container = new TestsPageGUI.Container({
         /* Constants */
         type: 'group',
         containerQuery: "#exerciseGroupsContainer",
@@ -52,6 +52,13 @@ if (!window.TestsPageGUI.Container) {
                 }
             ]
         ]
+    })
+
+    window.TestsPageGUI.activateGroupsContainer = function () {
+        container.activate()
     }
-    )
+
+    window.TestsPageGUI.deactivateGroupsContainer = function () {
+        container.deactivate()
+    }
 })()

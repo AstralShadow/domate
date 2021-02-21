@@ -49,6 +49,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
             if (TestPageGUI.lastFocusedTest) {
                 TestsPageGUI.editTest(TestPageGUI.lastFocusedTest)
             }
+            window.TestsPageGUI.deactivateExercisesContainer()
         }
         TestPageGUI.lastFocusedGroup = oid
         return new TestsPageGUI.ContentListEditor(oid, copyOptions)
@@ -66,6 +67,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
 
         setTimeout(function () {
             TestsPageGUI.activeEditor = createEditor(oid, callerTestId)
+            window.TestsPageGUI.activateExercisesContainer()
             window.ExetendedDimensionParser.parse()
         }, 0)
     }
