@@ -20,8 +20,11 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
 $tests = (array) $user->tests ?? [];
 
 if (!in_array($input["id"], $tests)){
+    unset($tests);
     return false;
 }
+unset($tests);
+
 $id = new ObjectId($input["id"]);
 
 /*
@@ -33,6 +36,8 @@ $removeUserAccess = [
     ]
 ];
 $user->update($removeUserAccess);
+unset($removeUserAccess);
 
 $response["msg"] = $dictionary->success;
 $response["code"] = "Success";
+unset($id);

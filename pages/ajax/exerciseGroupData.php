@@ -21,8 +21,10 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
 $groups = (array) $user->exerciseGroups ?? [];
 
 if (!in_array($input["id"], $groups)){
+    unset($groups);
     return false;
 }
+unset($groups);
 $id = new ObjectId($input["id"]);
 
 /*
@@ -33,3 +35,5 @@ $group = new ExerciseGroup($db, $id);
 $response["msg"] = $dictionary->success;
 $response["result"] = $group->dump();
 $response["code"] = "Success";
+
+unset($id, $group);

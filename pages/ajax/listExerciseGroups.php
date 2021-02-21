@@ -25,3 +25,5 @@ foreach ($groups as $key => $value){
 $response["msg"] = $dictionary->success;
 $response["result"] = $groups;
 $response["code"] = "Success";
+
+unset($groups);

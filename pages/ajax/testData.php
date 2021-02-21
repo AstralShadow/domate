@@ -21,8 +21,10 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
 $tests = (array) $user->tests ?? [];
 
 if (!in_array($input["id"], $tests)){
+    unset($tests);
     return false;
 }
+unset($tests);
 $id = new ObjectId($input["id"]);
 
 /*
@@ -33,3 +35,5 @@ $test = new Test($db, $id);
 $response["msg"] = $dictionary->success;
 $response["result"] = $test->dump();
 $response["code"] = "Success";
+
+unset($id, $test);

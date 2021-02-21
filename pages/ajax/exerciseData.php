@@ -21,8 +21,10 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
 $exercises = (array) $user->exercises ?? [];
 
 if (!in_array($input["id"], $exercises)){
+    unset($exercises);
     return false;
 }
+unset($exercises);
 $id = new ObjectId($input["id"]);
 
 /*
@@ -33,3 +35,5 @@ $exercise = new Exercise($db, $id);
 $response["msg"] = $dictionary->success;
 $response["result"] = $exercise->dump();
 $response["code"] = "Success";
+
+unset($id, $exercise);

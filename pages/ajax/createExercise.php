@@ -17,3 +17,5 @@ $response["result"] = [
     "id" => (string) $exercise->getId()
 ];
 $response["code"] = "Success";
+
+unset($exercise);

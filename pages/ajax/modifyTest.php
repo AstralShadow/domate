@@ -22,11 +22,14 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
 $tests = (array) $user->tests ?? [];
 
 if (!in_array($input["id"], $tests)){
+    unset($tests);
     return false;
 }
+unset($tests);
 
 $test = new Test($db, new ObjectId($input["id"]));
 if (!$test || $test->owner !== $user->user){
+    unset($test);
     return false;
 }
 
@@ -79,6 +82,5 @@ if (isset($input["move"], $input["position"])){
 }
 
 $response["msg"] = $dictionary->success;
-// $response["result"] = $test->dump();
 $response["code"] = "Success";
-
+unset($test);

@@ -20,19 +20,23 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
 $groups = (array) $user->exerciseGroups ?? [];
 
 if (!in_array($input["id"], $groups)){
+    unset($groups);
     return false;
 }
+unset($groups);
 $id = new ObjectId($input["id"]);
 
 /*
  * Action
  */
-$removeUserAccess = [
+$removeUserAccessQuery = [
     '$pull' => [
         "exerciseGroups" => $id
     ]
 ];
-$user->update($removeUserAccess);
+$user->update($removeUserAccessQuery);
+unset($removeUserAccessQuery);
 
 $response["msg"] = $dictionary->success;
 $response["code"] = "Success";
+unset($id);

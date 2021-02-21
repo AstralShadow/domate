@@ -17,3 +17,5 @@ $response["result"] = [
     "id" => (string) $group->getId()
 ];
 $response["code"] = "Success";
+
+unset($group);

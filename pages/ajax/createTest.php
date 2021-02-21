@@ -17,3 +17,5 @@ $response["result"] = [
     "id" => (string) $test->getId()
 ];
 $response["code"] = "Success";
+
+unset($test);

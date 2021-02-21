@@ -22,8 +22,10 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
 $groups = (array) $user->exerciseGroups ?? [];
 
 if (!in_array($input["id"], $groups)){
+    unset($groups);
     return false;
 }
+unset($groups);
 
 $group = new ExerciseGroup($db, new ObjectId($input["id"]));
 if (!$group || $group->owner !== $user->user){
@@ -54,6 +56,7 @@ if (isset($input["addContents"]) && is_array($input["addContents"])){
             $group->addExercise($exercise);
         }
     }
+    unset($accessibleExercises, $exerciseId, $exercise);
 }
 
 if (isset($input["removeContents"]) && is_array($input["removeContents"])){
@@ -64,9 +67,10 @@ if (isset($input["removeContents"]) && is_array($input["removeContents"])){
             $group->removeExercise($exercise);
         }
     }
+    unset($containedExerciseIds, $oid, $exercise);
 }
 
 $response["msg"] = $dictionary->success;
-// $response["result"] = $group->dump();
 $response["code"] = "Success";
+unset($group);
 

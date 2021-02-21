@@ -24,3 +24,5 @@ foreach ($tests as $key => $value){
 $response["msg"] = $dictionary->success;
 $response["result"] = $tests;
 $response["code"] = "Success";
+
+unset($tests);

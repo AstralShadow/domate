@@ -21,12 +21,15 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
 $exercises = (array) $user->exercises ?? [];
 
 if (!in_array($input["id"], $exercises)){
+    unset($exercises);
     return false;
 }
+unset($exercises);
 
 $exercise = new Exercise($db, new ObjectId($input["id"]));
 if (!$exercise || $exercise->owner !== $user->user){
     $response["msg"] = "You lack owhership here.";
+    unset($exercise);
     return;
 }
 
@@ -44,6 +47,6 @@ if (isset($input["description"]) && is_string($input["description"])){
 
 
 $response["msg"] = $dictionary->success;
-// $response["result"] = $exercise->dump();
 $response["code"] = "Success";
+unset($exercise);
 
