@@ -53,15 +53,29 @@ if (isset($input["addContents"]) && is_array($input["addContents"])){
             $test->addExerciseGroup($group, (int) $count);
         }
     }
+    unset($accessibleGroups, $groupId, $count, $group);
 }
 
 if (isset($input["removeContents"]) && is_array($input["removeContents"])){
-    $containedGroupIds = $test->getContentTokens();
-    foreach ($containedGroupIds as $token){
+    $containedGroupTokens = $test->getContentTokens();
+    foreach ($containedGroupTokens as $token){
         if (in_array($token, $input["removeContents"])){
             $test->removeExerciseGroup(new ObjectId($token));
         }
     }
+    unset($containedGroupTokens, $token);
+}
+
+if (isset($input["move"], $input["position"])){
+    if (is_string($input["move"]) && is_int($input["position"])){
+        $token = $input["move"];
+        $position = $input["position"];
+        $containedGroupTokens = $test->getContentTokens();
+        if (in_array($token, $containedGroupTokens)){
+            $test->moveExrciseGroup(new ObjectId($token), (int) $position);
+        }
+    }
+    unset($containedGroupTokens, $token, $position);
 }
 
 $response["msg"] = $dictionary->success;

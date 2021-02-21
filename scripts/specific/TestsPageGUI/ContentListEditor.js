@@ -110,6 +110,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         data.contents.forEach(function (entry) {
             appendNode(entry)
         })
+        resetPositions()
 
         /* Track contents */
         data.contents.forEach(function (entry) {
@@ -211,7 +212,6 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
 
     /* Drag to order */
     var dragging = null
-    var layerY = 0
     var baseY = 0
     var firstTop = 0
     var deltaY = 0
@@ -221,7 +221,6 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         document.addEventListener("mouseup", function (e) {
             if (dragging) {
                 mouseupHandler(e)
-                dragging = null
                 return false
             }
         })
@@ -234,7 +233,6 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     function mousedownHandler (e, nodeRef) {
         requestAnimationFrame(dragAnimation)
         dragging = nodeRef
-        layerY = e.layerY
         baseY = nodeRef.base.offsetTop
         deltaY = 0
         lastTop = container.lastChild.offsetTop
@@ -248,7 +246,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         localDelta = Math.min(lastTop - baseY, localDelta)
         var margins = 10
 
-        reestPositions()
+        resetPositions()
         var baseI = Array.prototype.indexOf.call(container.childNodes, dragging.base)
         var array = []
         container.childNodes.forEach(function (node, i) {
@@ -264,11 +262,21 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
             } else {
                 y = Math.max(-height, Math.min(0, cursorDelta - height))
             }
-            array[i + Math.round(y / height)] = getToken(lastContents[i])
+            y = Math.round(y / height)
+            array[i + y] = getToken(lastContents[i])
+            node.style.transform = "translate(0px, " + y * height + "px)"
         })
+        var height = dragging.base.offsetHeight + margins
+        dragging.base.style.top = Math.round(localDelta / height) * height + "px"
+
+        var token = getToken(dragging.entry)
+        dragging = null
         for (var i = 0; i < container.childNodes.length; i++) {
             if (array[i] === undefined) {
-                self.move(getToken(dragging.entry), i)
+                var pos = i
+                setTimeout(function () {
+                    self.move(token, pos)
+                }, 0)
                 break;
             }
         }
@@ -282,7 +290,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         localDelta = Math.min(lastTop - baseY, localDelta)
         var margins = 10
 
-        reestPositions()
+        resetPositions()
         var baseI = Array.prototype.indexOf.call(container.childNodes, dragging.base)
         container.childNodes.forEach(function (node, i) {
             if (dragging.base === node) {
@@ -303,7 +311,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         dragging.base.style.top = localDelta + "px"
     }
 
-    function reestPositions () {
+    function resetPositions () {
         container.childNodes.forEach(function (node, i) {
             node.style.top = "0px"
             node.style.transform = "translate(0px, 0px)"

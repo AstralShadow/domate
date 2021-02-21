@@ -78,18 +78,25 @@ class Test
      * Appends exercise-group to the test. Random task will be selected from the group
      * @param TaskGroup $group
      * @param int $repeat
+     * @param ?int $position
      * @return void
      */
-    public function addExerciseGroup(ExerciseGroup $group, int $repeat = 1): void {
-        $query = [
-            '$push' => [
-                "contents" => [
-                    "id" => $group->getId(),
-                    "token" => new ObjectId(),
-                    "repeat" => min($repeat, 1)
-                ]
-            ]
+    public function addExerciseGroup(ExerciseGroup $group, int $repeat = 1, ?int $position = null): void {
+        $query = ['$push' => []];
+        $item = [
+            "id" => $group->getId(),
+            "token" => new ObjectId(),
+            "repeat" => min($repeat, 1)
         ];
+
+        if (!isset($position)){
+            $query['$push']["contents"] = $item;
+        } else {
+            $query['$push']["contents"] = [
+                '$each' => [$item],
+                '$position' => $position
+            ];
+        }
         $this->update($query);
     }
 
@@ -108,6 +115,30 @@ class Test
             ]
         ];
         $this->update($query);
+    }
+
+    public function moveExrciseGroup(ObjectId $token, int $position): void {
+        $item = $this->getContent($token);
+        if (!isset($item)){
+            return;
+        }
+        $this->removeExerciseGroup($token);
+        $query = ['$push' => []];
+        $query['$push']["contents"] = [
+            '$each' => [$item],
+            '$position' => $position
+        ];
+        $this->update($query);
+    }
+
+    public function getContent(ObjectId $token): ?array {
+        $contents = (array) $this->contents ?? [];
+        foreach ($contents as $pair){
+            if ($pair["token"] == $token){
+                return (array) $pair;
+            }
+        }
+        return null;
     }
 
     public function getContentTokens(): array {
