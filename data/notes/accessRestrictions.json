@@ -1,0 +1,17 @@
+{
+    "author": "azcraft",
+    "forbiddenURLs": [
+        ".git*",
+        ".ht*",
+        "/composer/",
+        "/include/",
+        "/logs/",
+        "/vendor/",
+        "/nbproject/",
+        "/img/Gimp/",
+        "/data/",
+        "/pages/",
+        "/include/",
+        "/submodules/"
+    ]
+}

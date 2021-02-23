@@ -14,7 +14,6 @@ if (!window.TestsPageGUI.DefaultEditor) {
     throw "TestsPageGUI.DefaultEditor is a dependency of TestPageGUI.ContentListEditor"
 }
 
-/* Test interface */
 TestsPageGUI.ContentListEditor = function (oid, options) {
     'use strict'
     var self = this

@@ -1,5 +1,8 @@
 {
     "author": "azcraft",
+    "format": {
+        "originaURL": "aliasToUse"
+    },
     "pagesToRelocate": {
         "submodules/MathJax/es5": "mathjax/"
     }

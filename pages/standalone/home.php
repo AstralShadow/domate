@@ -77,6 +77,10 @@ require "include/secureTokens.php";
             foreach ($contents as $element){
                 $counter++;
                 $position = $element["position"] ?? $counter % 2 ? "right" : "left";
+                if (is_array($element["content"])){
+                    $element["content"] = implode(' ', $element["content"]);
+                }
+                $element["content"] = str_replace("\n", "<br />", $element["content"]);
                 ?>
 
                 <div class="element <?php echo $position; ?>">
@@ -84,8 +88,9 @@ require "include/secureTokens.php";
                         <?php echo $element["topic"]; ?>
                     </div>
                     <br />
-                    <div class="content"  style="width:80%">
+                    <div class="content"  style="min-width:500px;">
                         <?php echo $element["content"]; ?>
+                        <div style="float: <?php echo $position; ?>; min-width:50px; min-height:10px;"></div>
                     </div>
                 </div>
 

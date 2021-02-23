@@ -39,8 +39,8 @@
         <script defer src="./scripts/specific/TestsPageGUI/editGroup.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/editExercise.js"></script>
 
-        <script defer src="./scripts/specific/TestsPageGUI/tmp.js"></script>
-        <script defer src="./mathjax/startup.js"id="MathJax-script"></script>
+        <script src="./scripts/mathjaxConfig.js"></script>
+        <script async src="./mathjax/startup.js" id="MathJax-script"></script>
 
     </head>
     <body class="nomathjax">
@@ -179,8 +179,7 @@
                 </fieldset>
                 <fieldset class="textarea">
                     <legend> Настройки на задача </legend>
-                    <div id="exerciseSettings"
-                         contentEditable="true"></div>
+                    <div id="exerciseSettings"></div>
                 </fieldset>
                 <fieldset class="textarea">
                     <legend> Отговор на задачата </legend>

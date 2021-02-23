@@ -31,6 +31,8 @@ if (!window.TestsPageGUI.ContentListEditor) {
         swidingDirection: "right",
 
         workspaceQuery: "#exerciseWorkspace",
+        settingsQuery: "#exerciseSettings",
+        answerQuery: "#exerciseAnswer",
         sideboardQuery: "#exerciseSideboard"
     }
 
