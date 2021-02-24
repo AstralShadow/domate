@@ -38,13 +38,24 @@ if (!$exercise || $exercise->owner !== $user->user){
  */
 
 if (isset($input["name"]) && is_string($input["name"])){
-    $exercise->name = $input["name"];
+    $exercise->name = (string) $input["name"];
 }
 
 if (isset($input["description"]) && is_string($input["description"])){
-    $exercise->description = $input["description"];
+    $exercise->description = (string) $input["description"];
 }
 
+if (isset($input["question"]) && is_string($input["question"])){
+    $exercise->question = (string) $input["question"];
+}
+
+if (isset($input["answer"]) && is_string($input["answer"])){
+    $exercise->answer = (string) $input["answer"];
+}
+
+if (isset($input["useAnswer"]) && is_bool($input["useAnswer"])){
+    $exercise->useAnswer = (bool) $input["useAnswer"];
+}
 
 $response["msg"] = $dictionary->success;
 $response["code"] = "Success";

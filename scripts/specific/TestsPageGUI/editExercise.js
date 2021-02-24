@@ -30,7 +30,10 @@ if (!window.TestsPageGUI.ContentListEditor) {
         descriptionQuery: "#exerciseDescription",
         swidingDirection: "right",
 
-        workspaceQuery: "#exerciseWorkspace",
+        //workspaceQuery: "#exerciseWorkspace",
+        mathDisplayQuery: '#exerciseDisplay',
+        mathInputQuery: '#exerciseInput',
+
         settingsQuery: "#exerciseSettings",
         answerQuery: "#exerciseAnswer",
         sideboardQuery: "#exerciseSideboard"

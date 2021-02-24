@@ -209,19 +209,21 @@ and open the template in the editor.
     z-index: 40;
 }
 #exerciseDetails{}
-#exerciseAnswer{
-    height: 50px;
+#exerciseSettings{
     max-width: 266px;
     text-indent: 20px;
 }
-#exerciseSettings{
-    height: 50px;
+#exerciseAnswer{
     max-width: 266px;
     text-indent: 20px;
 }
 #exerciseWorkspace{
     position: relative;
     height: 100%;
+}
+#exerciseDisplay{
+    text-align: center;
+    vertical-align: middle;
 }
 #exerciseSideboard{}
 #exerciseInput{
@@ -232,6 +234,21 @@ and open the template in the editor.
     width: 100%;
     background: black;
 }
+
+.config{
+    background-color: black;
+    color: rgb(0, 255, 0);
+    font-size: 14pt;
+    box-sizing: border-box;
+    border: 1px solid rgb(0, 200, 0);
+    max-height: 0px;
+    padding: 0px;
+}
+.config > legend{
+    text-indent: 0px;
+}
+
+/* Notification */
 .notification{
     display: none;
     background: black;

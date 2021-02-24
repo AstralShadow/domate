@@ -179,12 +179,16 @@
                 </fieldset>
                 <fieldset class="textarea">
                     <legend> Настройки на задача </legend>
-                    <div id="exerciseSettings"></div>
-                </fieldset>
-                <fieldset class="textarea">
-                    <legend> Отговор на задачата </legend>
-                    <div id="exerciseAnswer"
-                         contentEditable="true"></div>
+                    <div id="exerciseSettings">
+                        <fieldset class="config">
+                            <legend>
+                                <input type="checkbox" />
+                                Отговор
+                            </legend>
+                            <div id="exerciseAnswer"
+                                 contentEditable="true"></div>
+                        </fieldset>
+                    </div>
                 </fieldset>
                 <fieldset class="textarea selectedElementsList"
                           data-dimensions="
@@ -205,7 +209,7 @@
                       width: <#exerciseExitorPage>.offsetWidth - <#exerciseDetails>.offsetWidth - 42;">
                 <legend> Направи задача </legend>
                 <div id="exerciseWorkspace">
-                    <div id="a"  class="mathjax"></div>
+                    <div id="exerciseDisplay" class="mathjax"></div>
                     <div id="exerciseInput" contentEditable="true">
                         `x=(-b +- sqrt(b^2 - 4ac))/(2a)`
                     </div>

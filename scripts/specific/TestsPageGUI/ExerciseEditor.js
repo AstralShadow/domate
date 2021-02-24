@@ -15,27 +15,6 @@ if (!window.TestsPageGUI.DefaultEditor) {
 }
 
 (function () {
-    'use strict'
-    var input = document.querySelector('#exerciseInput')
-    var display = document.querySelector('#a')
-
-    function render () {
-        var a = input.innerText
-        while (a.indexOf('<') !== - 1)
-            a = a.replace('<', '&lt;')
-        display.innerText = a
-        if (MathJax.typeset) {
-            MathJax.typeset()
-        }
-    }
-
-    input.addEventListener('input', function () {
-        render();
-    })
-    render();
-})();
-
-(function () {
     var shortcuts = [
         'sqrt(x)',
         'root(x)(y)',
@@ -53,12 +32,15 @@ if (!window.TestsPageGUI.DefaultEditor) {
         const type = options.type
         const dataURL = options.dataURL
         const modifyURL = options.modifyURL
-        const workspaceQuery = options.workspaceQuery
+        //const workspaceQuery = options.workspaceQuery
         const sideboardQuery = options.sideboardQuery
         const settingsQuery = options.settingsQuery
         const answerQuery = options.answerQuery
+        const mathDisplayQuery = options.mathDisplayQuery
+        const mathInputQuery = options.mathInputQuery
 
-        if (!type || !dataURL || !modifyURL || !workspaceQuery) {
+        if (!type || !dataURL || !modifyURL || !sideboardQuery || // !workspaceQuery ||
+            !settingsQuery || !answerQuery || !mathDisplayQuery || !mathInputQuery) {
             throw ["Missing TestPageGUI.ContentListEditor option!", options]
         }
 
@@ -66,7 +48,7 @@ if (!window.TestsPageGUI.DefaultEditor) {
         var lastData
         function onUpdate (data) {
             lastData = data
-
+            fillInputs(data)
         }
         options.contentsRenderer = onUpdate
 
@@ -82,20 +64,67 @@ if (!window.TestsPageGUI.DefaultEditor) {
             var result = await StateTracker.get(modifyURL, query)
             StateTracker.reloadTracker(dataURL, {id: oid})
         }
+        this.setAnswer = async function (answer, useAnswer) {
+            var query = {
+                id: oid
+            }
+            if (lastData.answer !== answer && answer !== undefined) {
+                query.answer = answer
+            }
+            if (lastData.useAnswer !== useAnswer && useAnswer !== undefined) {
+                query.useAnswer = useAnswer
+            }
+            if (Object.keys(query).length === 1) {
+                return;
+            }
+            var result = await StateTracker.get(modifyURL, query)
+            StateTracker.reloadTracker(dataURL, {id: oid})
+        }
 
 
         /* Rendering */
-        var workspace = document.querySelector(workspaceQuery)
+        // var workspace = document.querySelector(workspaceQuery)
         var sideboard = document.querySelector(sideboardQuery)
 
         var settingsContainer = document.querySelector(settingsQuery)
         var answerContainer = document.querySelector(answerQuery)
+        var answerCheckbox = answerContainer.parentElement.querySelector("input[type=checkbox]")
 
-        answerContainer.addEventListener("blur", function () {
+        var mathDisplay = document.querySelector(mathDisplayQuery)
+        var mathInput = document.querySelector(mathInputQuery)
+
+
+        function fillInputs (data) {
+            answerContainer.innerText = data.answer || ""
+            answerCheckbox.checked = Boolean(data.useAnswer)
+            mathInput.innerText = data.question || ""
+            renderMath()
+        }
+
+        mathInput.addEventListener("input", renderMath)
+        mathInput.addEventListener("blur", function () {
             if (TestsPageGUI.activeEditor === self) {
-                TestsPageGUI.activeEditor.setAnswer(this.innerText)
+                self.setQuestion(this.innerText)
             }
         })
+        answerContainer.addEventListener("blur", function () {
+            if (TestsPageGUI.activeEditor === self) {
+                self.setAnswer(answerContainer.innerText, answerCheckbox.checked)
+            }
+        })
+        answerCheckbox.addEventListener("input", function () {
+            if (TestsPageGUI.activeEditor === self) {
+                self.setAnswer(answerContainer.innerText, answerCheckbox.checked)
+            }
+        })
+
+        function renderMath () {
+            var math = mathInput.innerText
+            mathDisplay.innerText = math
+            if (MathJax.typeset) {
+                MathJax.typeset()
+            }
+        }
 
         /* Core initialization */
         TestsPageGUI.DefaultEditor.apply(this, [oid, options])
