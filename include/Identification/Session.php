@@ -56,7 +56,7 @@ class Session
      * @return void
      */
     private function newSession(): void {
-        $sessions = $this->database->sessions;
+        $sessions = $this->collection;
         $characters = array_merge(range('a', 'z'), range('A', 'Z'), range('0', '9'));
         $charactersLength = count($characters) - 1;
 
@@ -83,9 +83,9 @@ class Session
      * @param string $key
      * @return bool
      */
-    private static function sessionExists(Database $database, string $key): bool {
-        $collection = $database->sessions;
-        $document = $collection->findOne(["key" => $key]);
+    private function sessionExists(string $key): bool {
+        $sessions = $this->collection;
+        $document = $sessions->findOne(["key" => $key]);
         return isset($document);
     }
 
@@ -94,7 +94,7 @@ class Session
      * @return void
      */
     public function clear(): void {
-        $sessions = $this->database->sessions;
+        $sessions = $this->collection;
         if (!isset($this->data)){
             return;
         }
@@ -113,7 +113,7 @@ class Session
      * @return void
      */
     public function reset(): void {
-        $sessions = $this->database->sessions;
+        $sessions = $this->collection;
         if (!isset($this->data)){
             return;
         }
