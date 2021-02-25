@@ -4,6 +4,8 @@
     "unknownError": "Възникна някаква грешка.",
     "success": "Заявката беше изпълнена успешно.",
     "forbidden": "Достъпът отказан.",
+    "illegalArgument": "Невалиден аргумент!",
+    "illegalArguments": "Невалидни аргументи!",
 
     "loginMessages": {
         "name": "Потребителско име",

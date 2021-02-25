@@ -232,19 +232,20 @@
             </label>
             <label>
                 Минути за работа:
-                <input name="worktime" type="number" class="input" value="40" step="5" >
+                <input name="worktime" min="1" type="number" class="input">
             </label>
             <fieldset class="textarea" style="padding: 5px; margin: 5px; width:auto;">
                 <legend>
                     Бележка
                 </legend>
                 <div style="min-height: 40px;"
-                     contenteditable="true">
+                     contenteditable="true" id="ST_note">
                 </div>
             </fieldset>
             <div class="input" id="ST_button" style="width: auto; margin: 10px;">
                 Насрочи
             </div>
+            <span id="ST_feedback"></span>
         </div>
         <!-- Tests container -->
         <div id="testsShadow" class="shadow"

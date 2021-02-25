@@ -262,7 +262,7 @@ and open the template in the editor.
 #startTest{
     text-align: center;
     z-index: 110;
-    width: 300px;
+    width: 400px;
     min-height: 300px;
     font-size: 14pt;
 }
