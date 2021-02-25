@@ -51,7 +51,8 @@ if (!window.TestsPageGUI.Container) {
                     }
                 }
             ]
-        ]
+        ],
+        contextHint: "img/Firefox-OS-tan.png"
     })
 
     window.TestsPageGUI.activateGroupsContainer = function () {

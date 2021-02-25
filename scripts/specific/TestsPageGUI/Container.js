@@ -196,7 +196,7 @@ TestsPageGUI.Container = function (options) {
             cell: parentNode,
             name: nameNode,
             description: descriptionNode,
-            contextMenu: new FancyContextMenu(parentNode, ctxOptions)
+            contextMenu: new FancyContextMenu(parentNode, ctxOptions, options.contextHint)
         }
         return references
     }

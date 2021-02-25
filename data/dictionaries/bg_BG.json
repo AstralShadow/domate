@@ -73,6 +73,7 @@
         "noExerciseName": "<i style=\"opacity:0.5;\">Неименувана задача</i>",
         "noExerciseDescription": "<i style=\"opacity:0.5;\">Липсва описание</i>"
     },
+    "successfulTestSchedule": "Насрочването на теста беше успешно. Моля споделете този линк с учениците си: \n $link",
 
     "userClassErrorMessage": {
         "USER_ERRCODE_NO_ERROR": "Нямаше грешка.",

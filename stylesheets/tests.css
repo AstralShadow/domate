@@ -300,3 +300,7 @@ and open the template in the editor.
     z-index: 100;
     cursor: pointer;
 }
+.FancyContextMenu_Help{
+    z-index: 100;
+    width: 200px;
+}

@@ -19,4 +19,8 @@ and open the template in the editor.
     transform: translate(-24px, -24px);
 }
 
-
+.FancyContextMenu_Help{
+    position: fixed;
+    pointer-events: none;
+    transform: translate(24px, -24px);
+}

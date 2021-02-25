@@ -10,7 +10,7 @@
  * @param {type} optionsList - array of objects of type FancyContextMenu.Option
  * @returns {undefined}
  */
-function FancyContextMenu (element, optionsList) {
+function FancyContextMenu (element, optionsList, infoImgSrc) {
     'use strict'
     var self = this
     this.options = optionsList || []
@@ -47,6 +47,14 @@ function FancyContextMenu (element, optionsList) {
         self.close()
     })
 
+    /* Helper */
+    var infoimg = null
+    if (infoImgSrc) {
+        infoimg = document.createElement("img")
+        infoimg.src = infoImgSrc
+        infoimg.className = "FancyContextMenu_Help"
+    }
+
     /* Animation */
     var visible = false
     var progress = 1
@@ -77,6 +85,11 @@ function FancyContextMenu (element, optionsList) {
                 }
                 (element || document.body).append(option.icon)
                 option.lastContextMenu = self
+            }
+            if (infoimg) {
+                (element || document.body).append(infoimg)
+                infoimg.style.left = radius * 3 + "px"
+                infoimg.style.top = 0 + "px"
             }
 
             var now = (new Date()).getTime()
@@ -136,7 +149,9 @@ function FancyContextMenu (element, optionsList) {
                         (element || document.body).removeChild(option.icon)
                         option.lastContextMenu = null
                     }
-                })
+                });
+                if (infoimg)
+                    (element || document.body).removeChild(infoimg)
             } else {
                 self.options.forEach(function (option) {
                     if (option.lastContextMenu === self) {
@@ -162,6 +177,12 @@ function FancyContextMenu (element, optionsList) {
                 option.icon.style.opacity = p
             }
         })
+        infoimg.style.opacity = Math.max(0, p * 1.2 - .1)
+        infoimg.style.left = xPos + radius + "px"
+        infoimg.style.top = yPos - radius + "px"
+        if (xPos + radius + infoimg.offsetWidth > window.innerWidth) {
+            infoimg.style.left = xPos - radius - infoimg.offsetWidth - self.options[0].icon.offsetWidth + "px"
+        }
     }
 
 }

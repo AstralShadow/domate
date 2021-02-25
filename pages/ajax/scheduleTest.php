@@ -54,9 +54,10 @@ if (!in_array($id, (array) $user->tests ?? [])){
 $test = new Test($db, new ObjectId($id));
 $test->schedule($user, $start, $end, $worktime, $note);
 unset($id, $note, $start, $end, $worktime, $test);
-
+$msg = $dictionary->successfulTestSchedule;
+$link = "В разработка...";
 
 $response["code"] = "Success";
-$response["msg"] = $dictionary->success;
+$response["msg"] = str_replace(['$link', '\n'], [$link, '<br />'], $msg);
 $response["input"] = $input;
 

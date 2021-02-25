@@ -55,7 +55,8 @@ if (!window.TestsPageGUI.Container) {
                 }
             ]
         ],
-        oncreate: TestsPageGUI.editTest
+        oncreate: TestsPageGUI.editTest,
+        contextHint: "img/Firefox-OS-tan.png"
     })
     container.activate()
 
