@@ -41,11 +41,17 @@ if (!window.TestsPageGUI.Container) {
                         this.remove(oid)
                 }
             ],
-            ["img/icon_231x234.png",
+            ["img/math1.png",
                 function (oid) {
                     //console.log("use not used yet")
                     // *use* function
                     showStartTestDiv(oid)
+                }
+            ],
+            ["img/math2.png",
+                function (oid) {
+                    //console.log("use not used yet")
+                    // *use* function
                 }
             ]
         ],
