@@ -16,6 +16,7 @@ if (!window.TestsPageGUI.Container) {
 
 (function () {
     'use strict'
+    var startTestDiv, showStartTestDiv, hideStartTestDiv
     var container = new TestsPageGUI.Container({
         /* Constants */
         type: 'test',
@@ -42,13 +43,57 @@ if (!window.TestsPageGUI.Container) {
             ],
             ["img/icon_231x234.png",
                 function (oid) {
-                    console.log("use not used yet")
+                    //console.log("use not used yet")
                     // *use* function
+                    showStartTestDiv(oid)
                 }
             ]
         ],
         oncreate: TestsPageGUI.editTest
     })
-
     container.activate()
+
+    window.addEventListener("load", function () {
+        var lastClickEvent
+        startTestDiv = document.querySelector("#startTest")
+        startTestDiv.addEventListener("mousedown", function (e) {
+            lastClickEvent = e
+        })
+        document.addEventListener("mousedown", function (e) {
+            if (lastClickEvent !== e) {
+                hideStartTestDiv()
+            }
+        })
+        showStartTestDiv = function (oid) {
+            startTestDiv.style.display = "block"
+            fill(oid)
+        }
+        hideStartTestDiv = function () {
+            startTestDiv.style.display = "none"
+        }
+        var data = null
+        function fill (oid) {
+            data = container.get(oid)
+            if (data.name) {
+                document.getElementById("ST_name")
+                    .innerText = data.name
+            } else {
+                document.getElementById("ST_name")
+                    .innerHTML = TestsPageGUI.noTestName
+            }
+            document.getElementById("ST_description")
+                .innerText = data.description
+            document.getElementById("ST_tasks")
+                .innerText = data.contents.length
+        }
+        document.getElementById("ST_button")
+            .addEventListener("click", async function () {
+                var query = await StateTracker.get("scheduleTest", {
+                    id: data["_id"],
+
+                })
+                document.getElementById("ST_feedback").innerHTML = query.result
+                console.log(query)
+            })
+    })
 })()

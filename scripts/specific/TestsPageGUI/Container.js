@@ -138,6 +138,10 @@ TestsPageGUI.Container = function (options) {
         }
     }
 
+    this.get = function (oid) {
+        return tracked[oid]
+    }
+
     /* Activation & Deactivation */
     var active = false;
     this.activate = function () {

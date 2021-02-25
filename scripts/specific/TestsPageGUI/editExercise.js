@@ -98,7 +98,6 @@ if (!window.TestsPageGUI.ContentListEditor) {
         if (MathJax.typeset) {
             MathJax.typeset()
         }
-        console.log(input)
 
         function insertTextAtCaret (text) {
             //https://stackoverflow.com/questions/2920150/insert-text-at-cursor-in-a-content-editable-div

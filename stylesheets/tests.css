@@ -234,7 +234,13 @@ and open the template in the editor.
     width: 100%;
     background: black;
 }
-
+.box{
+    border: 2px solid rgb(0, 250, 0);
+    margin: 2px;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px;
+}
 .exerciseConfig{
     background-color: black;
     color: rgb(0, 255, 0);
@@ -253,6 +259,13 @@ and open the template in the editor.
     overflow: hidden;
 }
 
+#startTest{
+    text-align: center;
+    z-index: 110;
+    width: 300px;
+    min-height: 300px;
+    font-size: 14pt;
+}
 
 /* Notification */
 .notification{
@@ -282,13 +295,6 @@ and open the template in the editor.
     border: 2px solid rgb(0, 250, 0);
 }
 
-.box{
-    border: 2px solid rgb(0, 250, 0);
-    margin: 2px;
-    display: inline-block;
-    border-radius: 5px;
-    padding: 5px;
-}
 
 .FancyContextMenu_Icon{
     z-index: 100;

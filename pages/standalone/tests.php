@@ -216,8 +216,35 @@
                 </div>
             </fieldset>
         </div>
-
-        <div id="startTest" class="page" >
+        <div id="startTest" class="notification" >
+            <span style="font-size:16pt;" id="ST_name"></span><br />
+            <span style="font-size:12pt;">
+                <span id="ST_description"></span><br />
+                (<span id="ST_tasks">0</span> задачи)<br /><br />
+            </span>
+            <label>
+                Достъпен от:
+                <input name="start" type="datetime-local" class="input" >
+            </label>
+            <label>
+                Достъпен до:
+                <input name="end" type="datetime-local" class="input" >
+            </label>
+            <label>
+                Минути за работа:
+                <input name="worktime" type="number" class="input" value="40" step="5" >
+            </label>
+            <fieldset class="textarea" style="padding: 5px; margin: 5px; width:auto;">
+                <legend>
+                    Бележка
+                </legend>
+                <div style="min-height: 40px;"
+                     contenteditable="true">
+                </div>
+            </fieldset>
+            <div class="input" id="ST_button" style="width: auto; margin: 10px;">
+                Насрочи
+            </div>
         </div>
         <!-- Tests container -->
         <div id="testsShadow" class="shadow"

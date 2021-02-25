@@ -28,7 +28,8 @@
         "removeTest": "?p=removeTest",
         "testData": "?p=testData",
 
-        "logout": "?p=logout"
+        "logout": "?p=logout",
+        "scheduleTest": "?p=scheduleTest"
     }
 
     // TODO: Modifying can return status, use this.
