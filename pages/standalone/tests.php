@@ -180,9 +180,9 @@
                 <fieldset class="textarea">
                     <legend> Настройки на задача </legend>
                     <div id="exerciseSettings">
-                        <fieldset class="config">
+                        <fieldset class="exerciseConfig">
                             <legend>
-                                <input type="checkbox" />
+                                <input type="checkbox" class="configCheckbox" />
                                 Отговор
                             </legend>
                             <div id="exerciseAnswer"
@@ -217,6 +217,8 @@
             </fieldset>
         </div>
 
+        <div id="startTest" class="page" >
+        </div>
         <!-- Tests container -->
         <div id="testsShadow" class="shadow"
              data-dimensions="height: <#testsContainer>.offsetHeight;

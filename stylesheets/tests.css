@@ -235,18 +235,24 @@ and open the template in the editor.
     background: black;
 }
 
-.config{
+.exerciseConfig{
     background-color: black;
     color: rgb(0, 255, 0);
     font-size: 14pt;
     box-sizing: border-box;
-    border: 1px solid rgb(0, 200, 0);
-    max-height: 0px;
     padding: 0px;
-}
-.config > legend{
+    height: 50px;
     text-indent: 0px;
 }
+.exerciseConfig.on{
+    border: 1px solid rgb(0, 200, 0);
+}
+.exerciseConfig.off{
+    border: 0px solid rgb(0, 200, 0);
+    max-height: 0px;
+    overflow: hidden;
+}
+
 
 /* Notification */
 .notification{
@@ -274,6 +280,14 @@ and open the template in the editor.
     margin-right: 30px;
     cursor: pointer;
     border: 2px solid rgb(0, 250, 0);
+}
+
+.box{
+    border: 2px solid rgb(0, 250, 0);
+    margin: 2px;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .FancyContextMenu_Icon{

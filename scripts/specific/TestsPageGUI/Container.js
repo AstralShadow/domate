@@ -185,7 +185,7 @@ TestsPageGUI.Container = function (options) {
         parentNode.appendChild(nameNode)
 
         var descriptionNode = document.createElement("div")
-        descriptionNode.className = "description"
+        descriptionNode.className = "description mathjax"
         parentNode.appendChild(descriptionNode)
 
         var references = {
@@ -207,10 +207,13 @@ TestsPageGUI.Container = function (options) {
         } else {
             reference.name.innerHTML = namePlaceholder
         }
-        if (data.description) {
-            reference.description.innerText = data.description
+        if (data.description || data.question) {
+            reference.description.innerText = data.description || data.question
         } else {
             reference.description.innerHTML = descriptionPlaceholder
+        }
+        if (MathJax.typeset) {
+            MathJax.typeset()
         }
     }
 
