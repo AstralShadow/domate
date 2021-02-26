@@ -14,13 +14,17 @@ use \MongoDB\Database as Database;
 use Identification\User as User;
 use Shared\ModificableMongoDocument as ModificableMongoDocument;
 use MathExam\ExerciseGroup as ExerciseGroup;
+use MathExam\ActiveTest as ActiveTest;
 
 class Test
 {
 
     use ModificableMongoDocument;
 
+    private Database $database;
+
     public function __construct(Database $database, ObjectId $id) {
+        $this->database = $database;
         $this->collection = $database->tests;
         $this->privateParameters = ["owner"];
         $this->identificator = $id;
@@ -148,6 +152,35 @@ class Test
             $groups[] = (string) $pair["token"];
         }
         return $groups;
+    }
+
+    /**
+     * Schedules a test.
+     * @param User $teacher
+     * @param int $start
+     * @param int $end
+     * @param int $worktime
+     * @param string $note
+     * @return string
+     */
+    public function schedule(User $teacher, int $start, int $end, int $worktime, ?string $note): ActiveTest {
+        $active = ActiveTest::create($this->database, $teacher);
+        $active->start = new UTCDateTime(max(time(), $start) * 1000);
+        $active->end = new UTCDateTime(max(time() + 60, $end) * 1000);
+        $active->worktime = max(1, $worktime);
+        if (isset($note)){
+            $active->note = $note;
+        }
+        $active->test = $this->getId();
+
+        $query = [
+            '$push' => [
+                "active" => $active->getId()
+            ]
+        ];
+        $this->update($query);
+
+        return $active;
     }
 
 }

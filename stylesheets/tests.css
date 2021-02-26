@@ -21,7 +21,9 @@ and open the template in the editor.
     background-size: 90%;
     background-repeat: no-repeat;
     background-position: left center;
-    float: right;
+    position: fixed;
+    top: 5px;
+    right: 5px;
     width: 130px;
     height: 130px;
     margin: 15px 15px;

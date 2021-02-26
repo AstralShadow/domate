@@ -12,7 +12,9 @@ if (!defined("DETECTED_PAGE")){
 
     $page = "home";
     $pageType = null;
-    if (isset($_GET['p']) && is_string($_GET['p'])){
+    if (isset($_GET["test"]) && is_string($_GET["test"])){
+        $page = "joinTest";
+    } else if (isset($_GET['p']) && is_string($_GET['p'])){
         if (preg_match("/^[a-zA-Z0-9\_]{2,}$/", $_GET['p'])){
             $page = $_GET['p'];
         }

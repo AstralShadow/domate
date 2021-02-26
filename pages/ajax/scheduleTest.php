@@ -7,6 +7,10 @@
  */
 include "include/testsAndTasks.php";
 
+use \MongoDB\BSON\ObjectId as ObjectId;
+use MathExam\Test as Test;
+use MathExam\ActiveTest as ActiveTest;
+
 /*  Input  */
 
 $inputOk = true;
@@ -14,6 +18,9 @@ if (!isset($input["id"]) || !is_string($input["id"])){
     $inputOk = false;
 }
 if (isset($input["note"]) && !is_string($input["note"])){
+    $inputOk = false;
+}
+if (isset($input["question"]) && !is_string($input["question"])){
     $inputOk = false;
 }
 if (!isset($input["start"]) || !is_numeric($input["start"])){
@@ -28,18 +35,21 @@ if (!isset($input["worktime"]) || !is_numeric($input["worktime"])){
 if (!$inputOk){
     unset($inputOk);
     $response["msg"] = $dictionary->illegalArguments;
+    $response["code"] = "Illegal input";
     return;
 }
 unset($inputOk);
 
 $id = (string) $input["id"];
-$note = (string) $input["note"];
+$note = isset($input["note"]) ? (string) $input["note"] : null;
 $start = (int) $input["start"];
 $end = (int) $input["end"];
 $worktime = (int) $input["worktime"];
+$question = isset($input["idQuestion"]) ? (string) $input["question"] : null;
 
 if ($start >= $end || time() >= $end || $worktime < 1){
     $response["msg"] = $dictionary->illegalArguments;
+    $response["code"] = "OutdatedInput";
     unset($id, $note, $start, $end, $worktime);
     return;
 }
@@ -52,12 +62,14 @@ if (!in_array($id, (array) $user->tests ?? [])){
 
 /*  Action  */
 $test = new Test($db, new ObjectId($id));
-$test->schedule($user, $start, $end, $worktime, $note);
-unset($id, $note, $start, $end, $worktime, $test);
-$msg = $dictionary->successfulTestSchedule;
-$link = "В разработка...";
+$activeTest = $test->schedule($user, $start, $end, $worktime, $question, $note);
+$url = $activeTest->getLink();
+$link = "<a href=\"$url\">$url</a>";
+unset($id, $note, $start, $end, $worktime, $test, $question, $activeTest);
+$template = $dictionary->successfulTestSchedule;
+$msg = str_replace(['$link', "\n"], [$link, "<br />"], $template);
 
 $response["code"] = "Success";
-$response["msg"] = str_replace(['$link', '\n'], [$link, '<br />'], $msg);
+$response["msg"] = $msg;
 $response["input"] = $input;
-
+unset($template, $link, $msg);

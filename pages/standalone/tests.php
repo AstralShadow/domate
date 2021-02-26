@@ -222,28 +222,50 @@
             <span style="font-size:16pt;" id="ST_name"></span><br />
             <span style="font-size:12pt;">
                 <span id="ST_description"></span><br />
-                (<span id="ST_tasks">0</span> задачи)<br /><br />
+                (<span id="ST_tasks">0</span> задачи)<br />
             </span>
             <label>
-                Достъпен от:
-                <input name="start" type="datetime-local" class="input" >
+                <fieldset class="textarea" style="margin:5px; padding: 0px; width:auto;">
+                    <legend>
+                        Достъпен от:
+                    </legend>
+                    <input name="start" style="border: 0px solid black;" type="datetime-local" class="input" >
+                </fieldset>
             </label>
             <label>
-                Достъпен до:
-                <input name="end" type="datetime-local" class="input" >
+                <fieldset class="textarea" style="margin:5px; padding: 0px; width:auto;">
+                    <legend>
+                        Заключване в:
+                    </legend>
+                    <input name="end" style="border: 0px solid black;" type="datetime-local" class="input" >
+                </fieldset>
             </label>
             <label>
-                Минути за работа:
-                <input name="worktime" min="1" type="number" class="input">
+                <fieldset class="textarea" style="margin:5px; padding: 0px; width:auto;">
+                    <legend>
+                        Минути за работа:
+                    </legend>
+                    <input name="worktime" style="border: 0px solid black;" min="1" type="number" class="input">
+                </fieldset>
             </label>
-            <fieldset class="textarea" style="padding: 5px; margin: 5px; width:auto;">
-                <legend>
-                    Бележка
-                </legend>
-                <div style="min-height: 40px;"
-                     contenteditable="true" id="ST_note">
-                </div>
-            </fieldset>
+            <label>
+                <fieldset class="textarea" style="padding: 5px; margin: 5px; width:auto;">
+                    <legend>
+                        Въпрос към учениците:
+                    </legend>
+                    <input id="ST_identification" style="border: 0px solid black;"
+                           type="text" class="input" value="Моля въведете вашето име.">
+                </fieldset>
+            </label>
+            <label>
+                <fieldset class="textarea" style="padding: 5px; margin: 5px; width:auto;">
+                    <legend>
+                        Бележка
+                    </legend>
+                    <input id="ST_note" style="border: 0px solid black;"
+                           type="text" class="input" placeholder="Няма бележка">
+                </fieldset>
+            </label>
             <div class="input" id="ST_button" style="width: auto; margin: 10px;">
                 Насрочи
             </div>

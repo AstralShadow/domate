@@ -15,8 +15,6 @@
 
         <link href="./stylesheets/main.css"
               rel="stylesheet" type="text/css" />
-        <link href="./stylesheets/task.css"
-              rel="stylesheet" type="text/css" />
 
         <script src="./scripts/StateTracker.js"></script>
 

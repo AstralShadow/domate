@@ -92,11 +92,13 @@ if (!window.TestsPageGUI.Container) {
                 .innerText = data.description
             document.getElementById("ST_tasks")
                 .innerText = data.contents.length
+            document.getElementById("ST_feedback").innerText = ""
         }
         var startE = startTestDiv.querySelector("[name=start]")
         var endE = startTestDiv.querySelector("[name=end]")
         var worktimeE = startTestDiv.querySelector("[name=worktime]")
         var noteE = startTestDiv.querySelector("#ST_note")
+        var idE = startTestDiv.querySelector("#ST_identification")
         document.getElementById("ST_button")
             .addEventListener("click", async function () {
                 var query = await StateTracker.get("scheduleTest", {
@@ -104,7 +106,8 @@ if (!window.TestsPageGUI.Container) {
                     start: startE.valueAsNumber / 1000,
                     end: endE.valueAsNumber / 1000,
                     worktime: worktimeE.value || def_worktime(),
-                    note: noteE.innerText
+                    note: noteE.value,
+                    question: idE.value
                 })
                 document.getElementById("ST_feedback").innerHTML = query.msg
                 console.log(query)
@@ -123,9 +126,10 @@ if (!window.TestsPageGUI.Container) {
         })
 
         function setmin () {
-            startE.min = now()
-            endE.min = now()
-            startE.value = now()
+            var timestamp = now()
+            startE.min = timestamp
+            endE.min = timestamp
+            startE.value = timestamp
         }
         setInterval(setmin, 30000)
         setmin()
