@@ -48,6 +48,8 @@ if (!window.TestsPageGUI.ContentListEditor) {
         copyOptions.onclose = function () {
             if (TestPageGUI.lastFocusedTest) {
                 TestsPageGUI.editTest(TestPageGUI.lastFocusedTest)
+            } else {
+                TestsPageGUI.showHelp("main")
             }
             window.TestsPageGUI.deactivateExercisesContainer()
         }
@@ -66,6 +68,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
         }
 
         setTimeout(function () {
+            TestsPageGUI.showHelp("groupEditor")
             TestsPageGUI.activeEditor = createEditor(oid, callerTestId)
             window.TestsPageGUI.activateExercisesContainer()
             window.ExetendedDimensionParser.parse()

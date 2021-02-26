@@ -53,6 +53,8 @@ if (!window.TestsPageGUI.ContentListEditor) {
         copyOptions.onclose = function () {
             if (TestPageGUI.lastFocusedGroup) {
                 TestsPageGUI.editGroup(TestPageGUI.lastFocusedGroup)
+            } else {
+                TestsPageGUI.showHelp("main")
             }
         }
         TestPageGUI.lastFocusedExercise = oid
@@ -73,6 +75,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
         }
 
         setTimeout(function () {
+            TestsPageGUI.showHelp("exerciseEditor")
             TestsPageGUI.activeEditor = createEditor(oid)
             window.ExetendedDimensionParser.parse()
         }, 0)

@@ -39,41 +39,40 @@
         <script defer src="./scripts/specific/TestsPageGUI/editGroup.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/editExercise.js"></script>
 
+        <script defer src="./scripts/specific/TestsPageGUI/HelperMenu.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/CloseButton.js"></script>
+
         <script src="./scripts/mathjaxConfig.js"></script>
         <script async src="./mathjax/startup.js" id="MathJax-script"></script>
 
     </head>
     <body class="nomathjax">
         <div id="header">
+            <?php
+            /* Instructions */
+            $instructions = [];
+            foreach ($dictionary->testsPageInstructions as $key => $value){
+                while (is_array($value) && count($value) > 2){
+                    $c = count($value);
+                    $value[$c - 2] = $value[$c - 2] . $value[$c - 1];
+                    unset($value[$c - 1]);
+                }
+                $instructions[$key] = $value;
+            }
+            ?>
             <div id="logo"></div>
             <div class="alignedTextContainer"
                  data-dimensions="width: <#header>.offsetWidth - <#logo>.offsetWidth - 75;">
-                <div class="element left">
+                <div class="element left" style="margin-bottom: -30px;">
                     <div class="topic">
-                        Здравейте, <?php echo $user->user; ?>
-                        <!---Как да създадем тест?-->
+                        <?php echo $instructions["main"][0]; ?>
                     </div>
                     <br />
                     <div class="content">
                         <div style="float: right; min-width:50px; min-height:10px;"></div>
-                        Тук можете да създавате, редактирате, 
-                        стартирате и оценявате тестове.    
-                        За да се получат различни варианти за всеки
-                        ученик е необхгодимо да въведете колекция от
-                        въпроси.<br />
-                        Още инструкции можете да намерите тук.
-                        <!---Тук виждате създадените от Вас тестове.
-                        Във всеки тест виждате групите задачи от който
-                        се състои, а във всяка граупа можете да видите 
-                        задачите от който се състои. Като изберете даден
-                        тест можете да редактирате съдържанието, 
-                        изтриете или пуснете теста на Вашите ученици. 
-                        Като изберете дадена група задачи можете да 
-                        редактирате съдържанието, изтриете или 
-                        добавите към избрания тест. Като изберете 
-                        дадена задача можете да 
-                        редактирате условието, изтриете или 
-                        добавите към избраната група. -->
+                        <span id="description">
+                            <?php echo $instructions["main"][1]; ?>
+                        </span>
                         <div style="float:left; min-width:50px; min-height:10px;"></div>
                     </div>
                 </div>
@@ -91,6 +90,7 @@
         </div>
         <!-- Test editor -->
         <div id="testEditorPage" class="page">
+            <div class="pageCloseButton"></div>
             <fieldset id="testDetails" class="details">
                 <legend> Тест </legend>
                 <fieldset class="textarea">
@@ -128,6 +128,7 @@
         </div>
         <!-- Exercise-Group editor -->
         <div id="groupEditorPage" class="page">
+            <div class="pageCloseButton"></div>
             <fieldset id="groupDetails" class="details">
                 <legend> Група </legend>
                 <fieldset class="textarea">
@@ -165,6 +166,7 @@
         </div>
         <!-- Exercise editor -->
         <div id="exerciseExitorPage" class="page" >
+            <div class="pageCloseButton"></div>
             <fieldset id="exerciseDetails" class="details">
                 <legend> Задача </legend>
                 <fieldset class="textarea">
@@ -268,6 +270,7 @@
         ];
         $placeholders = $dictionary->contentPlaceholders;
 
+        /* Placeholders */
         $keys = [
             "noTestName", "noTestDescription",
             "noGroupName", "noGroupDescription",
@@ -276,6 +279,9 @@
         foreach ($keys as $key){
             $TestsPageGUI_init[$key] = $placeholders[$key];
         }
+
+        $TestsPageGUI_init["instructions"] = $instructions;
+
         $json = json_encode($TestsPageGUI_init);
 
         echo "<script>var TestsPageGUI = " . $json . "</script>";

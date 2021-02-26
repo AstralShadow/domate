@@ -38,6 +38,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
 
         onclose: function () {
             window.TestsPageGUI.deactivateGroupsContainer()
+            TestsPageGUI.showHelp("main")
         }
     }
 
@@ -53,6 +54,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
         }
 
         setTimeout(function () {
+            TestsPageGUI.showHelp("testEditor")
             TestsPageGUI.activeEditor = createEditor(oid)
             window.TestsPageGUI.activateGroupsContainer()
             window.ExetendedDimensionParser.parse()

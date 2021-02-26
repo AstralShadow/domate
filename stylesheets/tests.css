@@ -26,6 +26,13 @@ and open the template in the editor.
     height: 130px;
     margin: 15px 15px;
 }
+#description{
+    font-size: 12pt;
+}
+hr{
+    border: 1px solid rgb(0, 250, 0);
+    margin: 3px;
+}
 
 /* Elements */
 .container{
@@ -295,6 +302,17 @@ and open the template in the editor.
     border: 2px solid rgb(0, 250, 0);
 }
 
+.pageCloseButton{
+    position: absolute;
+    background: red;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    z-index: 100;
+    right: 5px;
+    top: -5px;
+    cursor: pointer;
+}
 
 .FancyContextMenu_Icon{
     z-index: 100;
@@ -304,3 +322,4 @@ and open the template in the editor.
     z-index: 100;
     width: 200px;
 }
+
