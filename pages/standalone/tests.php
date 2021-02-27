@@ -254,7 +254,7 @@
                         Въпрос към учениците:
                     </legend>
                     <input id="ST_identification" style="border: 0px solid black;"
-                           type="text" class="input" value="Моля въведете вашето име.">
+                           type="text" class="input" value="Име на ученик:">
                 </fieldset>
             </label>
             <label>

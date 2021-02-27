@@ -107,9 +107,12 @@ if (!window.TestsPageGUI.Container) {
                     end: endE.valueAsNumber / 1000,
                     worktime: worktimeE.value || def_worktime(),
                     note: noteE.value,
-                    question: idE.value
+                    question: idE.value || "Име на ученик:"
                 })
-                document.getElementById("ST_feedback").innerHTML = query.msg
+                var msg = query.msg
+                var url = location.href.replace(/([^/\\]*\.php)?(\?.*)?$/, "")
+                var link = url + "?test=" + query.key
+                document.getElementById("ST_feedback").innerHTML = msg.replace(/\$link/g, link)
                 console.log(query)
             })
         startE.addEventListener("input", function () {

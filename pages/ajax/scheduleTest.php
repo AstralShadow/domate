@@ -63,13 +63,12 @@ if (!in_array($id, (array) $user->tests ?? [])){
 /*  Action  */
 $test = new Test($db, new ObjectId($id));
 $activeTest = $test->schedule($user, $start, $end, $worktime, $question, $note);
-$url = $activeTest->getLink();
-$link = "<a href=\"$url\">$url</a>";
-unset($id, $note, $start, $end, $worktime, $test, $question, $activeTest);
 $template = $dictionary->successfulTestSchedule;
-$msg = str_replace(['$link', "\n"], [$link, "<br />"], $template);
+$key = $activeTest->getKey();
+
+unset($id, $note, $start, $end, $worktime, $test, $question, $activeTest);
 
 $response["code"] = "Success";
-$response["msg"] = $msg;
-$response["input"] = $input;
-unset($template, $link, $msg);
+$response["msg"] = $template;
+$response["key"] = $key;
+unset($template, $key, $template);
