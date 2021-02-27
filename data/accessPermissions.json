@@ -10,20 +10,27 @@
     "defaultUserPage": "tests",
     "userOnlyPages": [
         "tests",
-
         "logout",
+
         "listExercises",
-        "listExerciseGroups",
-        "listTests",
+        "createExercise",
         "modifyExercise",
-        "modifyExerciseGroup",
-        "modifyTest",
         "removeExercise",
-        "removeExerciseGroup",
-        "removeTest",
         "exerciseData",
+
+        "listExerciseGroups",
+        "createExerciseGroup",
+        "modifyExerciseGroup",
         "removeExerciseGroup",
-        "removeTest"
+        "exerciseGroupData",
+
+        "listTests",
+        "createTest",
+        "modifyTest",
+        "removeTest",
+        "testData",
+
+        "scheduleTest"
 
     ]
 }

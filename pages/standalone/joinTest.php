@@ -55,14 +55,13 @@ use MathExam\ActiveTest as ActiveTest;
                 $activeTest = new ActiveTest($db, new ObjectId($id));
             }
         }
-        if (!isset($activeTest)){
-            ?>
-            Няма такъв тест; Грешен или невалиден линк.
-            <?php
-        }else{
+
+        if (isset($activeTest)){
             var_dump($activeTest->start->toDateTime());
             var_dump($activeTest->end->toDateTime());
         }
+
+        echo "Съществуващо изпитване: " . (bool) $activeTest . "<br />";
         ?>
     </body>
 </html>
