@@ -38,7 +38,11 @@ use MathExam\ActiveTest as ActiveTest;
             <br/>
             Стартиране след:
             <br/>
-            <div style="width: 100px; margin: 10px; text-align: center;  border: 1px solid rgb(0, 250, 0); ">
+            <div style="
+                 width: 100px;
+                 margin: auto auto;
+                 text-align: center; 
+                 border: 1px solid rgb(0, 250, 0); ">
                 Старт
             </div>
         </div>
