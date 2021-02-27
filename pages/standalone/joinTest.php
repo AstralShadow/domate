@@ -20,7 +20,7 @@ use MathExam\ActiveTest as ActiveTest;
 
         <link href="./stylesheets/main.css"
               rel="stylesheet" type="text/css" />
-        <link href="./stylesheets/tests.css"
+        <link href="./stylesheets/joinTest.css"
               rel="stylesheet" type="text/css" />
 
         <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
@@ -31,6 +31,17 @@ use MathExam\ActiveTest as ActiveTest;
 
     </head>
     <body>
+        <div class="notification">
+            Начало:
+            <br/>
+            Край:
+            <br/>
+            Стартиране след:
+            <br/>
+            <div style="width: 100px; margin: 10px; text-align: center;  border: 1px solid rgb(0, 250, 0); ">
+                Старт
+            </div>
+        </div>
         <?php
         $activeTest = null;
         if (isset($_GET["test"]) && is_string($_GET["test"])){
@@ -44,7 +55,7 @@ use MathExam\ActiveTest as ActiveTest;
             ?>
             Няма такъв тест; Грешен или невалиден линк.
             <?php
-        } else {
+        }else{
             var_dump($activeTest->start->toDateTime());
             var_dump($activeTest->end->toDateTime());
         }

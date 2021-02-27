@@ -12,8 +12,11 @@ and open the template in the editor.
     position: fixed;
     /* background-image defined by js */
     background-position: center center;
-    background-size: auto 48px;
+    background-size: auto 40px;
     background-repeat: no-repeat;
+    background-color: black;
+    border-radius: 50%;
+    box-shadow: inset 0 0 5px grey; 
     width: 48px;
     height: 48px;
     transform: translate(-24px, -24px);

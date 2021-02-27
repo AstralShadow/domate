@@ -30,11 +30,11 @@ if (!window.TestsPageGUI.Container) {
 
         /* Functionality */
         functions: [
-            ["img/icon_231x234.png",
+            ["img/m1.png",
                 function (oid) {
                     TestsPageGUI.editTest(oid)
                 }],
-            ["img/delete_in_domate_95x100.png",
+            ["img/delete.png",
                 function (oid) {
                     // TODO: use some more nice askbox
                     if (confirm("Are you sure you\nwant to remove this?"))
