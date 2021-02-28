@@ -81,7 +81,7 @@ class ExerciseGroup
      */
     public function addExercise(Exercise $exercise): void {
         $this->update([
-            '$push' => [
+            '$addToSet' => [
                 "contents" => $exercise->getId()
             ]
         ]);
