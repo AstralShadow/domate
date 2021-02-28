@@ -82,6 +82,8 @@ if (isset($activeTest)){
         <script src="./scripts/StateTracker.js"></script>
 
         <script defer src="./scripts/specific/SolveTestGUI/Core.js"></script>
+        <script defer src="./scripts/specific/SolveTestGUI/Timer.js"></script>
+        <script defer src="./scripts/specific/SolveTestGUI/Progress.js"></script>
 
         <script src="./scripts/mathjaxConfig.js"></script>
         <script async src="./mathjax/startup.js" id="MathJax-script"></script>
