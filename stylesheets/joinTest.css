@@ -8,17 +8,54 @@ and open the template in the editor.
     Author     : tedi
 */
 
-.notification{
+.centeredBox{
     background: black;
-    padding: 7px;
-    transform: translate(-50%, -50%);
+    position: fixed;
     top: 50%;
     left: 50%;
-    position: fixed;
-    font-size: 16pt;
-    border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
-    border: 3px solid rgb(0, 250, 0);
+    transform: translate(-50%, -50%);
     width: 340px;
+    border: 3px solid rgb(0, 250, 0);
+    border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
+    padding: 7px;
+    font-size: 16pt;
+    text-align: center;
+}
+
+.title{
+    font-size: 25pt;
+}
+
+.small{
+    font-size: 12pt;
+}
+
+#startTimerBox{
+    margin: 12pt;
+}
+
+#startTimer{
+    font-size: 45pt;
+}
+
+.textarea{
+    width: auto;
+    margin: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#identification{
+    border: 0px solid black;
+}
+
+#startButton{
+    width: 100px;
+    margin: auto auto;
+    margin-top: 5px;
+    text-align: center; 
+    border: 1px solid rgb(0, 250, 0);
+    opacity: 0.2;
 }
 
 #fulltest{

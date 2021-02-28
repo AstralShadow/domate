@@ -9,7 +9,53 @@
 include "include/testsAndTasks.php";
 
 use \MongoDB\BSON\ObjectId as ObjectId;
+use MathExam\Test as Test;
 use MathExam\ActiveTest as ActiveTest;
+
+$activeTest = null;
+$test = null;
+$startsAfter = null;
+$endsAfter = null;
+
+if (isset($_GET["test"]) && is_string($_GET["test"])){
+    $key = trim($_GET["test"]);
+    $id = ActiveTest::getIdFromKey($db, $key);
+    if (isset($id)){
+        $activeTest = new ActiveTest($db, new ObjectId($id));
+    }
+}
+
+if (isset($activeTest)){
+    $startTimestamp = $activeTest->start->toDateTime()->getTimestamp();
+    $endTimestamp = $activeTest->end->toDateTime()->getTimestamp();
+    $startsAfter = $startTimestamp - time();
+    $endsAfter = $endTimestamp - time();
+
+    if (Test::exists($db, new ObjectId($activeTest->test))){
+        $test = new Test($db, new ObjectId($activeTest->test));
+    } else {
+        // $dictionary->joinTest["sourceDeleted"];
+    }
+    $worktime = "(";
+    if ($activeTest->worktime > 60){
+        $worktime .= floor($activeTest->worktime / 60) . " час";
+        if ($activeTest->worktime >= 120){
+            $worktime .= "а";
+        }
+        if ($activeTest->worktime % 60){
+            $worktime .= " и ";
+        }
+    }
+    if ($activeTest->worktime % 60){
+        $worktime .= ($activeTest->worktime % 60) . " минути";
+    }
+    $worktime .= ')';
+    $questions = "(" . count($test->contents) . " въпрос";
+    if ($questions > 1){
+        $questions .= "а";
+    }
+    $questions .= ')';
+}
 ?>
 <html>
     <head>
@@ -31,41 +77,125 @@ use MathExam\ActiveTest as ActiveTest;
 
     </head>
     <body>
-        <div class="notification" style="display: none;">
-            <div style="font-size: 25pt; text-align: center;">Математика</div>
-            <div style="font-size: 12pt; text-align: center;">
-                (<span>23</span> въпроси)
-                <br/>
-                (<span>90</span> минути)
-            </div>
-            <br/>
-            <div style="display: ; text-align: center; font-size: 16pt;">
-                ЗАПОЧВА СЛЕД:
-                <br/>
-                <div style="font-size: 45pt;">
-                    33:33:33
+        <?php
+        if (isset($activeTest)){
+            ?>
+            <div class="centeredBox" >
+                <div class="title" ></div>
+
+                <script>
+                    window.addEventListener("load", fillTitle)
+                    fillTitle()
+                    function fillTitle () {
+                        document.querySelectorAll(".title").forEach(function (el) {
+                            el.innerText = <?php echo json_encode($test->name) ?>
+                        })
+                    }
+                </script>
+
+                <div class="small">
+                    <?php echo $questions . "<br />" . $worktime; ?>
                 </div>
+                <?php
+                $timerCss = "style=\"display: none;\" ";
+                if (isset($startAfter) && $startsAfter > 0){
+                    $timerCss = "";
+                }
+                if (isset($startTimestamp)){
+                    echo "<script>const startsAt = " . $startTimestamp . ";</script>";
+                }
+                ?>
+                <div id="startTimerBox" <?php echo $timerCss; ?>>
+                    ЗАПОЧВА СЛЕД:
+                    <div id="startTimer">
+                        ??:??:??
+                    </div>
+                    <script>
+                        var startCountdownInterval = setInterval(progressStartTimer, 1000)
+                        progressStartTimer()
+                        function progressStartTimer () {
+                            "use strict"
+                            const div = document.getElementById("startTimer");
+                            var differenceMS = startsAt - (new Date()).getTime() / 1000
+                            var difference = Math.abs(Math.floor(differenceMS))
+                            var hours = "00", minutes = "00", seconds = "00"
+                            if (Math.abs(difference) >= 3600) {
+                                hours = Math.floor(difference / 3600)
+                            }
+                            if (Math.abs(difference) % 3600 >= 60) {
+                                minutes = Math.floor(difference / 60) % 60
+                            }
+                            if (difference % 60) {
+                                seconds = difference % 60
+                            }
+
+                            hours = String(hours).padStart(2, '0')
+                            minutes = String(minutes).padStart(2, '0')
+                            seconds = String(seconds).padStart(2, '0')
+                            div.innerText = (differenceMS < 0 ? "-" : "") + hours + ':' + minutes + ':' + seconds
+
+                            if (differenceMS < 0 && window.readyFunc && window.readyFunc()) {
+                                document.getElementById("startTimerBox").style.display = "none"
+                                clearInterval(startCountdownInterval)
+                            }
+                        }
+                    </script>
+                </div>
+                <?php
+                if ($activeTest->question){
+                    ?>
+                    <label>
+                        <fieldset class="textarea">
+                            <legend id="identificationQuestion"></legend>
+                            <script>
+                                document.querySelector("#identificationQuestion")
+                                    .innerText = <?php echo json_encode($activeTest->question) ?>
+                            </script>
+                            <input type="text" id="identification" class="input">
+                        </fieldset>
+                    </label>
+                    <?php
+                }
+                ?>
+                <div id="startButton">
+                    Начало
+                </div>
+                <script>
+                    window.addEventListener("load", function () {
+                        'use strict'
+                        const id = document.querySelector("#identification")
+                        if (id) {
+                            window.readyFunc = function () {
+                                if (id.value.length > 0) {
+                                    enableStart()
+                                    return true
+                                }
+                            }
+                        } else {
+                            window.readyFunc = function () {
+                                enableStart()
+                                return true
+                            }
+                        }
+                        const start = document.getElementById("startButton")
+                        function enableStart () {
+                            start.style.opacity = 1
+                            start.style.cursor = "pointer"
+                            start.addEventListener("click", function () {
+                                if (id && !id.value.length) {
+                                    id.style.border = "1px solid red"
+                                    return;
+                                }
+                                console.log("go")
+                            })
+                        }
+                    })
+                </script>
             </div>
-            <label>
-                <fieldset class="textarea"  style="padding: 5px; font-size: 16pt; margin: 5px; width:auto;">
-                    <legend>
-                        Име
-                    </legend>
-                    <input id="" style="border: 0px solid black;"
-                           type="text" class="input">
-                </fieldset>
-            </label>
-            <br/>
-            <div style="
-                 width: 100px;
-                 margin: auto auto;
-                 margin-top: 5px;
-                 text-align: center; 
-                 border: 1px solid rgb(0, 250, 0); ">
-                Начало
-            </div>
-        </div>
-        <div>
+            <?php
+        }
+        ?>
+        <div style="display: none;">
             <div style="font-size: 25pt; text-align: center;">Математика</div>
             <div style="font-size: 12pt; text-align: center;">
                 (<span>23</span> въпроси)
@@ -81,7 +211,7 @@ use MathExam\ActiveTest as ActiveTest;
             </div>
         </div>
         <br/>
-        <div style="padding: 5px; background-color: black; position: fixed; right: 10px; border: 2px solid rgb(0, 250, 0); border-radius: 40px 40px 40px 40px/15px 15px 15px 15px; width: 50px;">
+        <div style="display: none; padding: 5px; background-color: black; position: fixed; right: 10px; border: 2px solid rgb(0, 250, 0); border-radius: 40px 40px 40px 40px/15px 15px 15px 15px; width: 50px;">
             <div class="kryg">
             </div>
             <div class="kryg">
@@ -95,7 +225,7 @@ use MathExam\ActiveTest as ActiveTest;
             <div class="kryg">
             </div>
         </div>
-        <div id="fulltest">
+        <div id="fulltest" style="display: none;">
             <fieldset id="test">  
                 <label>
                     <fieldset class="textarea"  style="border-top: 4px solid rgb(0, 250, 0); padding: 5px; font-size: 16pt; margin: 2px; width:auto;">
@@ -130,27 +260,5 @@ use MathExam\ActiveTest as ActiveTest;
                 </label>
             </fieldset>
         </div>
-        <?php
-        $activeTest = null;
-        $startsAfter = null;
-        $endsAfter = null;
-
-        if (isset($_GET["test"]) && is_string($_GET["test"])){
-            $key = trim($_GET["test"]);
-            $id = ActiveTest::getIdFromKey($db, $key);
-            if (isset($id)){
-                $activeTest = new ActiveTest($db, new ObjectId($id));
-            }
-        }
-
-        if (isset($activeTest)){
-            $startsAfter = $activeTest->start->toDateTime()->getTimestamp() - time();
-            $endsAfter = $activeTest->end->toDateTime()->getTimestamp() - time();
-        }
-
-        echo "Съществуващо изпитване: " . ($activeTest ? "да" : "не") . "<br />";
-        echo "Започва след: " . $startsAfter . "<br />";
-        echo "Свършва след: " . $endsAfter . "<br />";
-        ?>
     </body>
 </html>

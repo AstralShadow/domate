@@ -163,7 +163,7 @@ class Test
      * @param string $note
      * @return string
      */
-    public function schedule(User $teacher, int $start, int $end, int $worktime, ?string $note): ActiveTest {
+    public function schedule(User $teacher, int $start, int $end, int $worktime, string $question, ?string $note): ActiveTest {
         $active = ActiveTest::create($this->database, $teacher);
         $active->start = new UTCDateTime(max(time(), $start) * 1000);
         $active->end = new UTCDateTime(max(time() + 60, $end) * 1000);
@@ -172,6 +172,7 @@ class Test
             $active->note = $note;
         }
         $active->test = $this->getId();
+        $active->question = $question;
 
         $query = [
             '$push' => [

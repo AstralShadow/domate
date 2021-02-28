@@ -45,7 +45,7 @@ $note = isset($input["note"]) ? (string) $input["note"] : null;
 $start = (int) $input["start"];
 $end = (int) $input["end"];
 $worktime = (int) $input["worktime"];
-$question = isset($input["idQuestion"]) ? (string) $input["question"] : null;
+$question = isset($input["question"]) ? (string) $input["question"] : null;
 
 if ($start >= $end || time() >= $end || $worktime < 1){
     $response["msg"] = $dictionary->illegalArguments;
