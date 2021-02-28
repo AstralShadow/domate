@@ -29,19 +29,19 @@ if (!window.TestsPageGUI.Container) {
 
         /* Functionality */
         functions: [
-            ["img/icon_231x234.png",
+            ["img/m1.png",
                 function (oid) {
                     TestsPageGUI.editGroup(oid)
                 }
             ],
-            ["img/delete_in_domate_95x100.png",
+            ["img/delete.png",
                 function (oid) {
                     // TODO: use some more nice askbox
                     if (confirm("You sure want to remove?"))
                         this.remove(oid)
                 }
             ],
-            ["img/icon_231x234.png",
+            ["img/plus1.png",
                 function (oid) {
                     var active = TestsPageGUI.activeEditor
                     if (active && active.type === "test") {
@@ -52,7 +52,7 @@ if (!window.TestsPageGUI.Container) {
                 }
             ]
         ],
-        contextHint: "img/Firefox-OS-tan.png"
+        //contextHint: "img/Firefox-OS-tan.png"
     })
 
     window.TestsPageGUI.activateGroupsContainer = function () {

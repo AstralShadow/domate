@@ -235,7 +235,7 @@
             <label>
                 <fieldset class="textarea" style="margin:5px; padding: 0px; width:auto;">
                     <legend>
-                        Заключване в:
+                        Достъпен до:
                     </legend>
                     <input name="end" style="border: 0px solid black;" type="datetime-local" class="input" >
                 </fieldset>

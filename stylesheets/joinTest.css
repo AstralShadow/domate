@@ -15,11 +15,40 @@ and open the template in the editor.
     top: 50%;
     left: 50%;
     position: fixed;
-    border-radius: 3px;
     font-size: 16pt;
     border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
     border: 3px solid rgb(0, 250, 0);
     width: 340px;
-    z-index: 110;
-    box-shadow: 0px 0px 60px 60px black;
+}
+
+#fulltest{
+    font-size: 16pt;
+    margin: auto auto;
+    width: 750px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#test{
+    border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
+    border: 1px solid rgb(0, 250, 0);
+    font-size: 16pt;
+    padding: 7px;
+    background: black;
+    margin: auto auto;
+    width: 750px;
+    text-align: left;
+}
+
+.zadachite{
+
+}
+.kryg{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: auto auto;
+    display: inline-block;
+    background-color: black;
+    box-shadow: inset 0 0 10px grey; 
 }
