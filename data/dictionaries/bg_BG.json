@@ -6,6 +6,7 @@
     "forbidden": "Достъпът отказан.",
     "illegalArgument": "Невалиден аргумент!",
     "illegalArguments": "Невалидни аргументи!",
+    "missingArgument": "Липсва аргумент.",
 
     "loginMessages": {
         "name": "Потребителско име",
@@ -119,6 +120,16 @@
         "noExerciseDescription": "<i style=\"opacity:0.5;\">Липсва описание</i>"
     },
     "successfulTestSchedule": "Насрочването на теста беше успешно. Моля споделете този линк с учениците си: \n $link",
+
+    "joinTest": {
+        "unknownTest": "Неопределен тест.",
+        "notStartedYet": "Неопределен тест.",
+        "alreadyExpired": "Неопределен тест.",
+        "notExisting": "Несъществуващо изпитване.",
+        "sourceDeleted": "Преподавателят се е отказал от теста.",
+        "alreadyJoined": "Вече участвате в този тест.",
+        "youJoined": "Вие започнахте вашия тест."
+    },
 
     "userClassErrorMessage": {
         "USER_ERRCODE_NO_ERROR": "Нямаше грешка.",

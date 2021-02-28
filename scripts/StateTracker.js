@@ -29,12 +29,13 @@
         "testData": "?p=testData",
 
         "logout": "?p=logout",
-        "scheduleTest": "?p=scheduleTest"
+        "scheduleTest": "?p=scheduleTest",
+        "beginTest": "?p=beginTest"
     }
 
     // TODO: Modifying can return status, use this.
     //       Also schedule force-reloads for at least
-    //       one second after last reload.
+    //       one second after last reload request.
 
     window.StateTracker = new RESTStateTracker()
 

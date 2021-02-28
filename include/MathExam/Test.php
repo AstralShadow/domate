@@ -183,4 +183,11 @@ class Test
         return $active;
     }
 
+    public static function exists(Database $database, ObjectId $id): bool {
+        $collection = $database->tests;
+        $filter = ["_id" => $id];
+        $document = $collection->findOne($filter);
+        return (bool) $document;
+    }
+
 }

@@ -44,6 +44,9 @@ use MathExam\ActiveTest as ActiveTest;
         </div>
         <?php
         $activeTest = null;
+        $startsAfter = null;
+        $endsAfter = null;
+
         if (isset($_GET["test"]) && is_string($_GET["test"])){
             $key = trim($_GET["test"]);
             $id = ActiveTest::getIdFromKey($db, $key);
@@ -53,11 +56,13 @@ use MathExam\ActiveTest as ActiveTest;
         }
 
         if (isset($activeTest)){
-            var_dump($activeTest->start->toDateTime());
-            var_dump($activeTest->end->toDateTime());
+            $startsAfter = $activeTest->start->toDateTime()->getTimestamp() - time();
+            $endsAfter = $activeTest->end->toDateTime()->getTimestamp() - time();
         }
 
-        echo "Съществуващо изпитване: " . (bool) $activeTest . "<br />";
+        echo "Съществуващо изпитване: " . ($activeTest ? "да" : "не") . "<br />";
+        echo "Започва след: " . $startsAfter . "<br />";
+        echo "Свършва след: " . $endsAfter . "<br />";
         ?>
     </body>
 </html>

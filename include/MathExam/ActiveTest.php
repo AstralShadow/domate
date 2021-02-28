@@ -43,7 +43,7 @@ class ActiveTest
         $result = $collection->insertOne([
             "key" => $key,
             "teacher" => $teacher->user,
-            "results" => [],
+            "solutions" => [],
             "created" => new UTCDateTime(),
             "modified" => new UTCDateTime()
         ]);
@@ -100,6 +100,13 @@ class ActiveTest
         ];
         $document = $collection->findOne($filter);
         return $document ? (string) $document["_id"] : null;
+    }
+
+    public static function exists(Database $database, ObjectId $id): bool {
+        $collection = $database->activeTests;
+        $filter = ["_id" => $id];
+        $document = $collection->findOne($filter);
+        return (bool) $document;
     }
 
 }

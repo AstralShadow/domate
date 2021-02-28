@@ -39,7 +39,7 @@ trait ModificableMongoDocument
      * List of database parameters that are private
      * @var array
      */
-    private array $privateParameters;
+    private array $privateParameters = [];
 
     /**
      * Value of the identifier. Can be defined with load()

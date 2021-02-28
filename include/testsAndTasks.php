@@ -14,5 +14,9 @@ if (!defined("CLASS_TEST")){
     require "include/MathExam/Exercise.php";
     require "include/MathExam/ExerciseGroup.php";
     require "include/MathExam/Test.php";
+
     require "include/MathExam/ActiveTest.php";
+    require "include/MathExam/TestSolution.php";
+    require "include/MathExam/ExerciseVariant.php";
+    require "include/MathExam/TestVariantGenerator.php";
 }

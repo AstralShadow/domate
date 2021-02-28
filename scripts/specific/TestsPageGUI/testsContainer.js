@@ -103,8 +103,8 @@ if (!window.TestsPageGUI.Container) {
             .addEventListener("click", async function () {
                 var query = await StateTracker.get("scheduleTest", {
                     id: data["_id"],
-                    start: startE.valueAsNumber / 1000,
-                    end: endE.valueAsNumber / 1000,
+                    start: (new Date(startE.value)).getTime() / 1000,
+                    end: (new Date(endE.value)).getTime() / 1000,
                     worktime: worktimeE.value || def_worktime(),
                     note: noteE.value,
                     question: idE.value || "Име на ученик:"
