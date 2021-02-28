@@ -23,7 +23,7 @@ $activeTests = $session->activeTests;
 if (isset($activeTests[$input["test"]])){
     $response["code"] = "Success";
     $response["msg"] = $dictionary->joinTest["alreadyJoined"];
-    $response["result"] = (string) $activeTests[$input["tests"]];
+    $response["result"] = (string) $activeTests[$input["test"]];
     return;
 }
 
@@ -38,12 +38,12 @@ $activeTest = new ActiveTest($db, new ObjectId($id));
 $start = $activeTest->start->toDateTime()->getTimestamp();
 $end = $activeTest->end->toDateTime()->getTimestamp();
 
-if ($start < time()){
+if ($start > time()){
     $response["code"] = "TooEarly";
     $response["msg"] = $dictionary->joinTest["notStartedYet"];
     return;
 }
-if ($end > time()){
+if ($end < time()){
     $response["code"] = "TooLate";
     $response["msg"] = $dictionary->joinTest["alreadyExpired"];
     return;

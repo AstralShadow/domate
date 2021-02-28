@@ -36,6 +36,8 @@ if (isset($activeTest)){
     } else {
         // $dictionary->joinTest["sourceDeleted"];
     }
+
+    /* Worktime and Task count strings */
     $worktime = "(";
     if ($activeTest->worktime > 60){
         $worktime .= floor($activeTest->worktime / 60) . " час";
@@ -55,6 +57,13 @@ if (isset($activeTest)){
         $questions .= "а";
     }
     $questions .= ')';
+
+    /* Already started test */
+
+    $activeTests = $session->activeTests;
+    if (isset($activeTests[$key])){
+        $myTestId = $activeTests[$key];
+    }
 }
 ?>
 <html>
@@ -72,13 +81,15 @@ if (isset($activeTest)){
         <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
         <script src="./scripts/StateTracker.js"></script>
 
+        <script defer src="./scripts/specific/SolveTestGUI/Core.js"></script>
+
         <script src="./scripts/mathjaxConfig.js"></script>
         <script async src="./mathjax/startup.js" id="MathJax-script"></script>
 
     </head>
     <body>
         <?php
-        if (isset($activeTest)){
+        if (isset($activeTest) && !$myTestId){
             ?>
             <div class="centeredBox" >
                 <div class="title" ></div>
@@ -101,10 +112,10 @@ if (isset($activeTest)){
                 if (isset($startAfter) && $startsAfter > 0){
                     $timerCss = "";
                 }
-                if (isset($startTimestamp)){
-                    echo "<script>const startsAt = " . $startTimestamp . ";</script>";
-                }
                 ?>
+                <script>
+                    const startsAt = <?php echo json_encode($startTimestamp); ?>
+                </script>
                 <div id="startTimerBox" <?php echo $timerCss; ?>>
                     ЗАПОЧВА СЛЕД:
                     <div id="startTimer">
@@ -160,6 +171,7 @@ if (isset($activeTest)){
                 <div id="startButton">
                     Начало
                 </div>
+                <span id="startFeedback"></span>
                 <script>
                     window.addEventListener("load", function () {
                         'use strict'
@@ -186,12 +198,44 @@ if (isset($activeTest)){
                                     id.style.border = "1px solid red"
                                     return;
                                 }
-                                console.log("go")
+                                attemptStart()
+                            })
+                        }
+                        var started = false
+                        function attemptStart () {
+                            var identification = id.value
+                            if (started) {
+                                return;
+                            }
+                            StateTracker.get("beginTest", {
+                                test: <?php echo json_encode($_GET["test"]); ?>,
+                                "identification": identification
+                            }, function (e) {
+                                if (e.code === "Success") {
+                                    started = true
+                                    var oid = e.result
+                                    new window.SolveTestGUI.Core(oid)
+                                }
+                                document.getElementById("startFeedback").innerText = e.msg
+                                setTimeout(function () {
+                                    document.getElementById("startFeedback").innerText = ""
+                                }, 5000)
+
                             })
                         }
                     })
                 </script>
             </div>
+            <?php
+        }
+        if (isset($myTestId)){
+            ?>
+            <script defer>
+                window.addEventListener("load", function () {
+                    new window.SolveTestGUI.Core(<?php echo json_encode((string) $myTestId); ?>)
+                })
+                console.log(5)
+            </script>
             <?php
         }
         ?>

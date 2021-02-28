@@ -123,8 +123,8 @@
 
     "joinTest": {
         "unknownTest": "Неопределен тест.",
-        "notStartedYet": "Неопределен тест.",
-        "alreadyExpired": "Неопределен тест.",
+        "notStartedYet": "Теста все още не е отворен.",
+        "alreadyExpired": "Вече не можете да започнете този тест.",
         "notExisting": "Несъществуващо изпитване.",
         "sourceDeleted": "Преподавателят се е отказал от теста.",
         "alreadyJoined": "Вече участвате в този тест.",
