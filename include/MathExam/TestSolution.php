@@ -45,6 +45,7 @@ class TestSolution
             "collection" => $pack->getId(),
             "origin" => $pack->test,
             "finished" => new UTCDateTime($endTime * 1000),
+            "identification" => null,
             "tasks" => [],
             "created" => new UTCDateTime(),
             "modified" => new UTCDateTime()
