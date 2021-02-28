@@ -31,20 +31,104 @@ use MathExam\ActiveTest as ActiveTest;
 
     </head>
     <body>
-        <div class="notification">
-            Начало:
+        <div class="notification" style="display: none;">
+            <div style="font-size: 25pt; text-align: center;">Математика</div>
+            <div style="font-size: 12pt; text-align: center;">
+                (<span>23</span> въпроси)
+                <br/>
+                (<span>90</span> минути)
+            </div>
             <br/>
-            Край:
-            <br/>
-            Стартиране след:
+            <div style="display: ; text-align: center; font-size: 16pt;">
+                ЗАПОЧВА СЛЕД:
+                <br/>
+                <div style="font-size: 45pt;">
+                    33:33:33
+                </div>
+            </div>
+            <label>
+                <fieldset class="textarea"  style="padding: 5px; font-size: 16pt; margin: 5px; width:auto;">
+                    <legend>
+                        Име
+                    </legend>
+                    <input id="" style="border: 0px solid black;"
+                           type="text" class="input">
+                </fieldset>
+            </label>
             <br/>
             <div style="
                  width: 100px;
                  margin: auto auto;
+                 margin-top: 5px;
                  text-align: center; 
                  border: 1px solid rgb(0, 250, 0); ">
-                Старт
+                Начало
             </div>
+        </div>
+        <div>
+            <div style="font-size: 25pt; text-align: center;">Математика</div>
+            <div style="font-size: 12pt; text-align: center;">
+                (<span>23</span> въпроси)
+                <br/>
+                (<span>90</span> минути)
+            </div>
+            <div style=" text-align: center; font-size: 16pt; position: fixed; top: 5px; right: 5px;">
+                Оставащо време:
+                <br/>
+                <div style="font-size: 45pt;">
+                    33:33:33
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div style="padding: 5px; background-color: black; position: fixed; right: 10px; border: 2px solid rgb(0, 250, 0); border-radius: 40px 40px 40px 40px/15px 15px 15px 15px; width: 50px;">
+            <div class="kryg">
+            </div>
+            <div class="kryg">
+            </div>
+            <div class="kryg">
+            </div>
+            <div class="kryg">
+            </div>
+            <div class="kryg">
+            </div>
+            <div class="kryg">
+            </div>
+        </div>
+        <div id="fulltest">
+            <fieldset id="test">  
+                <label>
+                    <fieldset class="textarea"  style="border-top: 4px solid rgb(0, 250, 0); padding: 5px; font-size: 16pt; margin: 2px; width:auto;">
+                        <legend>
+                            Oтговор
+                        </legend>
+                        <input id="" style=" border: 0px solid black;"
+                               type="text" class="input">
+                    </fieldset>
+                </label>
+            </fieldset>
+            <fieldset id="test">  
+                <label>
+                    <fieldset class="textarea"  style="border-top: 4px solid rgb(0, 250, 0); padding: 5px; font-size: 16pt; margin: 2px; width:auto;">
+                        <legend>
+                            Oтговор
+                        </legend>
+                        <input id="" style=" border: 0px solid black;"
+                               type="text" class="input">
+                    </fieldset>
+                </label>
+            </fieldset>
+            <fieldset id="test">  
+                <label>
+                    <fieldset class="textarea"  style="border-top: 4px solid rgb(0, 250, 0); padding: 5px; font-size: 16pt; margin: 2px; width:auto;">
+                        <legend>
+                            Oтговор
+                        </legend>
+                        <input id="" style=" border: 0px solid black;"
+                               type="text" class="input">
+                    </fieldset>
+                </label>
+            </fieldset>
         </div>
         <?php
         $activeTest = null;

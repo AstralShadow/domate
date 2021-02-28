@@ -41,7 +41,7 @@ if (!window.TestsPageGUI.Container) {
                         this.remove(oid)
                 }
             ],
-            ["img/icon_231x234.png",
+            ["img/plus1.png",
                 function (oid) {
                     var active = TestsPageGUI.activeEditor
                     if (active && active.type === "group") {
