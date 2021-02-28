@@ -33,7 +33,7 @@ if (isset($activeTest)){
 
     if (Test::exists($db, new ObjectId($activeTest->test))){
         $test = new Test($db, new ObjectId($activeTest->test));
-    } else {
+    }else{
         // $dictionary->joinTest["sourceDeleted"];
     }
 
@@ -305,6 +305,12 @@ if (isset($activeTest)){
                     </fieldset>
                 </label>
             </fieldset>
+        </div>
+        <div class="centeredBox" style="font-size: 18pt; display: none;">
+            Теста вече е минал...
+        </div>
+        <div class="centeredBox" style="font-size: 18pt; display: none;">
+            Не съществува такъв тест. Грешен линк. 
         </div>
     </body>
 </html>
