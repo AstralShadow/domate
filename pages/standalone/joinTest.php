@@ -16,6 +16,7 @@ $activeTest = null;
 $test = null;
 $startsAfter = null;
 $endsAfter = null;
+$errorMsg = null;
 
 if (isset($_GET["test"]) && is_string($_GET["test"])){
     $key = trim($_GET["test"]);
@@ -23,6 +24,9 @@ if (isset($_GET["test"]) && is_string($_GET["test"])){
     if (isset($id)){
         $activeTest = new ActiveTest($db, new ObjectId($id));
     }
+}
+if (!isset($activeTest)){
+    $errorMsg = $dictionary->joinTest["notExisting"];
 }
 
 if (isset($activeTest)){
@@ -33,8 +37,11 @@ if (isset($activeTest)){
 
     if (Test::exists($db, new ObjectId($activeTest->test))){
         $test = new Test($db, new ObjectId($activeTest->test));
-    }else{
-        // $dictionary->joinTest["sourceDeleted"];
+    } else {
+        $errorMsg = $dictionary->joinTest["sourceDeleted"];
+    }
+    if ($endsAfter < 0){
+        $errorMsg = $dictionary->joinTest["alreadyExpired"];
     }
 
     /* Worktime and Task count strings */
@@ -84,6 +91,7 @@ if (isset($activeTest)){
         <script defer src="./scripts/specific/SolveTestGUI/Core.js"></script>
         <script defer src="./scripts/specific/SolveTestGUI/Timer.js"></script>
         <script defer src="./scripts/specific/SolveTestGUI/Progress.js"></script>
+        <script defer src="./scripts/specific/SolveTestGUI/start.js"></script>
 
         <script src="./scripts/mathjaxConfig.js"></script>
         <script async src="./mathjax/startup.js" id="MathJax-script"></script>
@@ -91,7 +99,7 @@ if (isset($activeTest)){
     </head>
     <body>
         <?php
-        if (isset($activeTest) && !$myTestId){
+        if (!$errorMsg && isset($activeTest) && !$myTestId){
             ?>
             <div class="centeredBox" >
                 <div class="title" ></div>
@@ -205,32 +213,32 @@ if (isset($activeTest)){
                         }
                         var started = false
                         function attemptStart () {
-                            var identification = id.value
+                            var identification
+                            if (id) {
+                                identification = id.value
+                            }
                             if (started) {
                                 return;
                             }
-                            StateTracker.get("beginTest", {
-                                test: <?php echo json_encode($_GET["test"]); ?>,
-                                "identification": identification
-                            }, function (e) {
-                                if (e.code === "Success") {
-                                    started = true
-                                    var oid = e.result
-                                    new window.SolveTestGUI.Core(oid)
-                                }
+                            var testKey = <?php echo json_encode($_GET["test"]); ?>
+
+                            window.SolveTestGUI.start(testKey, identification, function (e) {
                                 document.getElementById("startFeedback").innerText = e.msg
                                 setTimeout(function () {
                                     document.getElementById("startFeedback").innerText = ""
                                 }, 5000)
-
+                                if (e.code === "Success") {
+                                    started = true
+                                }
                             })
+
                         }
                     })
                 </script>
             </div>
             <?php
         }
-        if (isset($myTestId)){
+        if (!$errorMsg && isset($myTestId)){
             ?>
             <script defer>
                 window.addEventListener("load", function () {
@@ -238,6 +246,13 @@ if (isset($activeTest)){
                 })
                 console.log(5)
             </script>
+            <?php
+        }
+        if ($errorMsg){
+            ?>
+            <div class="centeredBox" style="font-size: 18pt;">
+                <?php echo $errorMsg; ?>
+            </div>
             <?php
         }
         ?>
@@ -305,12 +320,6 @@ if (isset($activeTest)){
                     </fieldset>
                 </label>
             </fieldset>
-        </div>
-        <div class="centeredBox" style="font-size: 18pt; display: none;">
-            Теста вече е минал...
-        </div>
-        <div class="centeredBox" style="font-size: 18pt; display: none;">
-            Не съществува такъв тест. Грешен линк. 
         </div>
     </body>
 </html>

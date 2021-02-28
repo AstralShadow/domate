@@ -12,6 +12,7 @@ window.SolveTestGUI.Core = function (oid) {
     "use strict"
     this.oid = oid
     console.log("Your id for this test is " + oid)
+    alert("Working on this.")
 
     new SolveTestGUI.Timer(this)
     new SolveTestGUI.Progress(this)
