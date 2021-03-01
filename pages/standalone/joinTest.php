@@ -99,9 +99,9 @@ if (isset($activeTest)){
     </head>
     <body>
         <?php
-        if (!$errorMsg && isset($activeTest) && !$myTestId){
+        if (!$errorMsg && isset($activeTest) && !isset($myTestId)){
             ?>
-            <div class="centeredBox" >
+            <div class="centeredBox" id="startMenu" >
                 <div class="title" ></div>
 
                 <script>
@@ -119,7 +119,7 @@ if (isset($activeTest)){
                 </div>
                 <?php
                 $timerCss = "style=\"display: none;\" ";
-                if (isset($startAfter) && $startsAfter > 0){
+                if (isset($startsAfter) && $startsAfter > 0){
                     $timerCss = "";
                 }
                 ?>
@@ -137,8 +137,8 @@ if (isset($activeTest)){
                         function progressStartTimer () {
                             "use strict"
                             const div = document.getElementById("startTimer");
-                            var differenceMS = startsAt - (new Date()).getTime() / 1000
-                            var difference = Math.abs(Math.floor(differenceMS))
+                            var delta = startsAt - (new Date()).getTime() / 1000
+                            var difference = Math.abs(Math.floor(delta))
                             var hours = "00", minutes = "00", seconds = "00"
                             if (Math.abs(difference) >= 3600) {
                                 hours = Math.floor(difference / 3600)
@@ -153,11 +153,12 @@ if (isset($activeTest)){
                             hours = String(hours).padStart(2, '0')
                             minutes = String(minutes).padStart(2, '0')
                             seconds = String(seconds).padStart(2, '0')
-                            div.innerText = (differenceMS < 0 ? "-" : "") + hours + ':' + minutes + ':' + seconds
-
-                            if (differenceMS < 0 && window.readyFunc && window.readyFunc()) {
+                            div.innerText = (delta < 0 ? "-" : "") + hours + ':' + minutes + ':' + seconds
+                            if (delta < 0 && window.readyFunc) {
                                 document.getElementById("startTimerBox").style.display = "none"
-                                clearInterval(startCountdownInterval)
+                                if (window.readyFunc()) {
+                                    clearInterval(startCountdownInterval)
+                                }
                             }
                         }
                     </script>
@@ -186,18 +187,9 @@ if (isset($activeTest)){
                     window.addEventListener("load", function () {
                         'use strict'
                         const id = document.querySelector("#identification")
-                        if (id) {
-                            window.readyFunc = function () {
-                                if (id.value.length > 0) {
-                                    enableStart()
-                                    return true
-                                }
-                            }
-                        } else {
-                            window.readyFunc = function () {
-                                enableStart()
-                                return true
-                            }
+                        window.readyFunc = function () {
+                            enableStart()
+                            return true
                         }
                         const start = document.getElementById("startButton")
                         function enableStart () {
@@ -229,6 +221,7 @@ if (isset($activeTest)){
                                 }, 5000)
                                 if (e.code === "Success") {
                                     started = true
+                                    document.querySelector("#startMenu").display = "none"
                                 }
                             })
 
