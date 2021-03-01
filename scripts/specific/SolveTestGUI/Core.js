@@ -14,9 +14,9 @@ window.SolveTestGUI.Core = function (oid) {
     "use strict"
     this.oid = oid
 
-    new SolveTestGUI.Timer(this)
-    new SolveTestGUI.Progress(this)
-    new SolveTestGUI.Tasks(this)
+    const timer = new SolveTestGUI.Timer(this)
+    const progress = new SolveTestGUI.Progress(this)
+    const contentsProcessor = new SolveTestGUI.Tasks(this)
     document.getElementById("testUI").style.display = "block"
     document.getElementById("testContents").style.display = "block"
 
@@ -40,11 +40,8 @@ window.SolveTestGUI.Core = function (oid) {
     }
 
     /* Modules events */
-    this.onNearFinish = function () {
-
-    }
     this.onFinish = function () {
-
+        contentsProcessor.disableInput()
     }
 
 }

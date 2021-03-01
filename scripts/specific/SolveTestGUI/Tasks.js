@@ -96,6 +96,7 @@ window.SolveTestGUI.Tasks = function (core) {
             ptrs.input.addEventListener("blur", function () {
                 setAnswer(oid, ptrs.input.value)
             })
+            ptrs.oid = oid
             nodes[oid] = ptrs
             fillElements()
         }
@@ -106,9 +107,18 @@ window.SolveTestGUI.Tasks = function (core) {
 
         ptrs.question.innerText = tasks[oid].question
         ptrs.input.value = tasks[oid].answer
+//        ptrs.display.innerText = tasks[oid].answer
         if (MathJax.typeset) {
             MathJax.typeset()
         }
     }
 
+    this.disableInput = function () {
+        Object.values(nodes).forEach(function (ptr) {
+            ptr.input.disabled = "true"
+            if (ptr.input.value !== "") {
+                setAnswer(ptr.oid, ptr.input.value)
+            }
+        })
+    }
 }
