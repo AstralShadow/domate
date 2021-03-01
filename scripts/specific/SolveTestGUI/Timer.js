@@ -27,7 +27,7 @@ window.SolveTestGUI.Timer = function (core) {
     var interval = setInterval(progressStartTimer, 1000)
     function progressStartTimer () {
         var delta = endTime - (new Date()).getTime() / 1000
-        var difference = Math.abs(Math.floor(delta))
+        var difference = Math.max(0, Math.floor(delta))
         var hours = "00", minutes = "00", seconds = "00"
         if (Math.abs(difference) >= 3600) {
             hours = Math.floor(difference / 3600)
@@ -45,10 +45,10 @@ window.SolveTestGUI.Timer = function (core) {
         timer.innerText = (delta < 0 ? "-" : "") + hours + ':' + minutes + ':' + seconds
 
         if (delta <= 60) {
-            core.onNearFinish()
+            timer.style.color = "rgb(255, 200, 0)"
         }
 
-        if (delta <= 0) {
+        if (delta <= 1) {
             core.onFinish()
             if (window.readyFunc()) {
                 clearInterval(interval)

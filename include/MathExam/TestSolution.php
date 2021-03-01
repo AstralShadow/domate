@@ -15,6 +15,7 @@ use Shared\ModificableMongoDocument as ModificableMongoDocument;
 use MathExam\Test as Test;
 use MathExam\ActiveTest as ActiveTest;
 use MathExam\TestVariantGenerator as TestVariantGenerator;
+use MathExam\ExerciseVariant as ExerciseVariant;
 
 class TestSolution
 {
@@ -47,6 +48,7 @@ class TestSolution
             "collection" => $pack->getId(),
             "origin" => $pack->test,
             "finished" => new UTCDateTime($endTime * 1000),
+            "closed" => false,
             "identification" => null,
             "tasks" => [],
             "created" => new UTCDateTime(),
@@ -70,6 +72,28 @@ class TestSolution
 
         TestVariantGenerator::generateTestVariant($database, $solution, $test);
         return $solution;
+    }
+
+    public function close(): void {
+        if ($this->closed){
+            return;
+        }
+        $max = $this->created;
+        foreach ($this->tasks as $t_id){
+            $task = new ExerciseVariant($this->databasem, $t_id);
+            $maxTime = $max->toDateTime()->getTimestamp();
+            $editTime = $task->answerTime->toDateTime()->getTimestamp();
+            if ($editTime > $maxTime){
+                $max = $task->answerTime;
+            }
+        }
+        $update = [
+            '$set' => [
+                "closed" => true,
+                "finished" => $max
+            ]
+        ];
+        $this->update($update);
     }
 
     public function dump() {

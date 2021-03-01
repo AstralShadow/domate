@@ -19,12 +19,15 @@ use MathExam\TestSolution as TestSolution;
 class ExerciseVariant
 {
 
+    private Database $database;
+
     use ModificableMongoDocument {
         dump as private _dump;
     }
 
     public function __construct(Database $database, ObjectId $id) {
         $this->collection = $database->exerciseVariants;
+        $this->database = $database;
         $this->identificator = $id;
     }
 
@@ -67,6 +70,10 @@ class ExerciseVariant
     }
 
     public function setAnswer(string $answer): void {
+        $paper = new TestSolution($this->database, $this->paper);
+        if ($paper->finished->toDateTime()->getTimeStamp() < time()){
+            return;
+        }
         $query = [
             '$set' => [
                 "answer" => $answer,
