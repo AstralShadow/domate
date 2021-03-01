@@ -479,7 +479,7 @@
                            type="text" class="input" placeholder="Няма бележка">
                 </fieldset>
             </label>
-            <div class="input" id="ST_button" style="width: auto; margin: 10px;">
+            <div class="input" id="ST_button" style="width: auto; margin: 10px; cursor: pointer;">
                 Насрочи
             </div>
             <span id="ST_feedback"></span>
