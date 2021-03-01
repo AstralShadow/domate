@@ -382,6 +382,7 @@ hr{
 }
 
 #table{
+    display: none;
     background:black;
     position: fixed;
     transform: translate(-50%, -50%);
