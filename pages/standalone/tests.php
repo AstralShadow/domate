@@ -88,6 +88,219 @@
                 Изтрии
             </div>
         </div>
+        <div id="tests" style="display: none;">
+            <div class="test">
+                ( задачи)
+                <br/>
+                ( минути)
+                <br/>
+                (участника)
+                <br/>
+                Дата:
+                <br/>
+                Бележка:
+            </div> 
+        </div>
+        <div id="table">
+            <table id="rezultati">
+                <tr class="tr">
+                    <th class="th">
+                        Име:
+                    </th>
+                    <th colspan="55" class="th">
+                        Задачи:
+                    </th>
+                    <th class="th">
+                        Започнал в:
+                    </th>
+                    <th class="th">
+                        Работил:
+                    </th>
+                    <th class="th">
+                        Вярни задачи:
+                    </th>
+                </tr>
+                <tr class="tr">
+                    <td class="td">
+                        Иван Иванов Иванов
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        2
+                    </td>
+                    <td class="td">
+                        1
+                    </td>
+                    <td class="td">
+                        12:00
+                    </td>
+                    <td class="td">
+                        30 мин
+                    </td>
+                    <td class="td">
+                        2/2
+                    </td>
+                </tr>
+            </table>
+        </div>
         <!-- Test editor -->
         <div id="testEditorPage" class="page">
             <div class="pageCloseButton"></div>
