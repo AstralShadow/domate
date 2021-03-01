@@ -8,7 +8,7 @@ if (!window.SolveTestGUI) {
     window.SolveTestGUI = {}
 }
 
-window.SolveTestGUI.Progress = function (o_id) {
+window.SolveTestGUI.Progress = function (core) {
     "use strict"
-    console.log("Your id for this test is " + o_id)
+
 }

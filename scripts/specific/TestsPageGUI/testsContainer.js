@@ -93,6 +93,7 @@ if (!window.TestsPageGUI.Container) {
             document.getElementById("ST_tasks")
                 .innerText = data.contents.length
             document.getElementById("ST_feedback").innerText = ""
+            startE.value = now()
         }
         var startE = startTestDiv.querySelector("[name=start]")
         var endE = startTestDiv.querySelector("[name=end]")
@@ -132,7 +133,6 @@ if (!window.TestsPageGUI.Container) {
             var timestamp = now()
             startE.min = timestamp
             endE.min = timestamp
-            startE.value = timestamp
         }
         setInterval(setmin, 30000)
         setmin()
