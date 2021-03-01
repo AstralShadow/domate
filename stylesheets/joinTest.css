@@ -75,6 +75,7 @@ and open the template in the editor.
 
 #progressDisplay{
     background-color: black;
+    display: none;
     position: fixed;
     right: 10px;
     padding: 5px;
@@ -83,6 +84,7 @@ and open the template in the editor.
 }
 .circle{
     background-color: black;
+    background-size: 50px;
     display: inline-block;
     width: 50px;
     height: 50px;
@@ -91,25 +93,57 @@ and open the template in the editor.
     border-radius: 50%;
 }
 
-#fulltest{
-    font-size: 16pt;
-    margin: auto auto;
-    width: 750px;
-    text-align: center;
-    margin-top: 20px;
+.UIheader{
+    transform: translate(-42px, 0px);
 }
 
-#test{
+#testContents{
+    display: none;
+    margin-top: 20px;
+    margin-right: 84px;
+    font-size: 16pt;
+    text-align: center;
+}
+
+.task{
     border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
     border: 1px solid rgb(0, 250, 0);
     font-size: 16pt;
     padding: 7px;
     background: black;
-    margin: auto auto;
+    margin: 25px auto;
     width: 750px;
     text-align: left;
 }
 
-.zadachite{
+.question{
+    min-height: 25px;
+    margin-bottom: 7px;
+    text-indent: 25px;
+}
 
+.answer{
+    width: auto;
+    border-top: 4px solid rgb(0, 250, 0);
+    padding: 5px;
+    font-size: 16pt;
+    margin: 2px;
+}
+
+.answerInput{
+    /* opacity: 0.4;*/
+    text-align: left;
+    min-height: 25px;
+    margin-bottom: 7px;
+    border: 0px solid black;
+    padding: 0px;
+}
+.answerInput:focus{
+    /*opacity: 1;*/
+    outline: 0px solid transparent;
+}
+
+.workarea{
+    min-height: 25px;
+    margin-bottom: 7px;
 }

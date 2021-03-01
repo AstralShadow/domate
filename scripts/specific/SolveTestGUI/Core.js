@@ -16,7 +16,9 @@ window.SolveTestGUI.Core = function (oid) {
 
     new SolveTestGUI.Timer(this)
     new SolveTestGUI.Progress(this)
+    new SolveTestGUI.Tasks(this)
     document.getElementById("testUI").style.display = "block"
+    document.getElementById("testContents").style.display = "block"
 
     /* Tracking */
     StateTracker.track("getExamData", {id: oid}, examDataHandler)
@@ -24,8 +26,20 @@ window.SolveTestGUI.Core = function (oid) {
     function examDataHandler (e) {
         lastData = e.result
         console.log(e.result)
+        e.result.tasks.forEach(trackTask)
+    }
+    var tasks = {}
+    function trackTask (oid) {
+        if (Object.keys(tasks).indexOf(oid) === -1) {
+            tasks[oid] = undefined
+            StateTracker.track("getExamQuestion", {id: oid}, taskUpdateHandler)
+        }
+    }
+    function taskUpdateHandler (e) {
+        tasks[e.args.id] = e.result
     }
 
+    /* Modules events */
     this.onNearFinish = function () {
 
     }

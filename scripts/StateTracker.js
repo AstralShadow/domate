@@ -33,6 +33,8 @@
 
         "beginTest": "?p=beginTest",
         "getExamData": "?p=getExamData",
+        "getExamQuestion": "?p=getExamQuestion",
+        "answerExamQuestion": "?p=answerExamQuestion"
 
     }
 

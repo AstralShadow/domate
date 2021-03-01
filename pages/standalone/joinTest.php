@@ -11,6 +11,7 @@ include "include/testsAndTasks.php";
 use \MongoDB\BSON\ObjectId as ObjectId;
 use MathExam\Test as Test;
 use MathExam\ActiveTest as ActiveTest;
+use MathExam\TestSolution as TestSolution;
 
 $activeTest = null;
 $test = null;
@@ -32,14 +33,25 @@ if (!isset($activeTest)){
 if (isset($activeTest)){
     $startTimestamp = $activeTest->start->toDateTime()->getTimestamp();
     $endTimestamp = $activeTest->end->toDateTime()->getTimestamp();
-    $startsAfter = $startTimestamp - time();
-    $endsAfter = $endTimestamp - time();
 
     if (Test::exists($db, new ObjectId($activeTest->test))){
         $test = new Test($db, new ObjectId($activeTest->test));
     } else {
         $errorMsg = $dictionary->joinTest["sourceDeleted"];
     }
+
+    /* Already started test */
+
+    $activeTests = $session->activeTests;
+    if (isset($activeTests[$key])){
+        $myTestId = $activeTests[$key];
+        $myTest = new TestSolution($db, $activeTests[$key]);
+        $endTimestamp = $myTest->finished->toDateTime()->getTimestamp();
+    }
+
+    $startsAfter = $startTimestamp - time();
+    $endsAfter = $endTimestamp - time();
+
     if ($endsAfter < 0){
         $errorMsg = $dictionary->joinTest["alreadyExpired"];
     }
@@ -64,13 +76,6 @@ if (isset($activeTest)){
         $questions .= "а";
     }
     $questions .= ')';
-
-    /* Already started test */
-
-    $activeTests = $session->activeTests;
-    if (isset($activeTests[$key])){
-        $myTestId = $activeTests[$key];
-    }
 }
 ?>
 <html>
@@ -91,6 +96,7 @@ if (isset($activeTest)){
         <script defer src="./scripts/specific/SolveTestGUI/Core.js"></script>
         <script defer src="./scripts/specific/SolveTestGUI/Timer.js"></script>
         <script defer src="./scripts/specific/SolveTestGUI/Progress.js"></script>
+        <script defer src="./scripts/specific/SolveTestGUI/Tasks.js"></script>
         <script defer src="./scripts/specific/SolveTestGUI/start.js"></script>
 
         <script src="./scripts/mathjaxConfig.js"></script>
@@ -122,7 +128,7 @@ if (isset($activeTest)){
                     </div>
                     <script>
                         var startCountdownInterval = setInterval(progressStartTimer, 1000)
-                        progressStartTimer()
+                        window.addEventListener("load", progressStartTimer)
                         function progressStartTimer () {
                             "use strict"
                             const div = document.getElementById("startTimer");
@@ -201,7 +207,7 @@ if (isset($activeTest)){
                             if (started) {
                                 return;
                             }
-                            var testKey = <?php echo json_encode($_GET["test"]); ?>
+                            var testKey = <?php echo json_encode(substr($_GET["test"], 0, 10)); ?>
 
                             window.SolveTestGUI.start(testKey, identification, function (e) {
                                 document.getElementById("startFeedback").innerText = e.msg
@@ -210,7 +216,7 @@ if (isset($activeTest)){
                                 }, 5000)
                                 if (e.code === "Success") {
                                     started = true
-                                    document.querySelector("#startMenu").display = "none"
+                                    document.querySelector("#startMenu").style.display = "none"
                                 }
                             })
 
@@ -238,9 +244,9 @@ if (isset($activeTest)){
         }
         ?>
         <div id="testUI" style="display: none;">
-            <div class="title" ></div>
+            <div class="title UIheader" ></div>
 
-            <div class="small">
+            <div class="small UIheader">
                 <?php echo $questions . "<br />" . $worktime; ?>
             </div>
             <div id="mainTimer">
@@ -248,9 +254,7 @@ if (isset($activeTest)){
                 <div class="timerFontHalf"></div>
             </div>
 
-            <div id="progressDisplay">
-                <div class="circle"></div>
-            </div>
+            <div id="progressDisplay"></div>
         </div>
         <script>
             window.addEventListener("load", fillTitle)
@@ -261,41 +265,15 @@ if (isset($activeTest)){
                 })
             }
         </script>
-        <br/>
-        <div id="fulltest" style="display: none;">
-            <fieldset id="test">  
-                <label>
-                    <fieldset class="textarea"  style="border-top: 4px solid rgb(0, 250, 0); padding: 5px; font-size: 16pt; margin: 2px; width:auto;">
-                        <legend>
-                            Oтговор
-                        </legend>
-                        <input id="" style=" border: 0px solid black;"
-                               type="text" class="input">
-                    </fieldset>
-                </label>
-            </fieldset>
-            <fieldset id="test">  
-                <label>
-                    <fieldset class="textarea"  style="border-top: 4px solid rgb(0, 250, 0); padding: 5px; font-size: 16pt; margin: 2px; width:auto;">
-                        <legend>
-                            Oтговор
-                        </legend>
-                        <input id="" style=" border: 0px solid black;"
-                               type="text" class="input">
-                    </fieldset>
-                </label>
-            </fieldset>
-            <fieldset id="test">  
-                <label>
-                    <fieldset class="textarea"  style="border-top: 4px solid rgb(0, 250, 0); padding: 5px; font-size: 16pt; margin: 2px; width:auto;">
-                        <legend>
-                            Oтговор
-                        </legend>
-                        <input id="" style=" border: 0px solid black;"
-                               type="text" class="input">
-                    </fieldset>
-                </label>
-            </fieldset>
+
+        <div id="testContents">
+            <!-- <div class="task">
+                 <div class="mathjax">Въпрос</div>
+                 <div class="textarea answer">
+                     <div class="workarea mathjax">`x^2`</div>
+                     <input type="text" class="input answerInput" value="x^2">
+                 </div>
+             </div> -->
         </div>
     </body>
 </html>

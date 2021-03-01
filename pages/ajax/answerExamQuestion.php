@@ -19,7 +19,9 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
     return false;
 }
 
-
+if (!isset($input["answer"]) || !is_string($input["answer"])){
+    return false;
+}
 
 /*
  * Action
@@ -35,8 +37,9 @@ if (!in_array((string) $variant->paper, (array) $session->activeTests ?? [])){
     return false;
 }
 
+$variant->setAnswer($input["answer"]);
+
 $response["code"] = "Success";
-$response["result"] = $variant->dump();
 $response["msg"] = $dictionary->success;
 
 unset($id, $variant);

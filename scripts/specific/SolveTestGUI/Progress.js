@@ -16,31 +16,55 @@ window.SolveTestGUI.Progress = function (core) {
     /* Tracking */
     StateTracker.track("getExamData", {id: core.oid}, examDataHandler)
     var lastData = undefined
-    var tasks = []
     function examDataHandler (e) {
         lastData = e.result
-        tasks = e.result.tasks
+        e.result.tasks.forEach(function (oid) {
+            set(oid, false)
+        })
+        e.result.tasks.forEach(trackTask)
+        container.style.display = "block"
+    }
+    var tasks = {}
+    function trackTask (oid) {
+        if (Object.keys(tasks).indexOf(oid) === -1) {
+            tasks[oid] = undefined
+            StateTracker.track("getExamQuestion", {id: oid}, taskUpdateHandler)
+        }
+    }
+    function taskUpdateHandler (e) {
+        tasks[e.args.id] = e.result
+        var solved = e.result.answer && e.result.answer.trim().length
+        set(e.args.id, solved)
     }
 
-    var container = document.querySelector("progressDeisplay")
+    var container = document.querySelector("#progressDisplay")
     function clear () {
         while (container.firstChild) {
             container.removeChild(container.firstChild)
         }
+        lastData.tasks.forEach(function (oid) {
+            if (nodes[oid]) {
+                container.appendChild(nodes[oid])
+            }
+        })
     }
 
-    var elements = {}
-    function add (oid, color) {
-        if (elements[oid] === undefined) {
+    var nodes = {}
+    function set (oid, solved) {
+        if (nodes[oid] === undefined) {
             var circle = document.createElement("div")
             circle.className = "circle"
-            circle.style.backgroundColor = color || "black"
             circle.addEventListener("click", function () {
                 scrollTo(oid)
             })
-            elements[oid] = circle
+            nodes[oid] = circle
+            clear()
         }
-        container.appendChild(circle)
+        if (!solved) {
+            nodes[oid].style.backgroundImage = ""
+        } else {
+            nodes[oid].style.backgroundImage = 'url("img/tick.png")'
+        }
     }
     function scrollTo (oid) {
         console.log("implement scroll", oid)

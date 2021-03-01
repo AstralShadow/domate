@@ -14,11 +14,14 @@ use \MongoDB\Database as Database;
 use Identification\User as User;
 use Shared\ModificableMongoDocument as ModificableMongoDocument;
 use MathExam\Exercise as Exercise;
+use MathExam\TestSolution as TestSolution;
 
 class ExerciseVariant
 {
 
-    use ModificableMongoDocument;
+    use ModificableMongoDocument {
+        dump as private _dump;
+    }
 
     public function __construct(Database $database, ObjectId $id) {
         $this->collection = $database->exerciseVariants;
@@ -35,17 +38,18 @@ class ExerciseVariant
      * @param User $owner
      * @return Test
      */
-    public static function create(Database $database, Exercise $origin): ExerciseVariant {
+    public static function create(Database $database, Exercise $origin, TestSolution $paper): ExerciseVariant {
         $collection = $database->exerciseVariants;
 
         $document = [
             "name" => $origin->name,
             "description" => $origin->description,
             "question" => $origin->question,
+            "paper" => $paper->getId(),
             "answer" => null,
             "answerTime" => null,
-            "correctCheck" => null,
-            "changedSinceCheck" => false,
+            "correctMarker" => null,
+            "checked" => false,
             "created" => new UTCDateTime(),
             "modified" => new UTCDateTime()
         ];
@@ -62,8 +66,40 @@ class ExerciseVariant
         return new ExerciseVariant($database, $id);
     }
 
+    public function setAnswer(string $answer): void {
+        $query = [
+            '$set' => [
+                "answer" => $answer,
+                "answerTime" => new UTCDateTime(),
+                "checked" => false
+            ]
+        ];
+        $this->update($query);
+    }
+
     public static function exists(Database $database, ObjectId $id): bool {
-        
+        $collection = $database->exerciseVariants;
+        $filter = ["_id" => $id];
+        $document = $collection->findOne($filter);
+        return (bool) $document;
+    }
+
+    public function dump() {
+        $data = $this->_dump();
+        $private = [
+            "name",
+            "description",
+            "paper",
+            "correctCheck",
+            "changedSinceCheck",
+            "correctAnswer"
+        ];
+        foreach ($private as $param){
+            if (isset($data[$param])){
+                unset($data[$param]);
+            }
+        }
+        return $data;
     }
 
 }

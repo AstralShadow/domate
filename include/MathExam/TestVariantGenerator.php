@@ -60,7 +60,7 @@ class TestVariantGenerator
             for ($i = 0; $i < $repeat; $i++){
                 $e_oid = array_shift($exercisesByGroup[$g_oid]);
                 $exercise = $exercisesObjects[$e_oid];
-                $tasks[] = ExerciseVariant::create($database, $exercise);
+                $tasks[] = ExerciseVariant::create($database, $exercise, $solution);
             }
         }
 
