@@ -23,10 +23,12 @@ and open the template in the editor.
 }
 
 .title{
+    text-align: center;
     font-size: 25pt;
 }
 
 .small{
+    text-align: center;
     font-size: 12pt;
 }
 
@@ -34,9 +36,14 @@ and open the template in the editor.
     margin: 12pt;
 }
 
-#startTimer{
+.timerFont{
     font-size: 45pt;
 }
+
+.timerFontHalf{
+    font-size: 30pt;
+}
+
 
 .textarea{
     width: auto;
@@ -56,6 +63,32 @@ and open the template in the editor.
     text-align: center; 
     border: 1px solid rgb(0, 250, 0);
     opacity: 0.2;
+}
+
+#mainTimer{
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    text-align: center;
+    font-size: 16pt;
+}
+
+#progressDisplay{
+    background-color: black;
+    position: fixed;
+    right: 10px;
+    padding: 5px;
+    border: 2px solid rgb(0, 250, 0);
+    border-radius: 40px 40px 40px 40px/15px 15px 15px 15px; width: 50px;
+}
+.circle{
+    background-color: black;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: auto auto;
+    box-shadow: inset 0 0 10px grey; 
+    border-radius: 50%;
 }
 
 #fulltest{
@@ -79,13 +112,4 @@ and open the template in the editor.
 
 .zadachite{
 
-}
-.kryg{
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin: auto auto;
-    display: inline-block;
-    background-color: black;
-    box-shadow: inset 0 0 10px grey; 
 }

@@ -30,7 +30,10 @@
 
         "logout": "?p=logout",
         "scheduleTest": "?p=scheduleTest",
-        "beginTest": "?p=beginTest"
+
+        "beginTest": "?p=beginTest",
+        "getExamData": "?p=getExamData",
+
     }
 
     // TODO: Modifying can return status, use this.

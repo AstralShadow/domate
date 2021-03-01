@@ -60,7 +60,7 @@ if (isset($activeTest)){
     }
     $worktime .= ')';
     $questions = "(" . count($test->contents) . " въпрос";
-    if ($questions > 1){
+    if (count($test->contents) > 1){
         $questions .= "а";
     }
     $questions .= ')';
@@ -103,17 +103,6 @@ if (isset($activeTest)){
             ?>
             <div class="centeredBox" id="startMenu" >
                 <div class="title" ></div>
-
-                <script>
-                    window.addEventListener("load", fillTitle)
-                    fillTitle()
-                    function fillTitle () {
-                        document.querySelectorAll(".title").forEach(function (el) {
-                            el.innerText = <?php echo json_encode($test->name) ?>
-                        })
-                    }
-                </script>
-
                 <div class="small">
                     <?php echo $questions . "<br />" . $worktime; ?>
                 </div>
@@ -128,7 +117,7 @@ if (isset($activeTest)){
                 </script>
                 <div id="startTimerBox" <?php echo $timerCss; ?>>
                     ЗАПОЧВА СЛЕД:
-                    <div id="startTimer">
+                    <div id="startTimer" class="timerFont">
                         ??:??:??
                     </div>
                     <script>
@@ -154,7 +143,7 @@ if (isset($activeTest)){
                             minutes = String(minutes).padStart(2, '0')
                             seconds = String(seconds).padStart(2, '0')
                             div.innerText = (delta < 0 ? "-" : "") + hours + ':' + minutes + ':' + seconds
-                            if (delta < 0 && window.readyFunc) {
+                            if (delta <= 0 && window.readyFunc) {
                                 document.getElementById("startTimerBox").style.display = "none"
                                 if (window.readyFunc()) {
                                     clearInterval(startCountdownInterval)
@@ -237,7 +226,6 @@ if (isset($activeTest)){
                 window.addEventListener("load", function () {
                     new window.SolveTestGUI.Core(<?php echo json_encode((string) $myTestId); ?>)
                 })
-                console.log(5)
             </script>
             <?php
         }
@@ -249,36 +237,31 @@ if (isset($activeTest)){
             <?php
         }
         ?>
-        <div style="display: none;">
-            <div style="font-size: 25pt; text-align: center;">Математика</div>
-            <div style="font-size: 12pt; text-align: center;">
-                (<span>23</span> въпроси)
-                <br/>
-                (<span>90</span> минути)
+        <div id="testUI" style="display: none;">
+            <div class="title" ></div>
+
+            <div class="small">
+                <?php echo $questions . "<br />" . $worktime; ?>
             </div>
-            <div style=" text-align: center; font-size: 16pt; position: fixed; top: 5px; right: 5px;">
-                Оставащо време:
-                <br/>
-                <div style="font-size: 45pt;">
-                    33:33:33
-                </div>
+            <div id="mainTimer">
+                Оставащо време: 
+                <div class="timerFontHalf"></div>
+            </div>
+
+            <div id="progressDisplay">
+                <div class="circle"></div>
             </div>
         </div>
+        <script>
+            window.addEventListener("load", fillTitle)
+            fillTitle()
+            function fillTitle () {
+                document.querySelectorAll(".title").forEach(function (el) {
+                    el.innerText = <?php echo json_encode($test->name) ?>
+                })
+            }
+        </script>
         <br/>
-        <div style="display: none; padding: 5px; background-color: black; position: fixed; right: 10px; border: 2px solid rgb(0, 250, 0); border-radius: 40px 40px 40px 40px/15px 15px 15px 15px; width: 50px;">
-            <div class="kryg">
-            </div>
-            <div class="kryg">
-            </div>
-            <div class="kryg">
-            </div>
-            <div class="kryg">
-            </div>
-            <div class="kryg">
-            </div>
-            <div class="kryg">
-            </div>
-        </div>
         <div id="fulltest" style="display: none;">
             <fieldset id="test">  
                 <label>

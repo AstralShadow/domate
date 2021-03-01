@@ -62,4 +62,8 @@ class ExerciseVariant
         return new ExerciseVariant($database, $id);
     }
 
+    public static function exists(Database $database, ObjectId $id): bool {
+        
+    }
+
 }

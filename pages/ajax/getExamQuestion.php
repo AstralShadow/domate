@@ -9,7 +9,7 @@
 include "include/testsAndTasks.php";
 
 use MongoDB\BSON\ObjectId;
-use MathExam\TestSolution as TestSolution;
+use MathExam\TestVariant as TestVariant;
 
 /*
  * Validate
@@ -19,9 +19,6 @@ if (!isset($input) || !is_array($input) || !isset($input["id"])){
     return false;
 }
 
-if (!in_array($input["id"], (array) $session->activeTests ?? [])){
-    return false;
-}
 
 
 /*
@@ -29,7 +26,14 @@ if (!in_array($input["id"], (array) $session->activeTests ?? [])){
  */
 
 $id = new ObjectId($input["id"]);
-$testSolution = new TestSolution($db, $id);
+if (!TestVariant::exists($db, $id)){
+    return false;
+}
+$variant = new TestVariant($db, $id);
+
+if (!in_array($input["id"], (array) $session->activeTests ?? [])){
+    return false;
+}
 
 $response["code"] = "Success";
 $response["result"] = $testSolution->dump();

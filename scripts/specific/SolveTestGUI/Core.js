@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+/* global StateTracker */
+
 if (!window.SolveTestGUI) {
     window.SolveTestGUI = {}
 }
@@ -11,10 +13,24 @@ if (!window.SolveTestGUI) {
 window.SolveTestGUI.Core = function (oid) {
     "use strict"
     this.oid = oid
-    console.log("Your id for this test is " + oid)
-    alert("Working on this.")
 
     new SolveTestGUI.Timer(this)
     new SolveTestGUI.Progress(this)
+    document.getElementById("testUI").style.display = "block"
+
+    /* Tracking */
+    StateTracker.track("getExamData", {id: oid}, examDataHandler)
+    var lastData = undefined
+    function examDataHandler (e) {
+        lastData = e.result
+        console.log(e.result)
+    }
+
+    this.onNearFinish = function () {
+
+    }
+    this.onFinish = function () {
+
+    }
 
 }

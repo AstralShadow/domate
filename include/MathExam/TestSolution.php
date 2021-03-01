@@ -19,7 +19,9 @@ use MathExam\TestVariantGenerator as TestVariantGenerator;
 class TestSolution
 {
 
-    use ModificableMongoDocument;
+    use ModificableMongoDocument {
+        dump as private _dump;
+    }
 
     private Database $database;
 
@@ -68,6 +70,20 @@ class TestSolution
 
         TestVariantGenerator::generateTestVariant($database, $solution, $test);
         return $solution;
+    }
+
+    public function dump() {
+        $data = $this->_dump();
+        $private = [
+            "collection",
+            "origin"
+        ];
+        foreach ($private as $param){
+            if (isset($data[$param])){
+                unset($data[$param]);
+            }
+        }
+        return $data;
     }
 
 }
