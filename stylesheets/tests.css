@@ -399,7 +399,7 @@ hr{
     z-index: 110;
     box-shadow: 0px 0px 40px 40px black;
 }
-#rezultati{
+#scoreboardTable{
     background: black;
     width: 100%;
     padding: 7px;
@@ -420,6 +420,13 @@ hr{
     min-width: 20px;
     margin: 2px;
     vertical-align: center;
+}
+.td_cell{
+    height: 20px;
+    display: inline-block;
+    margin: 3px;
+    margin-top: 5px;
+    border-radius: 10px;
 }
 
 #taskCheck{
@@ -462,10 +469,14 @@ hr{
 
 .button_green{
     border: 2px solid rgb(0, 250, 0);
-    background-image: url('../img/121.png');
 }
 .button_red{
     color: red;
     border: 2px solid rgb(250, 0, 0);
+}
+.button_green.marked{
+    background-image: url('../img/121.png');   
+}
+.button_red.marked{
     background-image: url('../img/212.png');
 }

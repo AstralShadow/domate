@@ -106,62 +106,33 @@
         <div id="examListContainer"></div>
         <!-- Exam results -->
         <div id="singleExamResults">
-            <table id="rezultati">
+            <table id="scoreboardTable">
                 <thead>
                     <tr class="tr">
-                        <th class="th" id="identificationQuestion">
-                            Име:
-                        </th>
-                        <th class="th">
-                            Започнал в:
-                        </th>
-                        <th class="th">
-                            Работил:
-                        </th>
-                        <th class="th">
-                            Задачи:
-                        </th>
-                        <th class="th">
-                            Вярни задачи:
-                        </th>
+                        <th class="th" id="identificationQuestion"> Име: </th>
+                        <th class="th"> Започнал в: </th>
+                        <th class="th"> Работил: </th>
+                        <th class="th"> Задачи:  </th>
+                        <th class="th"> Вярни задачи: </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="tr">
-                        <td class="td">
-                            Иван Иванов Иванов
-                        </td>
-                        <td class="td">
-                            12:00
-                        </td>
-                        <td class="td">
-                            30 мин
-                        </td>
-                        <td class="td">
-                            <div>
-                            </div>
-                        </td>
-                        <td class="td">
-                            2/2
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody> </tbody>
             </table>
         </div>
         <!-- Task results -->
         <div id="taskCheck">
-            Име:
-            <div id="uslowie">
-                Условие:
-            </div>
-            <div id="otgowor">
+            <span id="studentIdentification">Име:</span><hr />
+            Условие:<hr />
+            <div id="taskQuestion"> </div>
+            <hr />
+            <div id="studentAnswer">
                 Отговор (??:??):
             </div>
-            <br/>
-            <div class="button button_green" style="float: left; ">
+            <br/><hr />
+            <div id="goodAnswer" class="button button_green" style="float: left; ">
                 Вярно
             </div>
-            <div class="button button_red" style="float: right; ">
+            <div id="badAnswer" class="button button_red" style="float: right; ">
                 Грешно
             </div>
         </div>

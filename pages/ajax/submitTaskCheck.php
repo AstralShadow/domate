@@ -27,12 +27,17 @@ $solution = new TestSolution($db, new ObjectId($variant->paper));
 $exams = (array) $user->activeTests ?? [];
 
 if (!in_array($solution->collection, $exams)){
+    echo 3;
     return false;
 }
 
+if (!isset($input["true"]) || !is_bool($input["true"])){
+    return false;
+}
+
+$variant->submitCheck((bool) $input["true"]);
 
 $response["msg"] = $dictionary->success;
-$response["result"] = $variant->getDataForTeacher();
 $response["code"] = "Success";
 
 unset($id, $test);

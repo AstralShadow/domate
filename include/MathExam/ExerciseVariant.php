@@ -84,6 +84,16 @@ class ExerciseVariant
         $this->update($query);
     }
 
+    public function submitCheck(bool $isCorrect): void {
+        $query = [
+            '$set' => [
+                "correctMarker" => $isCorrect,
+                "checked" => true
+            ]
+        ];
+        $this->update($query);
+    }
+
     public static function exists(Database $database, ObjectId $id): bool {
         $collection = $database->exerciseVariants;
         $filter = ["_id" => $id];
@@ -131,19 +141,19 @@ class ExerciseVariant
         $checked = $this->checked;
         $correctMarker = $this->correctMarker;
         $correctAnswer = $this->correctAnswer;
-        if ($answer === null || strlen(trim($answer)) === 0){
-            return "black";
-        }
         if ($checked){
             if ($correctMarker){
-                return "lime";
+                return "green";
             } else {
                 return "red";
             }
         }
+        if ($answer === null || strlen(trim($answer)) === 0){
+            return "black";
+        }
         if (isset($correctAnswer)){
             if (trim(mb_strtolower($correctAnswer)) === trim(mb_strtolower($answer))){
-                return "rgb(200, 255, 200)";
+                return "rgb(70, 255, 70)";
             } else {
                 return "rgb(255, 100, 100)";
             }
