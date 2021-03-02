@@ -46,9 +46,11 @@ class TestVariantGenerator
                 }
                 $get = mt_rand() % count($exercises);
                 $e_oid = array_splice($exercises, $get, 1)[0];
-                $exercisesByGroup[$g_oid][] = $e_oid;
-                if (!isset($exercisesObjects[$e_oid])){
-                    $exercisesObjects[$e_oid] = new Exercise($database, new ObjectId($e_oid));
+                if (isset($e_oid)){
+                    $exercisesByGroup[$g_oid][] = $e_oid;
+                    if (!isset($exercisesObjects[$e_oid])){
+                        $exercisesObjects[$e_oid] = new Exercise($database, new ObjectId($e_oid));
+                    }
                 }
             }
         }
@@ -59,8 +61,10 @@ class TestVariantGenerator
             $repeat = max(0, (int) $pair["repeat"]);
             for ($i = 0; $i < $repeat; $i++){
                 $e_oid = array_shift($exercisesByGroup[$g_oid]);
-                $exercise = $exercisesObjects[$e_oid];
-                $tasks[] = ExerciseVariant::create($database, $exercise, $solution);
+                if (isset($exercisesObjects[$e_oid])){
+                    $exercise = $exercisesObjects[$e_oid];
+                    $tasks[] = ExerciseVariant::create($database, $exercise, $solution);
+                }
             }
         }
 

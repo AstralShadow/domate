@@ -110,4 +110,29 @@ class TestSolution
         return $data;
     }
 
+    public function getDataForTeacher() {
+        $data = $this->_dump();
+        $private = [
+            "collection",
+            "origin"
+        ];
+        foreach ($private as $param){
+            if (isset($data[$param])){
+                unset($data[$param]);
+            }
+        }
+        foreach ($data["tasks"] as $key => $oid){
+            $task = new ExerciseVariant($this->database, new ObjectId($oid));
+            $data["tasks"][$key] = $task->getDataForTeacher();
+        }
+        return $data;
+    }
+
+    public static function exists(Database $database, ObjectId $id): bool {
+        $collection = $database->testSolutions;
+        $filter = ["_id" => $id];
+        $document = $collection->findOne($filter);
+        return (bool) $document;
+    }
+
 }

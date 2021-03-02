@@ -361,7 +361,7 @@ hr{
     left: 50%;
     transform: translate(-50%, -50%);
     width: 450px;
-    max-height: 550px;
+    height: 550px;
     overflow-y: auto;
     border: 3px solid rgb(0, 250, 0);
     border-radius: 30px 30px 30px 30px/5px 5px 5px 5px;
@@ -370,39 +370,17 @@ hr{
     box-shadow: 0px 0px 30px 30px black;
     z-index: 110;
 }
-.test{
+.examListElement{
     min-height: 100px;
-    margin: auto auto;
     background: black;
     padding: 7px;
     font-size: 16pt;
     border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
     border: 2px solid rgb(0, 250, 0);
     width: 400px;
-    margin-top: 8px;
+    margin: 12px auto;
     text-align: center;
-}
-
-#rezultati{
-    background: black;
-    padding: 7px;
-    font-size: 16pt;
-    z-index: 110;
-    box-shadow: 0px 0px 30px 30px black;
-    border-spacing: 3px;
-}
-
-.tr{
-    height: 20px;
-    border: 1px solid rgb(0, 250, 0);
-}
-
-.th{
-    border: 1px solid rgb(0, 250, 0);
-}
-.td{
-    text-align: center;
-    border: 1px solid rgb(0, 250, 0);
+    cursor: pointer;
 }
 
 #singleExamResults{
@@ -420,7 +398,30 @@ hr{
     box-sizing: border-box;
     z-index: 110;
 }
-#prowerka{
+#rezultati{
+    background: black;
+    width: 100%;
+    padding: 7px;
+    font-size: 16pt;
+    z-index: 110;
+    box-shadow: 0px 0px 30px 30px black;
+    //border-spacing: 3px;
+}
+
+.tr{
+    height: 20px;
+    border: 1px solid rgb(0, 250, 0);
+}
+
+.td{
+    text-align: center;
+    border: 1px solid rgb(0, 250, 0);
+    min-width: 20px;
+    margin: 2px;
+    vertical-align: center;
+}
+
+#taskCheck{
     display: none;
     text-align: center;
     font-size: 18pt;
