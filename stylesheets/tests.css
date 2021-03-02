@@ -16,18 +16,41 @@ and open the template in the editor.
     vertical-align: top;
     padding: 5px;
 }
+
+
 #logo{
     background-image: url('../img/logo_231x234.png');
     background-size: 90%;
     background-repeat: no-repeat;
-    background-position: left center;
     position: fixed;
+    background-position: center top;
+    float: right;
     top: 5px;
     right: 5px;
     width: 130px;
-    height: 130px;
+    height: 0px;
     margin: 15px 15px;
+    animation-name: logo;
+    animation-duration: 3s;
+    padding-top: 120px;
+    overflow:hidden;
+    transition: all 150ms ease-in-out;
 }
+
+#logo:hover {
+    background-size: 65%;
+    padding-top: 90px;
+    height:30px;
+    transition: all 150ms ease-in-out;
+}
+
+#end{
+    border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
+    border: 2px inset rgb(0, 255, 0);
+    text-align: center;
+    cursor: pointer;
+}
+
 #description{
     font-size: 12pt;
 }

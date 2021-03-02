@@ -62,7 +62,18 @@
                 $instructions[$key] = $value;
             }
             ?>
-            <div id="logo"></div>
+            <div id="logo">
+                <div id="end" onclick="exit()">
+                    Изход
+                </div>
+                <script>
+                    function exit () {
+                        StateTracker.get("logout", null, function () {
+                            location.reload()
+                        })
+                    }
+                </script>
+            </div>
             <div class="alignedTextContainer"
                  data-dimensions="width: <#header>.offsetWidth - <#logo>.offsetWidth - 75;">
                 <div class="element left" style="margin-bottom: -30px;">
@@ -452,6 +463,7 @@
             </fieldset>
         </div>
         <div id="startTest" class="notification" >
+            <div class="pageCloseButton"></div>
             <span style="font-size:16pt;" id="ST_name"></span><br />
             <span style="font-size:12pt;">
                 <span id="ST_description"></span><br />
