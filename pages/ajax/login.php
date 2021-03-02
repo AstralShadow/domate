@@ -40,7 +40,7 @@ $data = [];
 foreach (["user", "pwd", "token"] as $key){
     if (isset($_POST[$key]) && is_string($_POST[$key])){
         $data[$key] = trim($_POST[$key]);
-    } else{
+    } else {
         $response["msg"] = $dictionary->formMessages["missingFields"];
         $response["code"] = "MissingFields";
         unset($data);
