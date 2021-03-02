@@ -164,15 +164,15 @@ class Test
      * @return string
      */
     public function schedule(User $teacher, int $start, int $end, int $worktime, string $question, ?string $note): ActiveTest {
-        $active = ActiveTest::create($this->database, $teacher);
-        $active->start = new UTCDateTime(max(time(), $start) * 1000);
-        $active->end = new UTCDateTime(max(time() + 60, $end) * 1000);
-        $active->worktime = max(1, $worktime);
-        if (isset($note)){
-            $active->note = $note;
-        }
-        $active->test = $this->getId();
-        $active->question = $question;
+        $options = [
+            "start" => new UTCDateTime(max(time(), $start) * 1000),
+            "end" => new UTCDateTime(max(time() + 60, $end) * 1000),
+            "worktime" => max(1, $worktime),
+            "note" => $note ?? null,
+            "test_id" => $this->getId(),
+            "question" => $question ?? null
+        ];
+        $active = ActiveTest::create($this->database, $teacher, $options);
 
         $query = [
             '$push' => [

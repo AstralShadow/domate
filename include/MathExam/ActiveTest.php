@@ -26,9 +26,10 @@ class ActiveTest
      * Creates new test.
      * @param Database $database
      * @param User $teacher
-     * @return Test
+     * @param array $options
+     * @return ActiveTest
      */
-    public static function create(Database $database, User $teacher): ActiveTest {
+    public static function create(Database $database, User $teacher, array $options): ActiveTest {
         $collection = $database->activeTests;
         $characters = array_merge(range('a', 'z'), range('0', '9'));
         $charactersLength = count($characters) - 1;
@@ -40,13 +41,21 @@ class ActiveTest
             }
         } while (ActiveTest::getIdFromKey($database, $key) != null);
 
-        $result = $collection->insertOne([
+        $data = [
             "key" => $key,
             "teacher" => $teacher->user,
             "solutions" => [],
             "created" => new UTCDateTime(),
-            "modified" => new UTCDateTime()
-        ]);
+            "modified" => new UTCDateTime(),
+            "start" => $options["start"] ?? new UTCDateTime(),
+            "end" => $options["end"] ?? new UTCDateTime((time() + 2400) * 1000),
+            "worktime" => $options["worktime"] ?? 40,
+            "note" => $options["note"] ?? null,
+            "test" => $options["test_id"],
+            "question" => $options["question"] ?? null
+        ];
+
+        $result = $collection->insertOne($data);
 
         if (!$result->isAcknowledged()){
             return null;

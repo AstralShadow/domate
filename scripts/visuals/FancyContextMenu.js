@@ -177,11 +177,13 @@ function FancyContextMenu (element, optionsList, infoImgSrc) {
                 option.icon.style.opacity = p
             }
         })
-        infoimg.style.opacity = Math.max(0, p * 1.2 - .1)
-        infoimg.style.left = xPos + radius + "px"
-        infoimg.style.top = yPos - radius + "px"
-        if (xPos + radius + infoimg.offsetWidth > window.innerWidth) {
-            infoimg.style.left = xPos - radius - infoimg.offsetWidth - self.options[0].icon.offsetWidth + "px"
+        if (infoimg) {
+            infoimg.style.opacity = Math.max(0, p * 1.2 - .1)
+            infoimg.style.left = xPos + radius + "px"
+            infoimg.style.top = yPos - radius + "px"
+            if (xPos + radius + infoimg.offsetWidth > window.innerWidth) {
+                infoimg.style.left = xPos - radius - infoimg.offsetWidth - self.options[0].icon.offsetWidth + "px"
+            }
         }
     }
 
