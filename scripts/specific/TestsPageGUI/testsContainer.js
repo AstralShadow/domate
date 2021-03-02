@@ -41,7 +41,7 @@ if (!window.TestsPageGUI.Container) {
                         this.remove(oid)
                 }
             ],
-            ["img/math1.png",
+            ["img/list.png",
                 function (oid) {
                     //console.log("use not used yet")
                     // *use* function
