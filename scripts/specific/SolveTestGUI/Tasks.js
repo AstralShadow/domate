@@ -62,13 +62,13 @@ window.SolveTestGUI.Tasks = function (core) {
         var question = document.createElement("div")
         var answerWrap = document.createElement("div")
         //var workspace = document.createElement("div")
-        var input = document.createElement("input")
+        var input = document.createElement("textarea")
 
         base.className = "task"
         question.className = "question mathjax"
         answerWrap.className = "textarea answer"
         //workspace.className = "workarea mathjax"
-        input.className = "input answerInput"
+        input.className = "textarea answerInput"
 
         //answerWrap.appendChild(workspace)
         answerWrap.appendChild(input)

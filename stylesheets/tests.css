@@ -397,6 +397,7 @@ hr{
     border: 2px solid rgb(0, 250, 0);
     box-sizing: border-box;
     z-index: 110;
+    box-shadow: 0px 0px 40px 40px black;
 }
 #rezultati{
     background: black;
@@ -434,6 +435,7 @@ hr{
     background:black;
     z-index: 110;
     width: 400px;
+    box-shadow: 0px 0px 40px 40px black;
 }
 
 #otgowor{

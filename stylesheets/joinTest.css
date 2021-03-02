@@ -46,7 +46,8 @@ and open the template in the editor.
 
 
 .textarea{
-    width: auto;
+    width: 100%;
+    resize: vertical;
     margin: 5px;
     padding: 5px;
     margin-bottom: 10px;
