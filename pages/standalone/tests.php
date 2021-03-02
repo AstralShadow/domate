@@ -98,43 +98,14 @@
             <table id="rezultati">
                 <thead>
                     <tr class="tr">
-                        <th class="th" id="identificationQuestion">
-                            Име:
-                        </th>
-                        <th class="th">
-                            Започнал в:
-                        </th>
-                        <th class="th">
-                            Работил:
-                        </th>
-                        <th class="th">
-                            Задачи:
-                        </th>
-                        <th class="th">
-                            Вярни задачи:
-                        </th>
+                        <th class="th" id="identificationQuestion"> Име: </th>
+                        <th class="th"> Започнал в: </th>
+                        <th class="th"> Работил: </th>
+                        <th class="th"> Задачи:  </th>
+                        <th class="th"> Вярни задачи: </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="tr">
-                        <td class="td">
-                            Иван Иванов Иванов
-                        </td>
-                        <td class="td">
-                            12:00
-                        </td>
-                        <td class="td">
-                            30 мин
-                        </td>
-                        <td class="td">
-                            <div>
-                            </div>
-                        </td>
-                        <td class="td">
-                            2/2
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody> </tbody>
             </table>
         </div>
         <!-- Task results -->

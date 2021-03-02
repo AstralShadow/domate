@@ -136,14 +136,14 @@ class ExerciseVariant
         }
         if ($checked){
             if ($correctMarker){
-                return "lime";
+                return "green";
             } else {
                 return "red";
             }
         }
         if (isset($correctAnswer)){
             if (trim(mb_strtolower($correctAnswer)) === trim(mb_strtolower($answer))){
-                return "rgb(200, 255, 200)";
+                return "rgb(70, 255, 70)";
             } else {
                 return "rgb(255, 100, 100)";
             }
