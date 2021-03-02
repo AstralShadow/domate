@@ -43,8 +43,6 @@ if (!window.TestsPageGUI.Container) {
             ],
             ["img/math1.png",
                 function (oid) {
-                    //console.log("use not used yet")
-                    // *use* function
                     showStartTestDiv(oid)
                 }
             ],
@@ -52,6 +50,7 @@ if (!window.TestsPageGUI.Container) {
                 function (oid) {
                     //console.log("use not used yet")
                     // *use* function
+                    window.TestsPageGUI.showAllExams(oid)
                 }
             ]
         ],

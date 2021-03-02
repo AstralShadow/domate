@@ -41,12 +41,14 @@
 
         <script defer src="./scripts/specific/TestsPageGUI/HelperMenu.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/CloseButton.js"></script>
+        <script defer src="./scripts/specific/TestsPageGUI/ResultsManager.js"></script>
 
         <script src="./scripts/mathjaxConfig.js"></script>
         <script async src="./mathjax/startup.js" id="MathJax-script"></script>
 
     </head>
     <body class="nomathjax">
+        <!-- Header -->
         <div id="header">
             <?php
             /* Instructions */
@@ -78,6 +80,7 @@
                 </div>
             </div>
         </div>
+        <!-- Delete notification -->
         <div class="notification">
             Сигурни ли сте, че искате да изтриете това?
             <p/> Ако го изтриете повече няма да можете да го възстановите.
@@ -88,7 +91,8 @@
                 Изтрии
             </div>
         </div>
-        <div id="tests" style="display: none;">
+        <!-- Exam results -->
+        <div id="examListContainer">
             <div class="test">
                 ( задачи)
                 <br/>
@@ -101,7 +105,7 @@
                 Бележка:
             </div> 
         </div>
-        <div id="table">
+        <div id="singleExamResults">
             <table id="rezultati">
                 <tr class="tr">
                     <th class="th">
