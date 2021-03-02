@@ -91,221 +91,54 @@
                 Изтрии
             </div>
         </div>
+        <!-- Exams list -->
+        <div id="examListContainer"></div>
         <!-- Exam results -->
-        <div id="examListContainer">
-            <div class="test">
-                ( задачи)
-                <br/>
-                ( минути)
-                <br/>
-                (участника)
-                <br/>
-                Дата:
-                <br/>
-                Бележка:
-            </div> 
-        </div>
         <div id="singleExamResults">
             <table id="rezultati">
-                <tr class="tr">
-                    <th class="th">
-                        Име:
-                    </th>
-                    <th colspan="55" class="th">
-                        Задачи:
-                    </th>
-                    <th class="th">
-                        Започнал в:
-                    </th>
-                    <th class="th">
-                        Работил:
-                    </th>
-                    <th class="th">
-                        Вярни задачи:
-                    </th>
-                </tr>
-                <tr class="tr">
-                    <td class="td">
-                        Иван Иванов Иванов
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        2
-                    </td>
-                    <td class="td">
-                        1
-                    </td>
-                    <td class="td">
-                        12:00
-                    </td>
-                    <td class="td">
-                        30 мин
-                    </td>
-                    <td class="td">
-                        2/2
-                    </td>
-                </tr>
+                <thead>
+                    <tr class="tr">
+                        <th class="th" id="identificationQuestion">
+                            Име:
+                        </th>
+                        <th class="th">
+                            Започнал в:
+                        </th>
+                        <th class="th">
+                            Работил:
+                        </th>
+                        <th class="th">
+                            Задачи:
+                        </th>
+                        <th class="th">
+                            Вярни задачи:
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr">
+                        <td class="td">
+                            Иван Иванов Иванов
+                        </td>
+                        <td class="td">
+                            12:00
+                        </td>
+                        <td class="td">
+                            30 мин
+                        </td>
+                        <td class="td">
+                            <div>
+                            </div>
+                        </td>
+                        <td class="td">
+                            2/2
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-        <div id="prowerka">
+        <!-- Task results -->
+        <div id="taskCheck">
             Име:
             <div id="uslowie">
                 Условие:

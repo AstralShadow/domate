@@ -109,4 +109,66 @@ class ExerciseVariant
         return $data;
     }
 
+    public function getDataForTeacher() {
+        $data = $this->_dump();
+        $private = [
+            "name",
+            "description",
+            "paper"
+        ];
+        foreach ($private as $param){
+            if (isset($data[$param])){
+                unset($data[$param]);
+            }
+        }
+        $data["color"] = $this->getColor();
+        $data["isCorrect"] = $this->isCorrect();
+        return $data;
+    }
+
+    public function getColor(): string {
+        $answer = $this->answer;
+        $checked = $this->checked;
+        $correctMarker = $this->correctMarker;
+        $correctAnswer = $this->correctAnswer;
+        if ($answer === null || strlen(trim($answer)) === 0){
+            return "black";
+        }
+        if ($checked){
+            if ($correctMarker){
+                return "lime";
+            } else {
+                return "red";
+            }
+        }
+        if (isset($correctAnswer)){
+            if (trim(mb_strtolower($correctAnswer)) === trim(mb_strtolower($answer))){
+                return "rgb(200, 255, 200)";
+            } else {
+                return "rgb(255, 100, 100)";
+            }
+        }
+        return "gray";
+    }
+
+    public function isCorrect(): bool {
+        $answer = $this->answer;
+        $checked = $this->checked;
+        $correctMarker = $this->correctMarker;
+        $correctAnswer = $this->correctAnswer;
+
+        if ($checked && $correctMarker){
+            return true;
+        }
+
+        if ($answer === null || strlen(trim($answer)) === 0){
+            return false;
+        }
+
+        if (!$checked && trim(mb_strtolower($correctAnswer)) === trim(mb_strtolower($answer))){
+            return true;
+        }
+        return false;
+    }
+
 }

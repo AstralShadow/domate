@@ -184,6 +184,13 @@ class Test
         return $active;
     }
 
+    public function listExams(User $teacher): array {
+        $testActiveTests = (array) $this->active;
+        $userActiveTests = (array) $teacher->activeTests;
+        $result = array_intersect($testActiveTests, $userActiveTests);
+        return self::parseMongoObjects($result);
+    }
+
     public static function exists(Database $database, ObjectId $id): bool {
         $collection = $database->tests;
         $filter = ["_id" => $id];
