@@ -305,6 +305,22 @@
                 </tr>
             </table>
         </div>
+        <div id="prowerka">
+            Име:
+            <div id="uslowie">
+                Условие:
+            </div>
+            <div id="otgowor">
+                Отговор (??:??):
+            </div>
+            <br/>
+            <div class="button button_green" style="float: left; ">
+                Вярно
+            </div>
+            <div class="button button_red" style="float: right; ">
+                Грешно
+            </div>
+        </div>
         <!-- Test editor -->
         <div id="testEditorPage" class="page">
             <div class="pageCloseButton"></div>
@@ -499,7 +515,6 @@
             Разрешете JavaScript за правилното функциониране на сайта.
             </noscript>
         </div>
-
         <!-- GUI initalization -->
         <?php
         $TestsPageGUI_init = [

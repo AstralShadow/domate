@@ -46,7 +46,7 @@ if (!window.TestsPageGUI.Container) {
                     showStartTestDiv(oid)
                 }
             ],
-            ["img/math2.png",
+            ["img/tick.png",
                 function (oid) {
                     //console.log("use not used yet")
                     // *use* function
