@@ -29,20 +29,24 @@ window.addEventListener("load", function () {
         lastEventInTask = e
     })
     document.addEventListener("click", function (e) {
-        if (e === lastEventInTask)
+        if (e === lastEventInTask) {
             return;
+        }
         if (taskContainer.style.display !== "none") {
             taskContainer.style.display = "none"
             return;
         }
-        if (e === lastEventInExam)
-            return;
-        if (examContainer.style.display !== "none") {
-            examContainer.style.display = "none"
+        if (e === lastEventInExam) {
             return;
         }
-        if (e === lastEventInMain)
+        if (examContainer.style.display !== "none") {
+            examContainer.style.display = "none"
+            untrackAllSolutions()
             return;
+        }
+        if (e === lastEventInMain) {
+            return;
+        }
         if (mainContainer.style.display !== "none") {
             mainContainer.style.display = "none"
             return;
@@ -80,6 +84,30 @@ window.addEventListener("load", function () {
             mainContainer.style.display = "block"
         }, 20)
     }
+
+    var trackedSolutions = {}
+    var updateCommands = {}
+    function trackSolution (oid) {
+        if (Object.keys(trackedSolutions).indexOf(oid) === -1) {
+            trackedSolutions[oid] = null
+            StateTracker.track("solutionData", {id: oid}, solutionUpdate)
+        }
+    }
+    function reloadSolution (oid) {
+        StateTracker.reloadTracker("solutionData", {id: oid})
+    }
+    function solutionUpdate (e) {
+        trackedSolutions[e.args.id] = e.result
+        if (updateCommands[e.args.id]) {
+            updateCommands[e.args.id](e.result)
+        }
+    }
+    function untrackAllSolutions () {
+        Object.keys(trackedSolutions).forEach(function (oid) {
+            StateTracker.untrack("solutionData", {id: oid})
+            delete trackedSolutions[oid]
+        })
+    }
     window.TestsPageGUI.showExam = async function (exam_id) {
         var request = StateTracker.get("examData", {id: exam_id})
         setTimeout(function () {
@@ -93,42 +121,41 @@ window.addEventListener("load", function () {
         examContainer.querySelector("#identificationQuestion")
             .innerText = exam.question || ""
         exam.solutions.forEach(async function (s_oid) {
-            var request = await StateTracker.get("solutionData", {id: s_oid})
-            var solution = request.result
+            //var solution = trackedSolutions[s_oid]
             var row = container.insertRow()
             row.className = "tr"
             var name = row.insertCell()
             name.className = "td"
-            name.innerText = solution.identification
             var start = row.insertCell()
             start.className = "td"
-            start.innerText = (new Date(solution.created * 1000)).toLocaleString()
             var worktime = row.insertCell()
             worktime.className = "td"
-            var delta = solution.finished - solution.created
-            worktime.innerText = Math.floor(delta / 60) + " минут" + (delta === 1 ? "а" : "и")
-
             var tasks = row.insertCell()
             tasks.style.whiteSpace = "nowrap"
             tasks.style.textAlign = "center"
             var correctTasks = row.insertCell()
             correctTasks.className = "td"
             var nodes = {}
-            Object.keys(solution.tasks).forEach(function (task_id) {
-                var task = solution.tasks[task_id]
-                console.log(task)
-                var div = document.createElement("div")
-                tasks.appendChild(div)
-                div.className = "td"
-                div.style.height = "20px"
-                div.style.display = "inline-block"
-                div.style.margin = "3px"
-                div.style.marginTop = "5px"
-                div.style.borderRadius = "10px"
-                nodes[task_id] = div
-            })
-            parseCorrectness()
-            function parseCorrectness () {
+
+            updateCommands[s_oid] = function (solution) {
+                name.innerText = solution.identification
+                start.innerText = (new Date(solution.created * 1000)).toLocaleString()
+                var delta = solution.finished - solution.created
+                worktime.innerText = Math.floor(delta / 60) + " минут" + (delta === 1 ? "а" : "и")
+                while (tasks.firstChild) {
+                    tasks.removeChild(tasks.firstChild)
+                }
+                Object.keys(solution.tasks).forEach(function (task_id) {
+                    var task = solution.tasks[task_id]
+                    var div = document.createElement("div")
+                    tasks.appendChild(div)
+                    div.className = "td td_cell"
+                    nodes[task_id] = div
+                    div.onclick = function () {
+                        showTaskMenu(s_oid, task_id)
+                    }
+                })
+
                 var right = 0
                 Object.keys(solution.tasks).forEach(function (task_id) {
                     var task = solution.tasks[task_id]
@@ -139,8 +166,61 @@ window.addEventListener("load", function () {
                 })
                 correctTasks.innerText = right + "/" + Object.keys(solution.tasks).length
             }
+            trackSolution(s_oid)
         })
 
+
+    }
+    function showTaskMenu (s_oid, task_index) {
+        var solution = trackedSolutions[s_oid]
+        var task = solution.tasks[task_index]
+        var reload = () => reloadSolution(s_oid)
+        setTimeout(function () {
+            taskContainer.style.display = "block"
+        }, 0)
+        taskContainer.querySelector("#studentIdentification")
+            .innerText = solution.identification
+        taskContainer.querySelector("#taskQuestion")
+            .innerText = task.question
+        var ansT = ""
+        if (task.answerTime) {
+            ansT = " (" + (new Date(task.answerTime * 1000)).toLocaleString() + ")"
+        }
+        taskContainer.querySelector("#studentAnswer")
+            .innerHTML = "Отговор" + ansT + ":<hr />"
+        taskContainer.querySelector("#studentAnswer")
+            .append(task.answer || "")
+        taskContainer.querySelector("#goodAnswer")
+            .onclick = async function () {
+                decide(task["_id"], true)
+                taskContainer.style.display = "none"
+                reload()
+            }
+        taskContainer.querySelector("#badAnswer")
+            .onclick = async function () {
+                await decide(task["_id"], false)
+                taskContainer.style.display = "none"
+                reload()
+            }
+        if (task.correctMarker === true) {
+            taskContainer.querySelector("#goodAnswer")
+                .className = "button button_green marked"
+            taskContainer.querySelector("#badAnswer")
+                .className = "button button_red"
+        } else if (task.correctMarker === false) {
+            taskContainer.querySelector("#goodAnswer")
+                .className = "button button_green"
+            taskContainer.querySelector("#badAnswer")
+                .className = "button button_red marked"
+        } else {
+            taskContainer.querySelector("#goodAnswer")
+                .className = "button button_green"
+            taskContainer.querySelector("#badAnswer")
+                .className = "button button_red"
+        }
+    }
+    async function decide (task_id, isCorrect) {
+        console.log(await StateTracker.get("submitTaskCheck", {id: task_id, "true": isCorrect}))
 
     }
 })

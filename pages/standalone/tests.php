@@ -106,7 +106,7 @@
         <div id="examListContainer"></div>
         <!-- Exam results -->
         <div id="singleExamResults">
-            <table id="rezultati">
+            <table id="scoreboardTable">
                 <thead>
                     <tr class="tr">
                         <th class="th" id="identificationQuestion"> Име: </th>
@@ -121,18 +121,18 @@
         </div>
         <!-- Task results -->
         <div id="taskCheck">
-            Име:
-            <div id="uslowie">
-                Условие:
-            </div>
-            <div id="otgowor">
+            <span id="studentIdentification">Име:</span><hr />
+            Условие:<hr />
+            <div id="taskQuestion"> </div>
+            <hr />
+            <div id="studentAnswer">
                 Отговор (??:??):
             </div>
-            <br/>
-            <div class="button button_green" style="float: left; ">
+            <br/><hr />
+            <div id="goodAnswer" class="button button_green" style="float: left; ">
                 Вярно
             </div>
-            <div class="button button_red" style="float: right; ">
+            <div id="badAnswer" class="button button_red" style="float: right; ">
                 Грешно
             </div>
         </div>

@@ -80,11 +80,14 @@ class TestSolution
         }
         $max = $this->created;
         foreach ($this->tasks as $t_id){
-            $task = new ExerciseVariant($this->databasem, $t_id);
+            $task = new ExerciseVariant($this->database, new ObjectId($t_id));
             $maxTime = $max->toDateTime()->getTimestamp();
-            $editTime = $task->answerTime->toDateTime()->getTimestamp();
-            if ($editTime > $maxTime){
-                $max = $task->answerTime;
+            $answerTime = $task->answerTime;
+            if (isset($answerTime)){
+                $editTime = $answerTime->toDateTime()->getTimestamp();
+                if ($editTime > $maxTime){
+                    $max = $task->answerTime;
+                }
             }
         }
         $update = [
@@ -111,6 +114,9 @@ class TestSolution
     }
 
     public function getDataForTeacher() {
+        if ($this->finished->toDateTime()->getTimestamp() < time()){
+            $this->close();
+        }
         $data = $this->_dump();
         $private = [
             "collection",

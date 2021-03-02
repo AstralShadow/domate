@@ -39,7 +39,8 @@
         "listExams": "?p=listExams",
         "examData": "?p=examData",
         "solutionData": "?p=solutionData",
-        "taskData": "?p=taskData",
+        "taskData": "?p=taskData", // unused, really...
+        "submitTaskCheck": "?p=submitTaskCheck"
 
     }
 
@@ -67,6 +68,9 @@
                 return;
             }
 
+            var argsCopy = {}
+            Object.assign(argsCopy, args)
+
             var p = new Promise(function (resolve, reject) {
                 var request = new XMLHttpRequest()
 
@@ -78,7 +82,7 @@
 
                     var result = {
                         event: name,
-                        args: args,
+                        args: argsCopy,
                         timestamp: (new Date()).getTime()
                     }
                     Object.assign(result, JSON.parse(request.response))
@@ -113,6 +117,7 @@
             if (!args) {
                 args = {}
             }
+
             var query = _tracking.find(function (q) {
                 if (q.name !== name) {
                     return false;
@@ -128,6 +133,8 @@
                 return true;
             })
 
+            var argsCopy = {}
+            Object.assign(argsCopy, args)
             if (query) {
                 query.callbacks.push(callback)
                 query.active = true
@@ -135,11 +142,15 @@
                     query.refreshDelay = refreshDelay
                 }
                 if (query.lastData !== undefined) {
-                    callback(JSON.parse(query.lastData))
+                    var result = {
+                        event: name,
+                        args: argsCopy,
+                        timestamp: query.lastTime
+                    }
+                    Object.assign(result, JSON.parse(query.lastData))
+                    callback(result)
                 }
             } else {
-                var argsCopy = {}
-                Object.assign(argsCopy, args)
                 query = {
                     name: name,
                     active: true,
