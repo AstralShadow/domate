@@ -27,9 +27,9 @@ if (!in_array($input["id"], $exams)){
 unset($exams);
 $id = new ObjectId($input["id"]);
 
-/*
- * Action
- */
+if (!ActiveTest::exists($db, $id)){
+    return false;
+}
 
 $exam = new ActiveTest($db, $id);
 
