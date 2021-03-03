@@ -189,6 +189,8 @@ function FancyContextMenu (element, optionsList, infoImgSrc) {
 
 }
 
+FancyContextMenu.canvas = document.createElement("canvas")
+
 /**
  * A single option, contains circle icon and callback.
  * The callback is invoked with FancyContextMenu object as parameter
@@ -200,6 +202,27 @@ FancyContextMenu.Option = function (imageSrc, callback) {
     'use strict'
     this.icon = document.createElement("div")
     this.icon.className = "FancyContextMenu_Icon"
+
+    if (imageSrc.indexOf(':') !== -1) {
+        var content = imageSrc.split(':')[1]
+        imageSrc = imageSrc.split(':')[0]
+        var span = document.createElement("span")
+        this.icon.appendChild(span)
+        span.innerText = content
+        span.style.position = "absolute"
+        span.style.textIndent = "0px"
+        span.style.textShadow = "2px 2px 2px black, -2px 2px 2px black, -2px -2px 2px black, 2px -2px 2px black"
+        span.style.transform = "translate(-" + FancyContextMenu.getTextWidth(content) / 2 + "px, -23px)"
+        this.icon.style.overflow = "hidden"
+        var icon = this.icon
+        this.icon.addEventListener("mouseover", function () {
+            this.style.overflow = "visible"
+        })
+        this.icon.addEventListener("mouseout", function () {
+            this.style.overflow = "hidden"
+        })
+    }
+
     this.icon.style.backgroundImage = `url("${imageSrc}")`
 
     var lastContextMenu = null
@@ -217,4 +240,14 @@ FancyContextMenu.Option = function (imageSrc, callback) {
         lastContextMenu.close()
         callback(lastContextMenu)
     })
+
+}
+
+FancyContextMenu.getTextWidth = function (text) {
+    // re-use canvas object for better performance
+    var canvas = FancyContextMenu.canvas;
+    var context = canvas.getContext("2d");
+    context.font = "14pt Liberation Serif";
+    var metrics = context.measureText(text);
+    return metrics.width - 7;
 }

@@ -30,23 +30,23 @@ if (!window.TestsPageGUI.Container) {
 
         /* Functionality */
         functions: [
-            ["img/m1.png",
+            ["img/m1.png:Редактирай",
                 function (oid) {
                     TestsPageGUI.editTest(oid)
                 }],
-            ["img/delete.png",
+            ["img/delete.png:Изтрии",
                 function (oid) {
                     // TODO: use some more nice askbox
                     if (confirm("Are you sure you\nwant to remove this?"))
                         this.remove(oid)
                 }
             ],
-            ["img/list.png",
+            ["img/list.png:Раздай",
                 function (oid) {
                     showStartTestDiv(oid)
                 }
             ],
-            ["img/tick.png",
+            ["img/tick.png:Провери",
                 function (oid) {
                     //console.log("use not used yet")
                     // *use* function

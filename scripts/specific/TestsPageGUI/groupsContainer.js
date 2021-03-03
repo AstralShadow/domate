@@ -29,19 +29,19 @@ if (!window.TestsPageGUI.Container) {
 
         /* Functionality */
         functions: [
-            ["img/m1.png",
+            ["img/m1.png:Редактирай",
                 function (oid) {
                     TestsPageGUI.editGroup(oid)
                 }
             ],
-            ["img/delete.png",
+            ["img/delete.png:Изтрии",
                 function (oid) {
                     // TODO: use some more nice askbox
                     if (confirm("You sure want to remove?"))
                         this.remove(oid)
                 }
             ],
-            ["img/plus1.png",
+            ["img/plus1.png:Добави",
                 function (oid) {
                     var active = TestsPageGUI.activeEditor
                     if (active && active.type === "test") {
