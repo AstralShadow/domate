@@ -318,7 +318,6 @@ hr{
     box-shadow: 0px 0px 60px 60px black;
 }
 .buttonNotification{
-    display: none;
     background: black;
     width: 100px;
     margin-left: 30px;

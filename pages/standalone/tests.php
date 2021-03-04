@@ -92,13 +92,13 @@
             </div>
         </div>
         <!-- Delete notification -->
-        <div class="notification">
+        <div class="notification" id="delNotification">
             Сигурни ли сте, че искате да изтриете това?
             <p/> Ако го изтриете повече няма да можете да го възстановите.
-            <div class="buttonNotification" style="float: right;">
+            <div id="noDelButton" class="buttonNotification" style="float: right;">
                 Отказ
             </div>
-            <div class="buttonNotification" style="float: left;">
+            <div id="delButton" class="buttonNotification" style="float: left;">
                 Изтрии
             </div>
         </div>

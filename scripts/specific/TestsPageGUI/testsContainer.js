@@ -37,8 +37,19 @@ if (!window.TestsPageGUI.Container) {
             ["img/delete.png:Изтрии",
                 function (oid) {
                     // TODO: use some more nice askbox
-                    if (confirm("Are you sure you\nwant to remove this?"))
-                        this.remove(oid)
+                    var div = document.getElementById("delNotification")
+                    var del = document.getElementById("delButton")
+                    var nodel = document.getElementById("noDelButton")
+                    var self = this
+                    div.style.display = "block"
+
+                    del.onclick = function () {
+                        self.remove(oid)
+                        div.style.display = "none"
+                    }
+                    nodel.onclick = function () {
+                        div.style.display = "none"
+                    }
                 }
             ],
             ["img/list.png:Раздай",
