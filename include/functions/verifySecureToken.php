@@ -8,8 +8,20 @@
 
 use Identification\Session as Session;
 
-function verifySecureToken(Session $session, string $name, string $token) {
+/**
+ * Checks if the token is the same as recorded and deletes the token
+ * @param Session $session
+ * @param string $name
+ * @param string $token
+ * @return bool $valid 
+ */
+function verifySecureToken(Session $session, string $name, string $token): bool {
     $tokens = $session->tokens;
+    if (!isset($tokens[$name])){
+        return false;
+    }
+
+    $valid = $token === $tokens[$name];
     $session->remove("tokens." . $name);
-    return isset($tokens[$name]) && $token === $tokens[$name];
+    return $valid;
 }
