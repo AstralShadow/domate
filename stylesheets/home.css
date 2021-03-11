@@ -24,7 +24,7 @@ and open the template in the editor.
     top: 0px;
     margin-right: 2px;
     white-space: nowrap;
-    z-index: 10;
+    z-index: 20;
 }
 
 /* Forms */
@@ -41,8 +41,14 @@ and open the template in the editor.
     background: black;
     margin-left: 10px;
     margin-right: 10px;
+    background-color: transparent;
+}
+.dropdown_form_contents > .input{
+    position: relative;
+    z-index: 20;
 }
 .dropdown_form_submit{
+    position: relative;
     width: 250px;
     height: 30px;
     border: 3px inset rgb(0, 255, 0);
@@ -51,9 +57,15 @@ and open the template in the editor.
     text-align: center;
     cursor: pointer;
     background-color: black;
+    z-index: 20;
 }
 .dropdown_form_feedback{
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.9);
+    text-shadow: 1px 1px 1px black, -1px 1px 1px black, -1px -1px 1px black, 1px -1px 1px black;
+    box-shadow: 0px 0px 4px 4px black;
     white-space: normal;
+    z-index: 19;
 }
 #sign_up.dropdown_form_submit{
     border-radius: 0px 0px 0px 100px/0px 0px 0px 25px;
