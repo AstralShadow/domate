@@ -37,8 +37,9 @@ class User
      * Regular expressions for username and password
      */
     private const VALIDATION_EXPRESSIONS = [
-        "user" => '/^[a-zA-Z0-9\_\-]{3,16}$/',
-        "pwd" => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,32}$/'
+        "user" => '/^[\x{0400}-\x{04FF}A-Z0-9\_\-\.]{3,16}$/iu',
+        // "pwd" => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,72}$/'
+        "pwd" => '/^.{6,72}$/'
     ];
 
     /**
