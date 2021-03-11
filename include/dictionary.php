@@ -9,9 +9,9 @@
 require "include/session.php";
 
 if (!defined("DICTIONARY_LANGUAGE")){
-    $lang = $session->lang ?? "bg_BG";
-
     require "include/MathExam/Dictionary.php";
+
+    $lang = $session->lang ?? "bg_BG";
     define("DICTIONARY_LANGUAGE", $lang);
     $dictionary = new MathExam\Dictionary($lang);
 

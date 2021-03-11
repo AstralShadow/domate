@@ -10,7 +10,6 @@
  * @global \MongoDB\Client|null $db
  */
 if (!defined("DEFINED_DB_CLIENT")){
-    define("DEFINED_DB_CLIENT", true);
 
     // Default arguments
     $args = [
@@ -43,9 +42,11 @@ if (!defined("DEFINED_DB_CLIENT")){
         $k = $args["db"];
         $db = $dbClient->$k;
 
+        // To trigger an error if the authorization is wrong.
         $dbClient->listDatabases();
+        define("DEFINED_DB_CLIENT", true);
     } catch (Exception $e){
-        echo "Database Error <br />\n";
+        header("HTTP/1.1 500 Internal Server Error", true, 500);
         throw $e;
     }
 

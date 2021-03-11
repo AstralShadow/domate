@@ -241,9 +241,17 @@ trait ModificableMongoDocument
         $this->update($update);
     }
 
+    /**
+     * Prints all data for the object that is not private.
+     * 
+     * @return type
+     */
     public function dump() {
         if (!isset($this->data)){
-            $this->load();
+            $thisExists = $this->load();
+            if (!$thisExists){
+                return null;
+            }
         }
         $data = self::parseMongoObjects($this->data);
         foreach ($this->privateParameters as $param){
@@ -254,6 +262,12 @@ trait ModificableMongoDocument
         return $data;
     }
 
+    /**
+     * Recursively converts some mongodb data types to their php alternatives
+     * 
+     * @param type $data
+     * @return type
+     */
     private static function parseMongoObjects($data) {
         if ($data instanceof UTCDateTime){
             $data = $data->toDateTime()->getTimestamp();

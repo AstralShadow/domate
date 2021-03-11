@@ -8,7 +8,7 @@
 
 require "include/user.php";
 
-if (!defined("CLASS_TEST")){
+if (!defined("CLASS_TEST") && defined("USER_CLASS")){
     define("CLASS_TEST", true);
 
     require "include/MathExam/Exercise.php";

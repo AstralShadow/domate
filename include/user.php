@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 
-require "include/db.php";
 require "include/shared.php";
 
 if (!defined("USER_CLASS")){

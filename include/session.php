@@ -12,7 +12,7 @@ require "include/shared.php";
 /**
  * @global Identification\Session $session
  */
-if (!defined("SESSION_COOKIE")){
+if (!defined("SESSION_COOKIE") && defined("DEFINED_DB_CLIENT")){
     define("SESSION_COOKIE", "MathSession");
     require "include/Identification/Session.php";
 
