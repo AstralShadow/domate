@@ -1,6 +1,7 @@
 /nbproject/private/
 /logs/*.log
 /data/private/*.json
+/data/private/*.location
 /pages/test/*.*
 /vendor/
 /private/
