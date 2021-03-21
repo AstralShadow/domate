@@ -1,3 +1,6 @@
 [submodule "submodules/MathJax"]
 	path = submodules/MathJax
 	url = https://github.com/mathjax/MathJax.git
+[submodule "submodules/WhiteBellPHPClient"]
+	path = submodules/WhiteBellPHPClient
+	url = /workspace/c++/WhiteBell/clients/php/
