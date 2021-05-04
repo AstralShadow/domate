@@ -7,6 +7,7 @@
  */
 
 include "include/testsAndTasks.php";
+include "include/whiteBell.php";
 
 use MongoDB\BSON\ObjectId;
 use MathExam\ExerciseVariant as ExerciseVariant;
@@ -38,6 +39,9 @@ if (!in_array((string) $variant->paper, (array) $session->activeTests ?? [])){
 }
 
 $variant->setAnswer($input["answer"]);
+if (isset($whitebell)){
+    $whitebell->dispatchEvent($id . "_answered");
+}
 
 $response["code"] = "Success";
 $response["msg"] = $dictionary->success;

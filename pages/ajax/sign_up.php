@@ -40,7 +40,7 @@ $data = [];
 foreach (["user", "pwd", "pwd2", "token"] as $key){
     if (isset($_POST[$key]) && is_string($_POST[$key])){
         $data[$key] = trim($_POST[$key]);
-    } else{
+    } else {
         $response["msg"] = $dictionary->formMessages["missingFields"];
         $response["code"] = "MissingFields";
         unset($data);
@@ -60,7 +60,7 @@ if (isset($user)){
     return;
 }
 
-$ok = verifySecureToken($session, "signUp", $data["token"]);
+$ok = verifySecureToken($session, "signUp", trim($data["token"]));
 $response["newToken"] = generateSecureToken($session, "signUp");
 if (!$ok){
     $response["msg"] = $dictionary->formMessages["invalidToken"];

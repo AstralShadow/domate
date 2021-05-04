@@ -61,7 +61,7 @@ if (isset($user)){
     return;
 }
 
-$ok = verifySecureToken($session, "login", $data["token"]);
+$ok = verifySecureToken($session, "login", trim($data["token"]));
 $response["newToken"] = generateSecureToken($session, "login");
 if (!$ok){
     $response["msg"] = $dictionary->formMessages["invalidToken"];
@@ -70,7 +70,6 @@ if (!$ok){
     return;
 }
 unset($data["token"], $ok);
-
 
 /*
  * Action

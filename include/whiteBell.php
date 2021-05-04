@@ -18,11 +18,11 @@ use WhiteBell\WhiteBellClient;
 
 $whiteBellLocation = trim(file_get_contents("data/private/whitebell.location"));
 
-if (!file_exists($whiteBellFile)){
-    unset($whiteBellFile);
+if (!file_exists($whiteBellLocation)){
+    unset($whiteBellLocation);
     $whitebell = null;
     return;
 }
 
-$whitebell = new WhiteBellClient($whiteBellFile, "DomaTe");
-unset($whiteBellFile);
+$whitebell = new WhiteBellClient($whiteBellLocation, "DomaTe");
+unset($whiteBellLocation);

@@ -1,5 +1,4 @@
 {
-    "author": "azcraft",
     "forbiddenURLs": [
         ".git*",
         ".ht*",
@@ -8,7 +7,7 @@
         "/logs/",
         "/vendor/",
         "/nbproject/",
-        "/img/Gimp/",
+        "/img/GIMP/",
         "/data/",
         "/pages/",
         "/include/",

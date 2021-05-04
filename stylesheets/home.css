@@ -58,6 +58,7 @@ and open the template in the editor.
     cursor: pointer;
     background-color: black;
     z-index: 20;
+    box-sizing: border-box;
 }
 .dropdown_form_feedback{
     position: relative;

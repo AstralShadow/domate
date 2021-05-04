@@ -33,8 +33,8 @@ require "include/secureTokens.php";
                 <?php
                 $signUp = $dictionary->signUpMessages;
                 $login = $dictionary->loginMessages;
-                $signUpToken = str_replace('\\', '\\\\', generateSecureToken($session, "signUp"));
-                $loginToken = str_replace('\\', '\\\\', generateSecureToken($session, "login"));
+                $signUpToken = generateSecureToken($session, "signUp");
+                $loginToken = generateSecureToken($session, "login");
                 ?>
                 <div class="dropdown_form_container" autocomplete="off">
                     <form action="./?p=sign_up" method="post" class="dropdown_form_contents">
