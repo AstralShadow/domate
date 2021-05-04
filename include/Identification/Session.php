@@ -74,7 +74,7 @@ class Session
         ]);
 
         setcookie(SESSION_COOKIE, $key, 0, "", "", false, true);
-        $this->sessionKey = $key;
+        $this->identificator = $key;
     }
 
     /**
