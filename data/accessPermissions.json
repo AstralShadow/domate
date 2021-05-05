@@ -1,36 +1,20 @@
 {
-    "defaultGuestPage": "home",
-    "guestOnlyPages": [
-        "home",
+    "guestHome": "home",
+    "userHome": "app",
 
-        "login",
-        "sign_up"
+    "guestPages": [
+        "home"
     ],
 
-    "defaultUserPage": "tests",
-    "userOnlyPages": [
-        "tests",
-        "logout",
+    "userPages": [
+        "app"
+    ],
+    "userApis": [
+        "check",
+        "solving",
 
-        "listExercises",
-        "createExercise",
-        "modifyExercise",
-        "removeExercise",
-        "exerciseData",
-
-        "listExerciseGroups",
-        "createExerciseGroup",
-        "modifyExerciseGroup",
-        "removeExerciseGroup",
-        "exerciseGroupData",
-
-        "listTests",
-        "createTest",
-        "modifyTest",
-        "removeTest",
-        "testData",
-
-        "scheduleTest"
-
+        "exercise",
+        "groups",
+        "test"
     ]
 }

@@ -16,5 +16,6 @@ require "include/user.php";
 require "include/scripts/authorizeUserBySession.php";
 
 /* Contents */
-require "include/dictionary.php";
-require "include/scripts/includePage.php";
+require "include/scripts/resolveURI.php";
+require "include/scripts/verifyRequestPermissions.php";
+require "include/scripts/serveRequest.php";

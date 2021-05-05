@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8" />
         <title>
-            <?php echo $dictionary->title; ?>
+            <?php echo $dictionary["title"]; ?>
         </title>
 
         <link href="./stylesheets/main.css"
@@ -53,7 +53,7 @@
             <?php
             /* Instructions */
             $instructions = [];
-            foreach ($dictionary->testsPageInstructions as $key => $value){
+            foreach ($dictionary["tests_page_instructions"] as $key => $value){
                 while (is_array($value) && count($value) > 2){
                     $c = count($value);
                     $value[$c - 2] = $value[$c - 2] . $value[$c - 1];
@@ -63,14 +63,17 @@
             }
             ?>
             <div id="logo">
-                <div id="end" onclick="exit()">
+                <div id="end" onclick="logout()">
                     Изход
                 </div>
                 <script>
-                    function exit () {
-                        StateTracker.get("logout", null, function () {
+                    function logout () {
+                        var request = new XMLHttpRequest()
+                        request.addEventListener("load", function () {
                             location.reload()
                         })
+                        request.open("get", "./profile/logout")
+                        request.send()
                     }
                 </script>
             </div>
@@ -93,13 +96,12 @@
         </div>
         <!-- Delete notification -->
         <div class="notification" id="delNotification">
-            Сигурни ли сте, че искате да изтриете това?
-            <p/> Ако го изтриете повече няма да можете да го възстановите.
+            <?php echo str_replace("\n", "<br />", $dictionary["delete_confirm"]); ?>
             <div id="noDelButton" class="buttonNotification" style="float: right;">
-                Отказ
+                <?php echo $dictionary["cancel"]; ?>
             </div>
             <div id="delButton" class="buttonNotification" style="float: left;">
-                Изтрии
+                <?php echo $dictionary["delete"]; ?>
             </div>
         </div>
         <!-- Exams list -->
@@ -109,11 +111,17 @@
             <table id="scoreboardTable">
                 <thead>
                     <tr class="tr">
-                        <th class="th" id="identificationQuestion"> Име: </th>
-                        <th class="th"> Започнал в: </th>
-                        <th class="th"> Работил: </th>
-                        <th class="th"> Задачи:  </th>
-                        <th class="th"> Вярни задачи: </th>
+                        <?php
+                        echo <<<EOF
+                        <th class="th" id="identificationQuestion">
+                            $dictionary->name:
+                        </th>
+                        <th class="th"> $dictionary->started_at: </th>
+                        <th class="th"> $dictionary->worked_for: </th>
+                        <th class="th"> $dictionary->tasks:  </th>
+                        <th class="th"> $dictionary->correct_tasks: </th>
+EOF;
+                        ?>
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -121,20 +129,33 @@
         </div>
         <!-- Task results -->
         <div id="taskCheck">
-            <span id="studentIdentification">Име:</span><hr />
-            Условие:<hr />
-            <div id="taskQuestion"> </div>
+            <?php
+            echo <<<EOL
+            <span id="studentIdentification">
+                $dictionary->name:
+            </span>
             <hr />
+            
+                $dictionary->condition:
+            <hr />
+            
+            <div id="taskQuestion"></div>
+            <hr />
+            
             <div id="studentAnswer">
-                Отговор (??:??):
+                $dictionary->answer (??:??):
             </div>
-            <br/><hr />
+            <br/>
+            <hr />
+            
             <div id="goodAnswer" class="button button_green" style="float: left; ">
                 Вярно
             </div>
             <div id="badAnswer" class="button button_red" style="float: right; ">
                 Грешно
             </div>
+EOL;
+            ?>
         </div>
         <!-- Test editor -->
         <div id="testEditorPage" class="page">

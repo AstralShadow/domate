@@ -1,18 +1,9 @@
 <!DOCTYPE html>
-<?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-require "include/secureTokens.php";
-?>
 <html>
     <head>
         <meta charset="utf-8" />
         <title>
-            <?php echo $dictionary->title; ?>
+            <?php echo $dictionary["title"]; ?>
         </title>
 
         <link href="./stylesheets/main.css"
@@ -31,48 +22,44 @@ require "include/secureTokens.php";
             </div>
             <div id="home_forms">
                 <?php
-                $signUp = $dictionary->signUpMessages;
-                $login = $dictionary->loginMessages;
-                $signUpToken = generateSecureToken($session, "signUp");
-                $loginToken = generateSecureToken($session, "login");
+                $sign_up = $dictionary["sign_up_messages"];
+                $login = $dictionary["login_messages"];
                 ?>
                 <div class="dropdown_form_container" autocomplete="off">
-                    <form action="./?p=sign_up" method="post" class="dropdown_form_contents">
-                        <input placeholder="<?php echo $signUp["name"]; ?>"
+                    <form action="./profile/sign-up" method="post" class="dropdown_form_contents">
+                        <input placeholder="<?php echo $sign_up["name"]; ?>"
                                name="user" class="input" type="text" >
-                        <input placeholder="<?php echo $signUp["password"]; ?>"
+                        <input placeholder="<?php echo $sign_up["password"]; ?>"
                                name="pwd" class="input" type="password" >
-                        <input placeholder="<?php echo $signUp["repeatPassword"]; ?>"
+                        <input placeholder="<?php echo $sign_up["repeat_password"]; ?>"
                                name="pwd2" class="input" type="password" >
                         <span class="dropdown_form_feedback"></span>
-                        <input name="token" type="hidden" value="<?php echo $signUpToken; ?>" />
                     </form>
                     <div id="sign_up" class="dropdown_form_submit">
-                        <?php echo $signUp["signUp"]; ?>
+                        <?php echo $sign_up["sign_up"]; ?>
                     </div>
                 </div>
 
                 <div class="dropdown_form_container">
-                    <form action="./?p=login" method="post" class="dropdown_form_contents">
+                    <form action="./profile/login" method="post" class="dropdown_form_contents">
                         <input placeholder="<?php echo $login["name"]; ?>"
                                name="user" class="input" type="text" >
                         <input placeholder="<?php echo $login["password"]; ?>"
                                name="pwd" class="input" type="password" >
                         <span class="dropdown_form_feedback"></span>
-                        <input name="token" type="hidden" value="<?php echo $loginToken; ?>" />
                     </form>
                     <div id="login" class="dropdown_form_submit">
                         <?php echo $login["login"]; ?>
                     </div>
                 </div>
                 <?php
-                unset($signUp, $login, $signUpToken, $loginToken);
+                unset($sign_up, $login);
                 ?>
             </div>
         </div>
         <div class="alignedTextContainer">
             <?php
-            $contents = $dictionary->homePageContents;
+            $contents = $dictionary["home_page_contents"];
             $counter = 0;
             foreach ($contents as $element){
                 $counter++;

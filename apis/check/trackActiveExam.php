@@ -6,7 +6,9 @@
  * and open the template in the editor.
  */
 
-require "include/session.php";
+include "include/whiteBell.php";
 
-require "include/functions/generateSecureToken.php";
-require "include/functions/verifySecureToken.php";
+if (""){
+    
+}
+

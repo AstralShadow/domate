@@ -118,43 +118,58 @@
         this.container.style.top = top + "px"
     }
 
-    DropDownForm.prototype.submit = function () {
+    DropDownForm.prototype.submit = async function () {
         var self = this
 
-        var data = new FormData(this.contents)
-        if (self.token !== undefined) {
-            data.set("token", self.token)
-        }
-        clearContents()
-
-        var request = new XMLHttpRequest()
-        request.addEventListener("load", function () {
-            var response = JSON.parse(request.response)
-            self.feedbackContainer.innerText = response.msg
-
-            if (response.newToken) {
-                updateToken(response.newToken)
-
-                if (response.code === "invalid_token") {
-                    self.submit()
-                }
-            }
-
-            if (response.reload)
-                location.reload()
+        var token_promise = new Promise(function (finish) {
+            var token_request = new XMLHttpRequest()
+            token_request.addEventListener("load", function () {
+                finish(token_request)
+            })
+            token_request.open("post", "./profile/get-token")
+            token_request.send()
         })
-        request.open("post", this.contents.action)
-        request.send(data)
 
-        function updateToken (newToken) {
-            self.token = newToken
+        var token_request = await token_promise;
+
+        var token_requset_result = JSON.parse(token_request.response);
+        var token = token_requset_result["token"] || undefined
+        if (token_request.status !== 200 || token === undefined) {
+            sendFeedback(token_requset_result.message)
+            return;
         }
+
+        var data = new FormData(this.contents)
+        data.set("token", token)
+
+        var request_promise = new Promise(function (finish) {
+            var request = new XMLHttpRequest()
+            request.addEventListener("load", function () {
+                finish(request)
+            })
+            request.open("post", self.contents.action)
+            request.send(data)
+        })
+
+        clearContents()
+        var request = await request_promise;
+        var response = JSON.parse(request.response)
+        console.log(this.contents.action)
+        if (request.status === 200 && this.contents.action.indexOf("login") !== -1) {
+            location.reload()
+        }
+        sendFeedback(response.message)
+
 
         function clearContents () {
             var elements = self.container.querySelectorAll("input, textarea")
             Array.prototype.forEach.call(elements, function (element) {
                 element.value = ""
             })
+        }
+
+        function sendFeedback (str) {
+            self.feedbackContainer.innerText = str
         }
 
     }

@@ -8,7 +8,7 @@
 
 namespace MathExam;
 
-class Dictionary
+class Dictionary implements \ArrayAccess
 {
 
     private string $language;
@@ -24,6 +24,22 @@ class Dictionary
 
     public function __get($name) {
         return $this->data[$name] ?? "";
+    }
+
+    public function offsetExists($offset): bool {
+        return isset($this->data[$offset]);
+    }
+
+    public function offsetGet($offset) {
+        return $this->data[$offset];
+    }
+
+    public function offsetSet($offset, $value): void {
+        $this->data[$offset] = $value;
+    }
+
+    public function offsetUnset($offset): void {
+        unset($this->data[$offset]);
     }
 
 }
