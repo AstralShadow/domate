@@ -1,15 +1,15 @@
 {
-    "guestHome": "home",
-    "userHome": "app",
+    "guest_home": "home",
+    "user_home": "app",
 
-    "guestPages": [
+    "guest_pages": [
         "home"
     ],
 
-    "userPages": [
+    "user_pages": [
         "app"
     ],
-    "userApis": [
+    "user_apis": [
         "check",
         "solving",
 

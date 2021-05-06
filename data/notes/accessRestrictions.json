@@ -3,6 +3,7 @@
         ".git*",
         ".ht*",
         "/composer/",
+        "/apis/",
         "/include/",
         "/logs/",
         "/vendor/",

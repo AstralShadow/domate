@@ -83,6 +83,26 @@
     "answer": "Отговор",
     "true": "Вярно",
     "wrong": "Грешно",
+    "exam": "Тест",
+    "group": "Гроупа",
+    "exercise": "Упражнение",
+    "description": "Описание",
+    "groups_in_exam": "Групи в теста",
+    "exercises_in_group": "Задачи в група",
+    "avaliable_groups": "Налични групи",
+    "avaliable_exercises": "Налични задачи",
+    "exercise_settings": "Настройки на задача",
+    "answer": "отговор", 
+    "formulas": "Формули",
+    "exercise_workspace_legend": "Направи задача",
+    "exercises": "задачи",
+    "starting_at": "Достъпен от",
+    "ending_at": "Достъпен до",
+    "worktime_in_minutes": "Минути за работа",
+    "identification_question": "Въпрос за самоличност",
+    "note_to_self": "Бележка",
+    "schedule": "Насрочи",
+    "you_need_javascript": "Разрешете JavaScript за правилното функциониране на сайта.",
 
     "tests_page_instructions": {
         "main": [
@@ -130,27 +150,37 @@
         ]
     },
 
-    "contentPlaceholders": {
-        "noTestName": "<i style=\"opacity:0.5;\">Неименуван тест</i>",
-        "noTestDescription": "<i style=\"opacity:0.5;\">Липсва описание</i>",
+    "content_placeholders": {
+        "no_test_name": "<i style=\"opacity:0.5;\">Неименуван тест</i>",
+        "no_test_description": "<i style=\"opacity:0.5;\">Липсва описание</i>",
 
-        "noGroupName": "<i style=\"opacity:0.5;\">Неименувана категория</i>",
-        "noGroupDescription": "<i style=\"opacity:0.5;\">Липсва описание</i>",
+        "no_group_name": "<i style=\"opacity:0.5;\">Неименувана категория</i>",
+        "no_group_description": "<i style=\"opacity:0.5;\">Липсва описание</i>",
 
-        "noExerciseName": "<i style=\"opacity:0.5;\">Неименувана задача</i>",
-        "noExerciseDescription": "<i style=\"opacity:0.5;\">Липсва описание</i>"
+        "no_exercise_name": "<i style=\"opacity:0.5;\">Неименувана задача</i>",
+        "no_exercise_description": "<i style=\"opacity:0.5;\">Липсва описание</i>"
     },
     "successfulTestSchedule": "Насрочването на теста беше успешно. Моля споделете този линк с учениците си: \n $link",
 
-    "joinTest": {
-        "unknownTest": "Неопределен тест.",
-        "notStartedYet": "Теста все още не е отворен.",
-        "alreadyExpired": "Този тест вече приключи.",
-        "notExisting": "Несъществуващо изпитване.",
-        "sourceDeleted": "Преподавателят се е отказал от теста.",
-        "alreadyJoined": "Вече участвате в този тест.",
-        "youJoined": "Вие започнахте вашия тест."
+    "join_test": {
+        "unknown_test": "Неопределен тест.",
+        "not_started_yet": "Теста все още не е отворен.",
+        "already_expired": "Този тест вече приключи.",
+        "not_existing": "Несъществуващо изпитване.",
+        "source_deleted": "Преподавателят се е отказал от теста.",
+        "already_joined": "Вече участвате в този тест.",
+        "you_joined": "Вие започнахте вашия тест."
     },
+    "hour": "час",
+    "hours": "часа",
+    "and": "и",
+    "minute": "минута",
+    "minutes": "минути",
+    "question": "въпрос",
+    "questions": "въпроса",
+    "STARTING_IN": "ЗАПОЧВА СЛЕД",
+    "start": "Начало",
+    "remaining_time": "Оставащо време",
 
     "userClassErrorMessage": {
         "USER_ERRCODE_NO_ERROR": "Нямаше грешка.",

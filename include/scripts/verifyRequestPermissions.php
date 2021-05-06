@@ -22,7 +22,7 @@ if ($is_api){
     $api = $_requested_resource["api"];
     $isForbidden = false;
 
-    if (!$is_user && in_array($api, $permissions["userApis"])){
+    if (!$is_user && in_array($api, $permissions["user_apis"])){
         $isForbidden = true;
     }
 
@@ -41,12 +41,12 @@ if ($is_api){
 if (!$is_api){
     $page = $_requested_resource["page"];
 
-    if (!$is_user && in_array($page, $permissions["userPages"])){
-        $_requested_resource["page"] = $permissions["guestHome"];
+    if (!$is_user && in_array($page, $permissions["user_pages"])){
+        $_requested_resource["page"] = $permissions["guest_home"];
     }
 
-    if ($is_user && in_array($page, $permissions["guestPages"])){
-        $_requested_resource["page"] = $permissions["userHome"];
+    if ($is_user && in_array($page, $permissions["guest_pages"])){
+        $_requested_resource["page"] = $permissions["user_home"];
     }
 
     unset($page);

@@ -149,10 +149,10 @@ EOF;
             <hr />
             
             <div id="goodAnswer" class="button button_green" style="float: left; ">
-                Вярно
+                $dictionary->true
             </div>
             <div id="badAnswer" class="button button_red" style="float: right; ">
-                Грешно
+                $dictionary->wrong
             </div>
 EOL;
             ?>
@@ -161,14 +161,14 @@ EOL;
         <div id="testEditorPage" class="page">
             <div class="pageCloseButton"></div>
             <fieldset id="testDetails" class="details">
-                <legend> Тест </legend>
+                <legend> <?php echo $dictionary["exam"]; ?> </legend>
                 <fieldset class="textarea">
-                    <legend> Име </legend>
+                    <legend> <?php echo $dictionary["name"]; ?> </legend>
                     <div id="testName" class="title"
                          contentEditable="true"></div>
                 </fieldset>
                 <fieldset class="textarea">
-                    <legend> Описание </legend>
+                    <legend> <?php echo $dictionary["description"]; ?> </legend>
                     <div id="testDescription" class="description"
                          contentEditable="true"></div>
                 </fieldset>
@@ -179,7 +179,7 @@ EOL;
                           - <#testEditorPage>.offsetHeight
                           + <#testContents>.parentElement.offsetHeight - 20;"
                           >
-                    <legend> Групи в теста </legend>
+                    <legend> <?php echo $dictionary["groups_in_exam"]; ?> </legend>
                     <div id="testContents"></div>
                 </fieldset>
             </fieldset>
@@ -187,7 +187,7 @@ EOL;
             <fieldset class="editorContents"
                       data-dimensions="height: <#testDetails>.offsetHeight - 24;
                       width: <#testEditorPage>.offsetWidth - <#testDetails>.offsetWidth - 42;">
-                <legend> Налични групи </legend>
+                <legend> <?php echo $dictionary["avaliable_groups"]; ?> </legend>
                 <div id="exerciseGroupsShadow" class="shadow"
                      data-dimensions="height: <#exerciseGroupsContainer>.offsetHeight;
                      width: <#exerciseGroupsContainer>.offsetWidth + 10;" >
@@ -199,14 +199,14 @@ EOL;
         <div id="groupEditorPage" class="page">
             <div class="pageCloseButton"></div>
             <fieldset id="groupDetails" class="details">
-                <legend> Група </legend>
+                <legend> <?php echo $dictionary["group"]; ?> </legend>
                 <fieldset class="textarea">
-                    <legend> Име </legend>
+                    <legend> <?php echo $dictionary["name"]; ?> </legend>
                     <div id="groupName" class="title"
                          contentEditable="true"></div>
                 </fieldset>
                 <fieldset class="textarea">
-                    <legend> Описание </legend>
+                    <legend> <?php echo $dictionary["description"]; ?> </legend>
                     <div id="groupDescription" class="description"
                          contentEditable="true"></div>
                 </fieldset>
@@ -217,7 +217,7 @@ EOL;
                           - <#groupEditorPage>.offsetHeight
                           + <#groupContents>.parentElement.offsetHeight - 20;"
                           >
-                    <legend> Задачи в групата </legend>
+                    <legend> <?php echo $dictionary["exercises_in_group"]; ?> </legend>
                     <div id="groupContents"></div>
                 </fieldset>
             </fieldset>
@@ -225,7 +225,7 @@ EOL;
             <fieldset class="editorContents"
                       data-dimensions="height: <#groupDetails>.offsetHeight - 24;
                       width: <#groupEditorPage>.offsetWidth - <#groupDetails>.offsetWidth - 42;">
-                <legend> Налични задачи </legend>
+                <legend> <?php echo $dictionary["avaliable_exercises"]; ?> </legend>
                 <div id="exerciseGroupsShadow" class="shadow"
                      data-dimensions="height: <#exercisesContainer>.offsetHeight;
                      width: <#exercisesContainer>.offsetWidth + 10;" >
@@ -237,24 +237,24 @@ EOL;
         <div id="exerciseExitorPage" class="page" >
             <div class="pageCloseButton"></div>
             <fieldset id="exerciseDetails" class="details">
-                <legend> Задача </legend>
+                <legend> <?php echo $dictionary["exercise"]; ?> </legend>
                 <fieldset class="textarea">
-                    <legend> Име </legend>
+                    <legend> <?php echo $dictionary["name"]; ?> </legend>
                     <div id="exerciseName" class="title"
                          contentEditable="true"></div>
                 </fieldset>
                 <fieldset class="textarea">
-                    <legend> Описание </legend>
+                    <legend> <?php echo $dictionary["description"]; ?> </legend>
                     <div id="exerciseDescription" class="description"
                          contentEditable="true"></div>
                 </fieldset>
                 <fieldset class="textarea">
-                    <legend> Настройки на задача </legend>
+                    <legend> <?php echo $dictionary["exercise_settings"]; ?> </legend>
                     <div id="exerciseSettings">
                         <fieldset class="exerciseConfig">
                             <legend>
                                 <input type="checkbox" class="configCheckbox" />
-                                Отговор
+                                <?php echo $dictionary["answer"]; ?>
                             </legend>
                             <div id="exerciseAnswer"
                                  contentEditable="true"></div>
@@ -268,7 +268,7 @@ EOL;
                           - <#exerciseExitorPage>.offsetHeight
                           + <#exerciseSideboard>.parentElement.offsetHeight - 20;"
                           >
-                    <legend> Формули </legend>
+                    <legend> <?php echo $dictionary["formulas"]; ?> </legend>
                     <div id="exerciseSideboard">
 
                     </div>
@@ -278,7 +278,7 @@ EOL;
             <fieldset class="editorContents"
                       data-dimensions="height: <#exerciseDetails>.offsetHeight - 24;
                       width: <#exerciseExitorPage>.offsetWidth - <#exerciseDetails>.offsetWidth - 42;">
-                <legend> Направи задача </legend>
+                <legend> <?php echo $dictionary["exercise_workspace_legend"]; ?> </legend>
                 <div id="exerciseWorkspace">
                     <div id="exerciseDisplay" class="mathjax"></div>
                     <div id="exerciseInput" contentEditable="true">
@@ -292,12 +292,12 @@ EOL;
             <span style="font-size:16pt;" id="ST_name"></span><br />
             <span style="font-size:12pt;">
                 <span id="ST_description"></span><br />
-                (<span id="ST_tasks">0</span> задачи)<br />
+                (<span id="ST_tasks">0</span> <?php echo $dictionary["exercises"]; ?>)<br />
             </span>
             <label>
                 <fieldset class="textarea" style="margin:5px; padding: 0px; width:auto;">
                     <legend>
-                        Достъпен от:
+                        <?php echo $dictionary["starting_at"]; ?>:
                     </legend>
                     <input name="start" style="border: 0px solid black;" type="datetime-local" class="input" >
                 </fieldset>
@@ -305,7 +305,7 @@ EOL;
             <label>
                 <fieldset class="textarea" style="margin:5px; padding: 0px; width:auto;">
                     <legend>
-                        Достъпен до:
+                        <?php echo $dictionary["ending_at"]; ?>:
                     </legend>
                     <input name="end" style="border: 0px solid black;" type="datetime-local" class="input" >
                 </fieldset>
@@ -313,7 +313,7 @@ EOL;
             <label>
                 <fieldset class="textarea" style="margin:5px; padding: 0px; width:auto;">
                     <legend>
-                        Минути за работа:
+                        <?php echo $dictionary["worktime_in_minutes"]; ?>:
                     </legend>
                     <input name="worktime" style="border: 0px solid black;" min="1" type="number" class="input">
                 </fieldset>
@@ -321,7 +321,7 @@ EOL;
             <label>
                 <fieldset class="textarea" style="padding: 5px; margin: 5px; width:auto;">
                     <legend>
-                        Въпрос към учениците:
+                        <?php echo $dictionary["identification_question"]; ?>:
                     </legend>
                     <input id="ST_identification" style="border: 0px solid black;"
                            type="text" class="input" value="Име на ученик:">
@@ -330,14 +330,14 @@ EOL;
             <label>
                 <fieldset class="textarea" style="padding: 5px; margin: 5px; width:auto;">
                     <legend>
-                        Бележка
+                        <?php echo $dictionary["note_to_self"]; ?>
                     </legend>
                     <input id="ST_note" style="border: 0px solid black;"
                            type="text" class="input" placeholder="Няма бележка">
                 </fieldset>
             </label>
             <div class="input" id="ST_button" style="width: auto; margin: 10px; cursor: pointer;">
-                Насрочи
+                <?php echo $dictionary["schedule"]; ?>
             </div>
             <span id="ST_feedback"></span>
         </div>
@@ -349,23 +349,23 @@ EOL;
         <div id="testsContainer" class="container"
              data-dimensions="maxHeight: windowHeight - <#header>.offsetHeight - 10;" >
             <noscript>
-            Разрешете JavaScript за правилното функциониране на сайта.
+            <?php echo $dictionary["you_need_javascript"]; ?>
             </noscript>
         </div>
         <!-- GUI initalization -->
         <?php
         $TestsPageGUI_init = [
-            "logDownloadTestData" => false,
-            "logCreateCommands" => false,
-            "animationSpeed" => 830
+            "log_download_test_data" => false,
+            "log_create_commands" => false,
+            "animation_speed" => 830
         ];
-        $placeholders = $dictionary->contentPlaceholders;
+        $placeholders = $dictionary["content_placeholders"];
 
         /* Placeholders */
         $keys = [
-            "noTestName", "noTestDescription",
-            "noGroupName", "noGroupDescription",
-            "noExerciseName", "noExerciseDescription"
+            "no_test_name", "no_test_description",
+            "no_group_name", "no_group_description",
+            "no_exercise_name", "no_exercise_description"
         ];
         foreach ($keys as $key){
             $TestsPageGUI_init[$key] = $placeholders[$key];

@@ -27,7 +27,7 @@ if (isset($_GET["test"]) && is_string($_GET["test"])){
     }
 }
 if (!isset($activeTest)){
-    $errorMsg = $dictionary->joinTest["notExisting"];
+    $errorMsg = $dictionary["join_test"]["not_existing"];
 }
 
 if (isset($activeTest)){
@@ -37,7 +37,7 @@ if (isset($activeTest)){
     if (Test::exists($db, new ObjectId($activeTest->test))){
         $test = new Test($db, new ObjectId($activeTest->test));
     } else {
-        $errorMsg = $dictionary->joinTest["sourceDeleted"];
+        $errorMsg = $dictionary["join_test"]["source_deleted"];
     }
 
     /* Already started test */
@@ -53,27 +53,36 @@ if (isset($activeTest)){
     $endsAfter = $endTimestamp - time();
 
     if ($endsAfter < 0){
-        $errorMsg = $dictionary->joinTest["alreadyExpired"];
+        $errorMsg = $dictionary["join_test"]["already_expired"];
     }
 
     /* Worktime and Task count strings */
     $worktime = "(";
     if ($activeTest->worktime > 60){
-        $worktime .= floor($activeTest->worktime / 60) . " час";
-        if ($activeTest->worktime >= 120){
-            $worktime .= "а";
+        $worktime .= floor($activeTest->worktime / 60) . " ";
+        if ($activeTest->worktime < 120){
+            $worktime .= $dictionary["hour"];
+        } else {
+            $worktime .= $dictionary["hours"];
         }
         if ($activeTest->worktime % 60){
-            $worktime .= " и ";
+            $worktime .= " " . $dictionary["and"] . " ";
         }
     }
     if ($activeTest->worktime % 60){
-        $worktime .= ($activeTest->worktime % 60) . " минути";
+        $worktime .= ($activeTest->worktime % 60) . " ";
+        if ($activeTest->worktime % 60 == 1){
+            $worktime .= $dictionary["minute"];
+        } else {
+            $worktime .= $dictionary["minutes"];
+        }
     }
     $worktime .= ')';
-    $questions = "(" . count($test->contents) . " въпрос";
+    $questions = "(" . count($test->contents) . " ";
     if (count($test->contents) > 1){
-        $questions .= "а";
+        $questions .= $dictionary["question"];
+    } else {
+        $questions .= $dictionary["questions"];
     }
     $questions .= ')';
 }
@@ -82,7 +91,7 @@ if (isset($activeTest)){
     <head>
         <meta charset="utf-8" />
         <title>
-            <?php echo $dictionary->title; ?>
+            <?php echo $dictionary["title"]; ?>
         </title>
 
         <link href="./stylesheets/main.css"
@@ -122,7 +131,7 @@ if (isset($activeTest)){
                     const startsAt = <?php echo json_encode($startTimestamp); ?>
                 </script>
                 <div id="startTimerBox" <?php echo $timerCss; ?>>
-                    ЗАПОЧВА СЛЕД:
+                    <?php echo $dictionary["STARTING_IN"]; ?>:
                     <div id="startTimer" class="timerFont">
                         ??:??:??
                     </div>
@@ -175,7 +184,7 @@ if (isset($activeTest)){
                 }
                 ?>
                 <div id="startButton">
-                    Начало
+                    <?php echo $dictionary["start"]; ?>
                 </div>
                 <span id="startFeedback"></span>
                 <script>
@@ -250,7 +259,7 @@ if (isset($activeTest)){
                 <?php echo $questions . "<br />" . $worktime; ?>
             </div>
             <div id="mainTimer">
-                Оставащо време: 
+                <?php echo $dictionary["remainint_time"]; ?>: 
                 <div class="timerFontHalf"></div>
             </div>
 
@@ -267,13 +276,15 @@ if (isset($activeTest)){
         </script>
 
         <div id="testContents">
-            <!-- <div class="task">
-                 <div class="mathjax">Въпрос</div>
-                 <div class="textarea answer">
-                     <div class="workarea mathjax">`x^2`</div>
-                     <input type="text" class="input answerInput" value="x^2">
-                 </div>
-             </div> -->
+            <!--
+            <div class="task">
+                <div class="mathjax">Въпрос</div>
+                <div class="textarea answer">
+                    <div class="workarea mathjax">`x^2`</div>
+                    <input type="text" class="input answerInput" value="x^2">
+                </div>
+            </div>
+            -->
         </div>
     </body>
 </html>
