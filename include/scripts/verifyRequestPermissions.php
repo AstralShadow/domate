@@ -28,6 +28,7 @@ if ($is_api){
 
     if ($isForbidden){
         header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
+        require "include/dictionary.php";
         echo json_encode([
             "code" => "403",
             "message" => $dictionary["403"]

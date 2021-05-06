@@ -188,7 +188,7 @@ class Test
         $testActiveTests = (array) $this->active;
         $userActiveTests = (array) $teacher->activeTests;
         $result = array_intersect($testActiveTests, $userActiveTests);
-        return self::parseMongoObjects($result);
+        return self::parseMongoObjects(array_values($result));
     }
 
     public static function exists(Database $database, ObjectId $id): bool {

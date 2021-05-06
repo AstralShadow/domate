@@ -165,6 +165,9 @@ class User
         if ($key === "user"){
             return $this->identificator;
         }
+        if ($key === "id"){
+            return $this->data["_id"];
+        }
 
         return $this->get($key);
     }

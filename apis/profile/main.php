@@ -1,17 +1,14 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 use MongoDB\BSON\UTCDateTime as UTCDateTime;
 
 require "include/dictionary.php";
 require "include/secureTokens.php";
 
 $isUser = isset($user);
+if (!isset($_path[0])){
+    $_path[0] = "";
+}
 
 /* 404 */
 if (!in_array($_path[0], ["sign-up", "login", "logout", "get-token"])){
@@ -26,7 +23,7 @@ if (!in_array($_path[0], ["sign-up", "login", "logout", "get-token"])){
 /* GET  logout */
 if ($_path[0] == "logout"){
     if ($_method != "GET"){
-        header($_SERVER["SERVER_PROTOCOL"] . " 405 Method Not Allowed", true, 404);
+        header($_SERVER["SERVER_PROTOCOL"] . " 405 Method Not Allowed", true, 405);
         echo json_encode([
             "code" => "405_needs_GET",
             "message" => $dictionary["405_needs_GET"]
@@ -35,7 +32,7 @@ if ($_path[0] == "logout"){
     }
 
     if (!$isUser){
-        header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 404);
+        header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 400);
         echo json_encode([
             "code" => "you_are_not_authorized",
             "message" => $dictionary["you_are_not_authorized"]
@@ -49,7 +46,7 @@ if ($_path[0] == "logout"){
 
 /* GET  get-token */
 if ($_path[0] == "get-token"){
-    header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 404);
+    header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
     echo json_encode([
         "code" => "token",
         "token" => generateSecureToken($session, "profile")
@@ -60,8 +57,7 @@ if ($_path[0] == "get-token"){
 
 /* Token */
 if (!isset($_input["token"])){
-    var_dump($_input);
-    header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 404);
+    header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 400);
     echo json_encode([
         "code" => "missing_token",
         "message" => $dictionary["missing_token"],
@@ -70,7 +66,7 @@ if (!isset($_input["token"])){
     die;
 }
 if (!verifySecureToken($session, "profile", $_input["token"])){
-    header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 404);
+    header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 400);
     echo json_encode([
         "code" => "invalid_token",
         "message" => $dictionary["invalid_token"],
@@ -83,7 +79,7 @@ if (!verifySecureToken($session, "profile", $_input["token"])){
 if (isset($session->lastSentFormTime)){
     $lastTime = $session->lastSentFormTime->toDateTime()->format("U");
     if (time() - $lastTime < 2){
-        header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 404);
+        header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 400);
         echo json_encode([
             "code" => "too_fast",
             "message" => $dictionary["too_fast"]
@@ -96,7 +92,7 @@ $session->lastSentFormTime = new UTCDateTime();
 /* POST  sign up */
 if ($_path[0] == "sign-up"){
     if ($_method != "POST"){
-        header($_SERVER["SERVER_PROTOCOL"] . " 405 Method Not Allowed", true, 404);
+        header($_SERVER["SERVER_PROTOCOL"] . " 405 Method Not Allowed", true, 405);
         echo json_encode([
             "code" => "405_needs_POST",
             "message" => $dictionary["405_needs_POST"]
@@ -105,7 +101,7 @@ if ($_path[0] == "sign-up"){
     }
 
     if ($isUser){
-        header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 404);
+        header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
         echo json_encode([
             "code" => "you_are_already_logged_in",
             "message" => $dictionary["you_are_already_logged_in"]
@@ -120,7 +116,7 @@ if ($_path[0] == "sign-up"){
 /* POST  login */
 if ($_path[0] == "login"){
     if ($_method != "POST"){
-        header($_SERVER["SERVER_PROTOCOL"] . " 405 Method Not Allowed", true, 404);
+        header($_SERVER["SERVER_PROTOCOL"] . " 405 Method Not Allowed", true, 405);
         echo json_encode([
             "code" => "405_needs_POST",
             "message" => $dictionary["405_needs_POST"]
@@ -129,7 +125,7 @@ if ($_path[0] == "login"){
     }
 
     if ($isUser){
-        header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 404);
+        header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
         echo json_encode([
             "code" => "you_are_already_logged_in",
             "message" => $dictionary["you_are_already_logged_in"]
@@ -142,7 +138,7 @@ if ($_path[0] == "login"){
 }
 
 /* 500 */
-header($_SERVER["SERVER_PROTOCOL"] . " 500 Internal Server Error", true, 404);
+header($_SERVER["SERVER_PROTOCOL"] . " 500 Internal Server Error", true, 500);
 echo json_encode([
     "code" => "500",
     "message" => $dictionary["500"]
