@@ -6,7 +6,7 @@ use MongoDB\BSON\ObjectId;
 use MathExam\ExerciseGroup as ExerciseGroup;
 use MathExam\Exercise as Exercise;
 
-$group = new ExerciseGroup($db, new ObjectId($$_input["id"]));
+$group = new ExerciseGroup($db, new ObjectId($_id));
 if (!$group){
     header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
     die;
@@ -52,6 +52,7 @@ if (isset($_input["remove_contents"]) && is_array($_input["remove_contents"])){
 header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
 echo json_encode([
     "code" => "success",
+    "id" => $_id,
     "message" => $dictionary["success"]
 ]);
 
