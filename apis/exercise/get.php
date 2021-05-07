@@ -34,7 +34,7 @@ $whitebell->addEventListener("modified_exercise_" . $user->id, function (string 
             "id" => $exercise->getId(),
             "data" => $exercise->dump()
         ];
-        echo "event: modified_group\n";
+        echo "event: modified_exercise\n";
         echo 'data: ' . json_encode($data);
         echo "\n\n";
     }

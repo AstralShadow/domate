@@ -10,11 +10,10 @@
         "app"
     ],
     "user_apis": [
-        "check",
-        "solving",
-
+        "content",
+        "exam",
         "exercise",
-        "groups",
-        "test"
+        "group",
+        "solution"
     ]
 }

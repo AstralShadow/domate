@@ -10,6 +10,8 @@ include "include/testsAndTasks.php";
 
 use MongoDB\BSON\ObjectId;
 use MathExam\ActiveTest as ActiveTest;
+use MathExam\TestSolution as TestSolution;
+use MathExam\ExerciseVariant as ExerciseVariant;
 
 $active_exam = new ActiveTest($db, new ObjectId($_id2));
 
@@ -23,10 +25,6 @@ if (false === strpos($_SERVER["HTTP_ACCEPT"], "text/event-stream")){
     return;
 }
 
-header($_SERVER["SERVER_PROTOCOL"] . " 501 Not Implemented", true, 501);
-die;
-
-// Modifying not implemented after all.
 
 require "include/whiteBell.php";
 
@@ -39,13 +37,35 @@ header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 
-$whitebell->addEventListener("joined_" . $_id2, function (string $id) use ($active_exam, $_id2, $whitebell){
-    if ($id == $_id2 && isset($active_exam)){
+$solutions = [];
+
+$on_answer = function (string $question_id) use ($active_exam, $whitebell, $db){
+    if (isset($active_exam)){
+        $exercise = new ExerciseVariant($db, $question_id);
         $data = [
-            "id" => $active_exam->getId(),
-            "data" => $active_exam->dump()
+            "id" => $question_id,
+            "data" => $exercise->getDataForTeacher()
         ];
-        echo "event: modified_exam\n";
+        echo "event: answered\n";
+        echo 'data: ' . json_encode($data);
+        echo "\n\n";
+    }
+    if (connection_aborted()){
+        $whitebell->stop();
+    }
+};
+
+$whitebell->addEventListener("joined_" . $_id2, function (string $id) use ($active_exam, $_id2, $whitebell, $db, $solutions, $on_answer){
+    if (isset($active_exam)){
+        $solution = new TestSolution($db, $id);
+        $solutions[$id] = $solution;
+        $whitebell->addEventListener("answered_" . $id, $on_answer);
+        $data = [
+            "solution_id" => $id,
+            "active_exam" => $_id2,
+            "data" => $solution->getDataForTeacher()
+        ];
+        echo "event: joined\n";
         echo 'data: ' . json_encode($data);
         echo "\n\n";
     }
@@ -66,21 +86,10 @@ $whitebell->addEventListener("deleted_active_exam_" . $user->id, function (strin
     }
 });
 
-$whitebell->addEventListener("started_" . $_active_exam_id, function (string $question_id) use ($_id2, $whitebell){
-    if (in_array($question_id, $_exam_solution->tasks)){
-        $exercise_variant = new ExerciseVariant($db, $question_id);
-        $data = [
-            "id" => $_exam_solution->getId(),
-            "data" => $exercise_variant->getDataForTeacher()
-        ];
-        echo "event: started\n";
-        echo 'data: ' . json_encode($data);
-        echo "\n\n";
-    }
-    if (connection_aborted()){
-        $whitebell->stop();
-    }
-});
+foreach ($active_exam->solutions as $solution_id){
+    $solutions[$solution_id] = new TestSolution($db, $solution_id);
+    $whitebell->addEventListener("answered_" . $solution_id, $on_answer);
+}
 
 if (!defined("DONT_RUN_WHITEBELL")){
     $whitebell->run();

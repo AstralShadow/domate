@@ -62,4 +62,10 @@ echo json_encode([
     "id" => $activeTest->getId()
 ]);
 
+require "include/whiteBell.php";
+
+if (isset($whitebell)){
+    $whitebell->dispatchEvent("new_active_exam_" . $user->id, $activeTest->getId());
+}
+
 return;
