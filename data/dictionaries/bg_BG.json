@@ -19,7 +19,7 @@
     "success": "Заявката беше изпълнена успешно.",
     "illegalArgument": "Невалиден аргумент!",
     "illegalArguments": "Невалидни аргументи!",
-    "missingArgument": "Липсва аргумент.",
+    "missing_argument": "Липсва аргумент.",
 
     "login_messages": {
         "name": "Потребителско име",

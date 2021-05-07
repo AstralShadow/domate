@@ -28,7 +28,7 @@ header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 
-$whitebell->addEventListener("modified_exam_" . $user->id, function (string $id) use ($test, $_id){
+$whitebell->addEventListener("modified_exam_" . $user->id, function (string $id) use ($test, $_id, $whitebell){
     if ($id == $_id && isset($test)){
         $data = [
             "id" => $test->getId(),
@@ -38,6 +38,9 @@ $whitebell->addEventListener("modified_exam_" . $user->id, function (string $id)
         echo 'data: ' . json_encode($data);
         echo "\n\n";
     }
+    if (connection_aborted()){
+        $whitebell->stop();
+    }
 });
 
 $whitebell->addEventListener("deleted_exam_" . $user->id, function (string $id) use ($test, $_id, $whitebell){
@@ -46,6 +49,9 @@ $whitebell->addEventListener("deleted_exam_" . $user->id, function (string $id) 
         if (!defined("DONT_RUN_WHITEBELL")){
             $whitebell->stop();
         }
+    }
+    if (connection_aborted()){
+        $whitebell->stop();
     }
 });
 

@@ -28,7 +28,7 @@ header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 
-$whitebell->addEventListener("modified_exercise_" . $user->id, function (string $id) use ($exercise, $_id){
+$whitebell->addEventListener("modified_exercise_" . $user->id, function (string $id) use ($exercise, $_id, $whitebell){
     if ($id == $_id && isset($exercise)){
         $data = [
             "id" => $exercise->getId(),
@@ -38,6 +38,9 @@ $whitebell->addEventListener("modified_exercise_" . $user->id, function (string 
         echo 'data: ' . json_encode($data);
         echo "\n\n";
     }
+    if (connection_aborted()){
+        $whitebell->stop();
+    }
 });
 
 $whitebell->addEventListener("deleted_exercise_" . $user->id, function (string $id) use ($exercise, $_id, $whitebell){
@@ -46,6 +49,9 @@ $whitebell->addEventListener("deleted_exercise_" . $user->id, function (string $
         if (!defined("DONT_RUN_WHITEBELL")){
             $whitebell->stop();
         }
+    }
+    if (connection_aborted()){
+        $whitebell->stop();
     }
 });
 

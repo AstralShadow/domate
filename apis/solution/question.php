@@ -1,21 +1,31 @@
 <?php
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 include "include/testsAndTasks.php";
 
-use MongoDB\BSON\ObjectId;
-use MathExam\ExerciseGroup as ExerciseGroup;
-
-$group = new ExerciseGroup($db, new ObjectId($_id));
+$_exam;
+$_active_exam;
+$_exam_solution;
+$_question;
 
 if (false === strpos($_SERVER["HTTP_ACCEPT"], "text/event-stream")){
     header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
     echo json_encode([
         "code" => "success",
-        "data" => $group->dump(),
+        "data" => $_question->getDataForTeacher(),
         "message" => $dictionary["success"]
     ]);
     return;
 }
+
+header($_SERVER["SERVER_PROTOCOL"] . " 501 Not Implemented", true, 503);
+echo json_encode(["note" => "use tracking of ActiveTest instead."]);
+die;
 
 require "include/whiteBell.php";
 
@@ -28,27 +38,15 @@ header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 
-$whitebell->addEventListener("modified_group_" . $user->id, function (string $id) use ($group, $_id, $whitebell){
-    if ($id == $_id && isset($group)){
+$whitebell->addEventListener("answered_" . $user->id, function (string $id) use ($_question, $_question_id, $whitebell){
+    if ($id == $_question_id){
         $data = [
-            "id" => $group->getId(),
-            "data" => $group->dump()
+            "id" => $_question->getId(),
+            "data" => $_question->getDataForTeacher()
         ];
-        echo "event: modified_group\n";
+        echo "event: answered\n";
         echo 'data: ' . json_encode($data);
         echo "\n\n";
-    }
-    if (connection_aborted()){
-        $whitebell->stop();
-    }
-});
-
-$whitebell->addEventListener("deleted_group_" . $user->id, function (string $id) use ($group, $_id, $whitebell){
-    if ($id == $_id){
-        $group = null;
-        if (!defined("DONT_RUN_WHITEBELL")){
-            $whitebell->stop();
-        }
     }
     if (connection_aborted()){
         $whitebell->stop();

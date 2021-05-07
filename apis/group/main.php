@@ -89,10 +89,9 @@ if (isset($_id) && $_method == "DELETE"){
 }
 
 
-/* 500 */
-header($_SERVER["SERVER_PROTOCOL"] . " 500 Internal Server Error", true, 500);
+header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
 echo json_encode([
-    "code" => "500",
-    "message" => $dictionary["500"]
+    "code" => "404",
+    "message" => $dictionary["404"]
 ]);
 die;
