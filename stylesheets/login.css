@@ -16,9 +16,9 @@ body{
     background-color: black;
 }
 #start{
-	 display: flex;
+    display: flex;
     vertical-align: top;
-    border: 3px solid rgb(0, 255, 222.1);
+    border: 3px solid black;
     padding: 5px;
     overflow: hidden;
     font-family: sans-serif;
@@ -26,13 +26,13 @@ body{
     text-align: center;
     border-radius: 100px/20px;
     z-index: 10;
-    background-color: black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     position: relative;
     top: -20px;margin: auto auto;
-display: block;
+    display: block;
 }
 #page{
-	position: absolute;
+    position: absolute;
     left: 50%;
     top: 50%;
     z-index: 20;
@@ -44,13 +44,13 @@ display: block;
     display: flex;
 }
 input{
-  background-color: black;
-  color: rgb(0, 255, 222.1);
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
+    color: black;
 }
 .password{
     font-size: 16pt;
     border: 3px solid;
-    border-color: rgb(0, 255, 222.1);
+    border-color: black;
     text-align: center;
     padding-left: 10px;
     padding-right: 10px;
@@ -60,15 +60,15 @@ input{
     font-family: sans-serif;
 }
 a{
-	color: rgb(0, 255, 222.1);
-	text-decoration: none;
+    color: black;
+    text-decoration: none;
 }
 #home{
     font-size: 16pt;
     border: 3px solid;
     border-right: 2px solid;
     border-bottom: 0px;
-    border-color: rgb(0, 255, 222.1);
+    border-color: black;
     border-radius: 100px 0px 0px 0px/10px 0px 0px 0px;
     text-align: center;
     width: 200px;
@@ -82,7 +82,7 @@ a{
     border: 3px solid;
     border-left: 2px solid;
     border-bottom: 0px;
-    border-color: rgb(0, 255, 222.1);
+    border-color: black;
     border-radius: 0px 100px 0px 0px/0px 10px 0px 0px;
     text-align: center;
     margin-right: 10px;

@@ -14,10 +14,11 @@ and open the template in the editor.
     background-position: center center;
     background-size: auto 40px;
     background-repeat: no-repeat;
-    background-color: black;
+    background-color: #cdab7e;
     border-radius: 50%;
-    box-shadow: inset 0 0 5px grey; 
+    box-shadow: inset 0 0 9px black; 
     width: 48px;
+    color: #F5DEB3;
     height: 48px;
     transform: translate(-24px, -24px);
 }
@@ -25,5 +26,6 @@ and open the template in the editor.
 .FancyContextMenu_Help{
     position: fixed;
     pointer-events: none;
+    color: black;
     transform: translate(24px, -24px);
 }
