@@ -24,5 +24,11 @@ echo json_encode([
     "code" => "success",
     "message" => $dictionary["success"]
 ]);
+
+require "include/whiteBell.php";
+if (isset($whitebell)){
+    $whitebell->dispatchEvent("marked_" . $_exam_solution_id, $_question_id);
+}
+
 return;
 

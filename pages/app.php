@@ -355,8 +355,8 @@ EOL;
         <!-- GUI initalization -->
         <?php
         $TestsPageGUI_init = [
-            "logDownloadGroupData" => true,
-            "logCreateCommands" => true,
+            "logDownloadGroupData" => false,
+            "logCreateCommands" => false,
             "animationSpeed" => 830
         ];
         $placeholders = $dictionary["content_placeholders"];

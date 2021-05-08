@@ -40,14 +40,14 @@ if (!isset($_id) && $_method == "GET"){
     return;
 }
 
-if (isset($_id) && $_method == "GET"){
-    require "apis/exam/get.php";
-    return;
-}
-
 if (isset($_id) && count($_path) > 1 && $_path[1] == "active" && $_method == "GET"){
     $_path = array_slice($_path, 2);
     require "apis/exam/active/main.php";
+    return;
+}
+
+if (isset($_id) && $_method == "GET"){
+    require "apis/exam/get.php";
     return;
 }
 

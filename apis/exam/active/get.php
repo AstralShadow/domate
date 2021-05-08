@@ -26,6 +26,9 @@ if (false === strpos($_SERVER["HTTP_ACCEPT"], "text/event-stream")){
 }
 
 
+header($_SERVER["SERVER_PROTOCOL"] . " 501 Not Implemented", true, 501);
+die;
+
 require "include/whiteBell.php";
 
 if (!isset($whitebell)){

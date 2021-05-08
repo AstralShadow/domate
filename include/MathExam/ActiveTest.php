@@ -81,11 +81,11 @@ class ActiveTest
 
     public function __get(string $key) {
         switch ($key){
-            case "owner":
+            case "teacher":
                 if (!isset($this->data)){
                     $this->load();
                 }
-                return $this->data["owner"];
+                return $this->data["teacher"];
         }
         return $this->get($key);
     }

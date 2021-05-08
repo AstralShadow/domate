@@ -4,6 +4,7 @@
 
 require "include/dictionary.php";
 require "include/secureTokens.php";
+require "include/testsAndTasks.php";
 
 use MongoDB\BSON\ObjectId;
 use MathExam\ActiveTest as ActiveTest;
@@ -45,13 +46,14 @@ if (count($_path) > 0){
 
     if ($_active_exam->teacher != $user->user){
         header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
+        var_dump($_active_exam->teacher, $user->user);
         die;
     }
 }
 
 if (count($_path) > 1 && isset($_exam_solution)){
     $_question_id = trim($_path[1]);
-    if (!in_array($_question_id, $_exam_solution->tasks)){
+    if (!in_array($_question_id, (array) $_exam_solution->tasks)){
         header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
         die;
     }
@@ -62,8 +64,7 @@ if (count($_path) > 1 && isset($_exam_solution)){
     $_question = new ExerciseVariant($db, new ObjectId($_question_id));
 }
 
-// $_exam;
-// $_active_exam;
+$_active_exam;
 $_exam_solution;
 $_question;
 

@@ -54,15 +54,14 @@ window.addEventListener("load", function () {
     })
 
     window.TestsPageGUI.showAllExams = async function (test_id) {
-        var req = await StateTracker.get("listExams", {id: test_id})
+        var req = await listActiveExams(test_id)
 
         while (mainContainer.firstChild)
             mainContainer.removeChild(mainContainer.firstChild)
-        req.result.reverse().forEach(async function (id) {
-            var result = await StateTracker.get("examData", {id: id})
+        req.reverse().forEach(async function (id) {
+            var exam = await getExamData(test_id, id)
             var div = document.createElement("div")
             div.className = "examListElement"
-            var exam = result.result
             div.innerHTML = "Начало: " + (new Date(exam.start * 1000)).toLocaleString()
             div.innerHTML += "<br />";
             div.innerHTML += "Край: " + (new Date(exam.end * 1000)).toLocaleString()
@@ -77,7 +76,7 @@ window.addEventListener("load", function () {
             }
             mainContainer.appendChild(div)
             div.addEventListener("click", function () {
-                window.TestsPageGUI.showExam(id)
+                window.TestsPageGUI.showExam(test_id, id)
             })
         })
         setTimeout(function () {
@@ -85,39 +84,113 @@ window.addEventListener("load", function () {
         }, 20)
     }
 
-    var trackedSolutions = {}
-    var updateCommands = {}
-    function trackSolution (oid) {
-        if (Object.keys(trackedSolutions).indexOf(oid) === -1) {
-            trackedSolutions[oid] = null
-            StateTracker.track("solutionData", {id: oid}, solutionUpdate)
-        }
-    }
-    function reloadSolution (oid) {
-        StateTracker.reloadTracker("solutionData", {id: oid})
-    }
-    function solutionUpdate (e) {
-        trackedSolutions[e.args.id] = e.result
-        if (updateCommands[e.args.id]) {
-            updateCommands[e.args.id](e.result)
-        }
-    }
-    function untrackAllSolutions () {
-        Object.keys(trackedSolutions).forEach(function (oid) {
-            StateTracker.untrack("solutionData", {id: oid})
-            delete trackedSolutions[oid]
+    function listActiveExams (test_id) {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", "exam/" + test_id + "/active")
+            request.send()
+
+            request.addEventListener("load", function () {
+                if (request.status !== 200) {
+                    console.log("failed to fetch active exams list")
+                    return;
+                }
+                var data = JSON.parse(request.response)
+                resolve(data.data)
+            })
         })
     }
-    window.TestsPageGUI.showExam = async function (exam_id) {
-        var request = StateTracker.get("examData", {id: exam_id})
+
+    function getExamData (test_id, exam_id) {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", "exam/" + test_id + "/active/" + exam_id)
+            request.send()
+
+            request.addEventListener("load", function () {
+                if (request.status !== 200) {
+                    console.log("failed to fetch active exams list")
+                    return;
+                }
+                var data = JSON.parse(request.response)
+                resolve(data.data)
+            })
+        })
+    }
+
+    var tracked_active_exam = undefined;
+
+    var trackedSolutions = {}
+    var updateCommands = {}
+
+    function downloadSolution (id) {
+        var request = new XMLHttpRequest()
+        request.open("GET", "solution/" + id)
+        request.send()
+
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("couldnt load solutions")
+                return;
+            }
+
+            var data = JSON.parse(request.response).data
+
+            trackedSolutions[id] = data
+            if (updateCommands[id]) {
+                updateCommands[id](data)
+            }
+        })
+    }
+
+    window.AppEventSource.then(function (source) {
+        source.addEventListener("joined", function (e) {
+            var input = JSON.parse(e.data)
+            console.log("joined", input)
+
+            if (input.active_exam === tracked_active_exam) {
+                var id = input.solution
+                trackedSolutions[id] = input.data
+                if (updateCommands[id]) {
+                    updateCommands[id](input.data)
+                }
+            }
+        })
+        source.addEventListener("marked", questionUpdate)
+        source.addEventListener("answered", questionUpdate)
+        function questionUpdate (e) {
+            var input = JSON.parse(e.data)
+            var s_id = input.solution
+            var q_id = input.id
+            var question = input.data
+            question["_id"] = q_id
+            trackedSolutions[s_id].tasks.forEach(function (task, i) {
+                if (task._id === q_id) {
+                    trackedSolutions[s_id].tasks[i] = question
+                }
+            })
+            if (updateCommands[s_id]) {
+                updateCommands[s_id](trackedSolutions[s_id])
+            }
+
+        }
+    })
+
+    function untrackAllSolutions () {
+        trackedSolutions = {}
+        updateCommands = {}
+    }
+
+    window.TestsPageGUI.showExam = async function (exam_id, active_exam_id) {
+        var request = getExamData(exam_id, active_exam_id)
+        tracked_active_exam = active_exam_id
         setTimeout(function () {
             examContainer.style.display = "block"
         }, 0)
         var container = examContainer.querySelector("tbody")
         while (container.firstChild)
             container.removeChild(container.firstChild)
-        var result = await request
-        var exam = result.result
+        var exam = await request
         examContainer.querySelector("#identificationQuestion")
             .innerText = exam.question || ""
         exam.solutions.forEach(async function (s_oid) {
@@ -166,7 +239,7 @@ window.addEventListener("load", function () {
                 })
                 correctTasks.innerText = right + "/" + Object.keys(solution.tasks).length
             }
-            trackSolution(s_oid)
+            downloadSolution(s_oid)
         })
 
 
@@ -174,7 +247,7 @@ window.addEventListener("load", function () {
     function showTaskMenu (s_oid, task_index) {
         var solution = trackedSolutions[s_oid]
         var task = solution.tasks[task_index]
-        var reload = () => reloadSolution(s_oid)
+
         setTimeout(function () {
             taskContainer.style.display = "block"
         }, 0)
@@ -192,15 +265,13 @@ window.addEventListener("load", function () {
             .append(task.answer || "")
         taskContainer.querySelector("#goodAnswer")
             .onclick = async function () {
-                decide(task["_id"], true)
+                decide(s_oid, task["_id"], true)
                 taskContainer.style.display = "none"
-                reload()
             }
         taskContainer.querySelector("#badAnswer")
             .onclick = async function () {
-                await decide(task["_id"], false)
+                await decide(s_oid, task["_id"], false)
                 taskContainer.style.display = "none"
-                reload()
             }
         if (task.correctMarker === true) {
             taskContainer.querySelector("#goodAnswer")
@@ -219,8 +290,34 @@ window.addEventListener("load", function () {
                 .className = "button button_red"
         }
     }
-    async function decide (task_id, isCorrect) {
-        console.log(await StateTracker.get("submitTaskCheck", {id: task_id, "true": isCorrect}))
 
+    async function decide (solution_id, task_id, isCorrect) {
+        var token_request = new XMLHttpRequest()
+        token_request.open("GET", "solution/get-token")
+        token_request.send()
+        var token = new Promise(function (resolve) {
+            token_request.addEventListener("load", function () {
+                if (token_request.status !== 200) {
+                    console.log("couldnt accure token! maybe session expired")
+                    return;
+                }
+                var data = JSON.parse(token_request.response)
+                resolve(data.token)
+            })
+        })
+        var input = {
+            token: await token,
+            "true": isCorrect
+        }
+        var request = new XMLHttpRequest()
+        request.open("PUT", "solution/" + solution_id + "/" + task_id)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
+        request.addEventListener("load", function () {
+            if (token_request.status !== 200) {
+                console.log("couldnt set mark.")
+                return;
+            }
+        })
     }
 })

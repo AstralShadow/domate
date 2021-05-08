@@ -28,7 +28,7 @@ echo json_encode([
 
 require "include/whiteBell.php";
 if (isset($whitebell)){
-    $whitebell->dispatchEvent("answered_" . $_active_exam_id, $_question_id);
+    $whitebell->dispatchEvent("answered_" . $_exam_solution_id, $_question_id);
 }
 
 return;
