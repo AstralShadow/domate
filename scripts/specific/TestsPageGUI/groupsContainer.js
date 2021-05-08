@@ -20,10 +20,10 @@ if (!window.TestsPageGUI.Container) {
         /* Constants */
         type: 'group',
         containerQuery: "#exerciseGroupsContainer",
-        listURL: 'listExerciseGroups',
-        dataURL: 'exerciseGroupData',
-        createURL: 'createExerciseGroup',
-        removeURL: 'removeExerciseGroup',
+        endpoint: "group",
+        evCreated: "new_group",
+        evModified: "modified_group",
+        evDeleted: "deleted_group",
         noName: TestsPageGUI.noGroupName,
         noDescription: TestsPageGUI.noGroupDescription,
 

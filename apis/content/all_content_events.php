@@ -21,6 +21,8 @@ $whitebell->addEventListener("new_exam_" . $user->id, function (string $id) use 
     echo "event: new_exam\n";
     echo "data: " . json_encode(["id" => $id]);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -30,6 +32,8 @@ $whitebell->addEventListener("deleted_exam_" . $user->id, function (string $id) 
     echo "event: deleted_exam\n";
     echo "data: " . json_encode(["id" => $id]);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -44,6 +48,8 @@ $whitebell->addEventListener("modified_exam_" . $user->id, function (string $exa
     echo "event: modified_exam\n";
     echo 'data: ' . json_encode($data);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -53,6 +59,8 @@ $whitebell->addEventListener("new_active_exam_" . $user->id, function (string $i
     echo "event: new_active_exam\n";
     echo "data: " . json_encode(["id" => $id]);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -62,6 +70,8 @@ $whitebell->addEventListener("deleted_active_exam_" . $user->id, function (strin
     echo "event: deleted_active_exam\n";
     echo "data: " . json_encode(["id" => $id]);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -71,6 +81,8 @@ $whitebell->addEventListener("new_group_" . $user->id, function (string $id) use
     echo "event: new_group\n";
     echo "data: " . json_encode(["id" => $id]);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -80,6 +92,8 @@ $whitebell->addEventListener("deleted_group_" . $user->id, function (string $id)
     echo "event: deleted_group\n";
     echo "data: " . json_encode(["id" => $id]);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -94,6 +108,8 @@ $whitebell->addEventListener("modified_group_" . $user->id, function (string $id
     echo "event: modified_group\n";
     echo 'data: ' . json_encode($data);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -103,6 +119,8 @@ $whitebell->addEventListener("new_exercise_" . $user->id, function (string $id) 
     echo "event: new_exercise\n";
     echo "data: " . json_encode(["id" => $id]);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -112,6 +130,8 @@ $whitebell->addEventListener("deleted_exercise_" . $user->id, function (string $
     echo "event: deleted_exercise\n";
     echo "data: " . json_encode(["id" => $id]);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
@@ -126,10 +146,14 @@ $whitebell->addEventListener("modified_exercise_" . $user->id, function (string 
     echo "event: modified_exercise\n";
     echo 'data: ' . json_encode($data);
     echo "\n\n";
+    ob_end_flush();
+    flush();
     if (connection_aborted()){
         $whitebell->stop();
     }
 });
+
+flush();
 
 if (!defined("DONT_RUN_WHITEBELL")){
     $whitebell->run();

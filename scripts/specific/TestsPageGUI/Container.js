@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 
-/* global StateTracker, logDownloadTestData, logCreateCommands, noTestDescription, noTestName, FancyContextMenu */
+/* global AppEventSource, logDownloadTestData, logCreateCommands, noTestDescription, noTestName, FancyContextMenu */
 
 /* Dependencies */
 if (!window.TestsPageGUI) {
     var TestsPageGUI = {}
 }
-if (!window.StateTracker) {
-    throw "StateTracker is a dependency of TestsPageGUI"
+if (!window.AppEventSource) {
+    throw "AppEventSource is a dependency of TestsPageGUI"
 }
 if (!window.FancyContextMenu) {
     throw "FancyContextMenu is a dependency of TestsPageGUI"
@@ -34,49 +34,83 @@ TestsPageGUI.Container = function (options) {
 
     var type = options.type
     var containerQuery = options.containerQuery
-    var listURL = options.listURL
-    var dataURL = options.dataURL
-    var createURL = options.createURL
-    var removeURL = options.removeURL
     var functions = options.functions
-    if (!type || !containerQuery || !listURL || !dataURL || !createURL || !functions) {
+    var endpoint = options.endpoint
+    if (!type || !containerQuery || !functions || !endpoint) {
         throw ["Missing TestPageGUI.Container option!", options]
     }
+
+    var evCreated = options.evCreated || "new_" + endpoint
+    var evModified = options.evModified || "modified_" + endpoint
+    var evDeleted = options.evDeleted || "deleted_" + endpoint
+
+    function getToken () {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", endpoint + "/get-token")
+            request.send()
+
+            request.addEventListener("load", function () {
+                var data = JSON.parse(request.response)
+                if (data.token !== undefined) {
+                    resolve(data.token)
+                } else {
+                    console.log("Couldn't accure token. Maybe your session expired")
+                }
+            })
+        })
+    }
+
     /* Functionality */
     this.create = async function () {
-        var e = await StateTracker.get(createURL)
-
-        if (e.code !== "Success") {
-            // TODO: implement some kind of feedback
-            console.log("Couldn't create " + type, e);
-            return;
+        var input = {
+            token: await getToken()
         }
+        var request = new XMLHttpRequest()
+        request.open("POST", endpoint)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
 
-        var oid = e.result.id
-        StateTracker.reloadTracker(listURL)
-        if (options.oncreate) {
-            options.oncreate(oid)
-        }
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed creating element at " + endpoint, request.status, request.response)
+                return;
+            }
 
-        if (logCreateCommands) {
-            console.log("created " + type, oid)
-        }
+            var data = JSON.parse(request.response)
+            if (options.oncreate) {
+                options.oncreate(data.id)
+            }
+
+            if (logCreateCommands) {
+                console.log("created element at endpoint " + endpoint, data.id)
+            }
+        })
     }
     this.remove = async function (oid) {
-        var e = await StateTracker.get(removeURL, {id: oid})
-
-        if (e.code !== "Success") {
-            // TODO: implement some kind of feedback
-            console.log("Couldn't remove " + type, e);
-            return;
+        var input = {
+            token: await getToken()
         }
-        untrack(oid)
+        var request = new XMLHttpRequest()
+        request.open("DELETE", endpoint + "/" + oid)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
 
-        StateTracker.reloadTracker(listURL)
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed creating element at " + endpoint, request.status, request.response)
+                return;
+            }
 
-        if (logCreateCommands) {
-            console.log("removed " + type, oid)
-        }
+            var data = JSON.parse(request.response)
+            if (options.oncreate) {
+                options.oncreate(data.id)
+            }
+
+            if (logCreateCommands) {
+                console.log("deleted element at endpoint " + endpoint, data.id)
+            }
+        })
     }
 
     /* Containers */
@@ -101,38 +135,96 @@ TestsPageGUI.Container = function (options) {
      */
     const tracked = {}
 
-    function contentUpdateHandler (event) {
-        Object.keys(tracked).forEach(function (oid) {
-            if (event.result.indexOf(oid) === -1) {
-                untrack(oid)
+    window.AppEventSource.then(function (source) {
+        source.addEventListener(evCreated, function (e) {
+            var data = JSON.parse(e.data)
+            download(data.id)
+        })
+        source.addEventListener(evDeleted, function (e) {
+            var data = JSON.parse(e.data)
+            delete tracked[data.id]
+            render()
+            setTimeout(function () {
+                // workaround rapid deletion event delay
+                delete tracked[data.id]
+                render()
+            }, 500)
+        })
+        source.addEventListener(evModified, function (e) {
+            var data = JSON.parse(e.data)
+            console.log("event data: ", data)
+            tracked[data.id] = data;
+            updateCellOrRender(data.id)
+        })
+        fetchContentList();
+    })
+
+    function download (oid) {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", endpoint + "/" + oid)
+            request.send()
+
+            request.addEventListener("load", function () {
+                if (request.status !== 200) {
+                    console.log("Failed downloading element at " + endpoint, request.status, request.response)
+                    return;
+                }
+
+                var data = JSON.parse(request.response).data
+                resolve(data)
+                tracked[data._id] = data
+                updateCellOrRender(data._id)
+
+
+                if (logDownloadData) {
+                    console.log("downloading element at endpoint " + endpoint, data)
+                }
+            })
+        })
+    }
+
+    function fetchContentList () {
+        var request = new XMLHttpRequest()
+        request.open("GET", endpoint)
+        request.send()
+
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed fetching content at " + endpoint, request.status, request.response)
+                return;
+            }
+
+            var data = JSON.parse(request.response)
+            updateContentList(data.data)
+
+            if (logDownloadData) {
+                console.log("fetched content list at endpoint " + endpoint, data.data)
             }
         })
-        event.result.forEach(track)
-        render(event.result)
+    }
+    async function updateContentList (newList) {
+        var trackedKeys = Object.keys(tracked)
+        trackedKeys.forEach(function (oid) {
+            if (newList.indexOf(oid) === -1) {
+                delete tracked[oid]
+            }
+        })
+        var promises = []
+        newList.forEach(async function (oid) {
+            if (trackedKeys.indexOf(oid) === -1) {
+                if (tracked[oid] === undefined) {
+                    tracked[oid] = {}
+                }
+                tracked[oid] = await download(oid)
+            }
+        })
+        render()
+    }
 
-    }
-    function track (oid) {
-        if (Object.keys(tracked).indexOf(oid) === -1) {
-            tracked[oid] = null
-            StateTracker.track(dataURL, {id: oid}, handleUpdate)
-        }
-    }
-    function untrack (oid) {
-        StateTracker.untrack(dataURL, {id: oid}, handleUpdate)
-        delete tracked[oid]
-    }
-    function handleUpdate (e) {
-        if (e.code !== "Success") {
-            console.log("Update not successful")
-            return;
-        }
-        var object = e.result
-        tracked[object._id] = object
-        if (logDownloadData) {
-            console.log(type, object._id, object)
-        }
-        if (nodes[object._id]) {
-            updateCell(object._id)
+    function updateCellOrRender (oid) {
+        if (nodes[oid]) {
+            updateCell(oid)
         } else {
             render()
         }
@@ -147,24 +239,18 @@ TestsPageGUI.Container = function (options) {
     this.activate = function () {
         if (!active) {
             active = true
-            StateTracker.track(listURL, null, contentUpdateHandler)
+            render()
         }
     }
     this.deactivate = function () {
         if (active) {
             active = false
-            StateTracker.untrack(listURL, null, contentUpdateHandler)
-            Object.keys(tracked).forEach(function (oid) {
-                untrack(oid)
-            })
         }
     }
 
     /* Rendering */
-    var lastOrder = []
     function render (oids) {
-        var list = oids || lastOrder
-        lastOrder = list
+        var list = Object.keys(tracked)
 
         while (container.firstChild) {
             container.removeChild(container.firstChild)

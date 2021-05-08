@@ -25,7 +25,7 @@
         <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
         <script defer src="./scripts/visuals/SwidingBoard.js"></script>
         <script defer src="./scripts/visuals/FancyContextMenu.js"></script>
-        <script src="./scripts/StateTracker.js"></script>
+        <script src="./scripts/AppEventSource.js"></script>
 
         <script defer src="./scripts/specific/TestsPageGUI/Container.js"></script>
         <script defer src="./scripts/specific/TestsPageGUI/exerciseContainer.js"></script>
@@ -355,9 +355,9 @@ EOL;
         <!-- GUI initalization -->
         <?php
         $TestsPageGUI_init = [
-            "log_download_test_data" => false,
-            "log_create_commands" => false,
-            "animation_speed" => 830
+            "logDownloadGroupData" => true,
+            "logCreateCommands" => true,
+            "animationSpeed" => 830
         ];
         $placeholders = $dictionary["content_placeholders"];
 

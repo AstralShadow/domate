@@ -19,15 +19,24 @@ if ($is_api){
     $_path = $_requested_resource["path"];
     $_input = [];
 
-    if (in_array($_method, ["POST", "PUT"])){
-        if (strpos($_SERVER["CONTENT_TYPE"], 'application/json') !== false){
-            $_input = json_decode(file_get_contents("php://input"), true);
-        } else
+    if (in_array($_method, ["POST", "PUT", "DELETE"])){
         if (strpos($_SERVER["CONTENT_TYPE"], 'application/x-www-form-urlencoded') !== false){
             $_input = $_POST;
         }
         if (strpos($_SERVER["CONTENT_TYPE"], 'multipart/form-data') !== false){
             $_input = $_POST;
+        }
+        if (strpos($_SERVER["CONTENT_TYPE"], 'application/json') !== false){
+            try{
+                $_input = json_decode(file_get_contents("php://input"), true);
+            } catch (Exception $e){
+                header("HTTP/1.1 400 Bad Request", true, 404);
+                echo json_encode([
+                    "code" => "400",
+                    "note" => "Don't just pretend to, you need to actually send JSON."
+                ]);
+                die;
+            }
         }
     }
 

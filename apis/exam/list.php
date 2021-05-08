@@ -9,7 +9,7 @@ if (false === strpos($_SERVER["HTTP_ACCEPT"], "text/event-stream")){
     header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
     echo json_encode([
         "code" => "success",
-        "exams" => $tests,
+        "data" => $tests,
         "message" => $dictionary["success"]
     ]);
 

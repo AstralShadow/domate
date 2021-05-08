@@ -20,10 +20,10 @@ if (!window.TestsPageGUI.Container) {
         /* Constants */
         type: 'exercise',
         containerQuery: "#exercisesContainer",
-        listURL: 'listExercises',
-        dataURL: 'exerciseData',
-        createURL: 'createExercise',
-        removeURL: 'removeExercise',
+        endpoint: "exercise",
+        evCreated: "new_exercise",
+        evModified: "modified_exercise",
+        evDeleted: "deleted_exercise",
         noName: TestsPageGUI.noExerciseName,
         noDescription: TestsPageGUI.noExerciseDescription,
 

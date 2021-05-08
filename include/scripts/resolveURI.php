@@ -20,7 +20,7 @@ if (!isset($requestURI)){
     $default = true;
 } else if (!is_string($requestURI)){
     $default = true;
-} else if (!preg_match("/^[a-zA-Z0-9\-\/]{2,20}$/", $requestURI)){
+} else if (!preg_match("/^[a-zA-Z0-9\-\/]{2,}$/", $requestURI)){
     $default = true;
 }
 

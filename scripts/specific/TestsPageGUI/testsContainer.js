@@ -21,10 +21,10 @@ if (!window.TestsPageGUI.Container) {
         /* Constants */
         type: 'test',
         containerQuery: "#testsContainer",
-        listURL: 'listTests',
-        dataURL: 'testData',
-        createURL: 'createTest',
-        removeURL: 'removeTest',
+        endpoint: "exam",
+        evCreated: "new_exam",
+        evModified: "modified_exam",
+        evDeleted: "deleted_exam",
         noName: TestsPageGUI.noTestName,
         noDescription: TestsPageGUI.noTestDescription,
 

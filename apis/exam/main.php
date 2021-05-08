@@ -2,9 +2,10 @@
 
 require "include/dictionary.php";
 require "include/secureTokens.php";
+require "include/testsAndTasks.php";
 
 use MongoDB\BSON\ObjectId;
-use MathExam\Test as Test;
+use \MathExam\Test as Test;
 
 $_method;
 $_path;
