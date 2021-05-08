@@ -5,3 +5,4 @@
 /pages/test/*.*
 /vendor/
 /private/
+.gitmodules
