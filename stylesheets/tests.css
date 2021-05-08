@@ -46,7 +46,8 @@ and open the template in the editor.
 
 #end{
     border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
-    border: 2px inset rgb(0, 255, 0);
+    border: 2px inset black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     text-align: center;
     cursor: pointer;
 }
@@ -55,7 +56,7 @@ and open the template in the editor.
     font-size: 12pt;
 }
 hr{
-    border: 1px solid rgb(0, 250, 0);
+    border: 1px solid black;
     margin: 3px;
 }
 
@@ -78,21 +79,21 @@ hr{
     cursor: pointer;
 }
 .block > .name{
-    background: black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     width: 100%;
     height: 30px;
-    border: 2px inset rgb(0, 255, 0);
+    border: 2px inset black;
     border-bottom: 0px;
     border-radius: 0px 40px 0px 0px/0px 25px 0px 0px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .block > .description{
-    background: black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     width: 100%;
     height: 130px;
     border-radius: 0px 0px 0px 40px/0px 0px 0px 25px;
-    border: 2px inset rgb(0, 255, 0);
+    border: 2px inset black;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -118,9 +119,6 @@ hr{
 
 #testsShadow{
     z-index: 10;
-    -webkit-box-shadow: inset 0px 30px 15px -15px black, inset 0px -30px 15px -15px black;
-    -moz-box-shadow: inset 0px 30px 15px -15px black, inset 0px -30px 15px -15px black;
-    box-shadow: inset 0px 30px 15px -15px black, inset 0px -30px 15px -15px black;
     margin-left: 25px;
 }
 #exerciseGroupsShadow{
@@ -132,9 +130,6 @@ hr{
 .shadow{
     position: absolute;
     pointer-events: none;
-    -webkit-box-shadow: inset 0px 30px 15px -15px rgb(0, 20, 0), inset 0px -30px 15px -15px rgb(0, 20, 0);
-    -moz-box-shadow: inset 0px 30px 15px -15px rgb(0, 20, 0), inset 0px -30px 15px -15px rgb(0, 20, 0);
-    box-shadow: inset 0px 30px 15px -15px rgb(0, 20, 0), inset 0px -30px 15px -15px rgb(0, 20, 0);
 }
 
 /* Common */
@@ -144,7 +139,7 @@ hr{
     width: 100%;
 }
 .page > *{
-    background-color: rgb(0, 20, 0);
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
 }
 .page > .details{
     position:absolute;
@@ -152,7 +147,7 @@ hr{
     right: 0px;
     width: 300px;
     padding: 5px;
-    border: 2px solid green;
+    border: 2px solid black;
     border-radius: 5px;
     font-size: 16pt;
 }
@@ -170,7 +165,7 @@ hr{
 }
 .page > .editorContents{
     border-radius: 5px;
-    border: 2px solid green;
+    border: 2px solid black;
     font-size: 16pt;
     overflow: hidden;
 }
@@ -210,10 +205,10 @@ hr{
 .selectedElement > .name{
     flex: 1;
     font-size: 12pt;
-    border: 2px solid rgb(0, 200, 0);
+    border: 2px solid black;
     padding: 3px;
     border-radius: 5px;
-    background-color: rgb(0, 20, 0);
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     max-height: 30px;
     text-overflow: ellipsis;
 }
@@ -261,10 +256,10 @@ hr{
 #exerciseInput{
     position: absolute;
     height: 34%; 
-    border: 1px solid rgb(0, 250, 0);
+    border: 1px solid black;
     bottom: 3px;
     width: 100%;
-    background: black;
+    background-image: linear-gradient(to bottom right, #b88747, #F5DEB3);
 }
 .box{
     border: 2px solid rgb(0, 250, 0);
@@ -274,8 +269,8 @@ hr{
     padding: 5px;
 }
 .exerciseConfig{
-    background-color: black;
-    color: rgb(0, 255, 0);
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
+    color: black;
     font-size: 14pt;
     box-sizing: border-box;
     padding: 0px;
@@ -283,10 +278,10 @@ hr{
     text-indent: 0px;
 }
 .exerciseConfig.on{
-    border: 1px solid rgb(0, 200, 0);
+    border: 1px solid black;
 }
 .exerciseConfig.off{
-    border: 0px solid rgb(0, 200, 0);
+    border: 0px solid black;
     max-height: 0px;
     overflow: hidden;
 }
@@ -302,34 +297,33 @@ hr{
 /* Notification */
 .notification{
     display: none;
-    background: black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     padding: 7px;
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
     position: fixed;
-
     text-align: center;
     font-size: 16pt;
     border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
-    border: 3px solid rgb(0, 250, 0);
+    border: 3px solid black;
     width: 340px;
     z-index: 110;
-    box-shadow: 0px 0px 60px 60px black;
+    box-shadow: 0px 0px 10px 10px #b88747;
 }
 .buttonNotification{
-    background: black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     width: 100px;
     margin-left: 30px;
     margin-right: 30px;
     cursor: pointer;
-    border: 2px solid rgb(0, 250, 0);
+    border: 2px solid black;
 }
 
 .pageCloseButton{
     position: absolute; 
     border-radius: 50%;
-    background-color: black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     background-size: 100%;
     background-image: url('../img/delete.png');
     width: 32px;
@@ -339,7 +333,7 @@ hr{
     right: 5px;
     top: -5px;
     cursor: pointer;
-    box-shadow: inset 0 0 5px grey; 
+    box-shadow: inset 0 0 5px #b88747; 
 
 }
 
@@ -353,7 +347,7 @@ hr{
 }
 
 #examListContainer{
-    background: black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     display: none;
     position: absolute;
     top: 50%;
@@ -362,20 +356,20 @@ hr{
     width: 450px;
     height: 550px;
     overflow-y: auto;
-    border: 3px solid rgb(0, 250, 0);
+    border: 3px solid black;
     border-radius: 30px 30px 30px 30px/5px 5px 5px 5px;
     padding: 7px;
     font-size: 16pt;
-    box-shadow: 0px 0px 30px 30px black;
+    box-shadow: 0px 0px 10px 10px #b88747;
     z-index: 110;
 }
 .examListElement{
     min-height: 100px;
-    background: black;
+    background-image: linear-gradient(to bottom right, #b88747, #F5DEB3);
     padding: 7px;
     font-size: 16pt;
     border-radius: 40px 40px 40px 40px/15px 15px 15px 15px;
-    border: 2px solid rgb(0, 250, 0);
+    border: 2px solid black;
     width: 400px;
     margin: 12px auto;
     text-align: center;
@@ -384,7 +378,7 @@ hr{
 
 #singleExamResults{
     display: none;
-    background:black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     position: fixed;
     transform: translate(-50%, -50%);
     top: 50%;
@@ -393,29 +387,30 @@ hr{
     max-width: 100%;
     overflow: auto;
     border-radius: 30px 30px 30px 30px/5px 5px 5px 5px;
-    border: 2px solid rgb(0, 250, 0);
+    border: 2px solid black;
     box-sizing: border-box;
     z-index: 110;
-    box-shadow: 0px 0px 40px 40px black;
+    box-shadow: 0px 0px 10px 10px #b88747;
 }
 #scoreboardTable{
-    background: black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     width: 100%;
     padding: 7px;
     font-size: 16pt;
     z-index: 110;
-    box-shadow: 0px 0px 30px 30px black;
+    box-shadow: 0px 0px 10px 10px #b88747;
     //border-spacing: 3px;
 }
 
 .tr{
     height: 20px;
-    border: 1px solid rgb(0, 250, 0);
+    border: 1px solid black;
+    background-image: linear-gradient (to bottom left, #b88747, #F5DEB3);
 }
 
 .td{
     text-align: center;
-    border: 1px solid rgb(0, 250, 0);
+    border: 1px solid black;
     min-width: 20px;
     margin: 2px;
     vertical-align: center;
@@ -437,24 +432,23 @@ hr{
     top: 50%;
     position: fixed;
     border-radius: 30px 30px 30px 30px/5px 5px 5px 5px;
-    border: 3px solid rgb(0, 250, 0);
-    background:black;
+    border: 3px solid black;
+    background-image: linear-gradient(to bottom left, #b88747, #F5DEB3);
     z-index: 110;
     width: 400px;
-    box-shadow: 0px 0px 40px 40px black;
+    box-shadow: 0px 0px 10px 10px #b88747;
 }
 
 #otgowor{
     text-align: left;
-    border-top: 2px solid rgb(0, 250, 0);
+    border-top: 2px solid black;
 }
 #uslowie{
     text-align: left;
-    border-top: 2px solid rgb(0, 250, 0);
+    border-top: 2px solid black;
 }
 
 .button{
-    background-color: black;
     background-size:auto 15px;
     background-repeat: no-repeat;
     background-position:top right;
@@ -467,11 +461,12 @@ hr{
 }
 
 .button_green{
-    border: 2px solid rgb(0, 250, 0);
+    border: 2px solid black;
+    color: green;
 }
 .button_red{
     color: red;
-    border: 2px solid rgb(250, 0, 0);
+    border: 2px solid black;
 }
 .button_green.marked{
     background-image: url('../img/121.png');   
