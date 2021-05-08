@@ -21,8 +21,7 @@ TestsPageGUI.ExerciseEditor = function (oid, options) {
     const SwidingBoard = window.SwidingBoard
 
     const type = options.type
-    const dataURL = options.dataURL
-    const modifyURL = options.modifyURL
+    const endpoint = options.endpoint
     //const workspaceQuery = options.workspaceQuery
     const sideboardQuery = options.sideboardQuery
     const settingsQuery = options.settingsQuery
@@ -30,7 +29,7 @@ TestsPageGUI.ExerciseEditor = function (oid, options) {
     const mathDisplayQuery = options.mathDisplayQuery
     const mathInputQuery = options.mathInputQuery
 
-    if (!type || !dataURL || !modifyURL || !sideboardQuery || // !workspaceQuery ||
+    if (!type || !endpoint || !sideboardQuery || // !workspaceQuery ||
         !settingsQuery || !answerQuery || !mathDisplayQuery || !mathInputQuery) {
         throw ["Missing TestPageGUI.ContentListEditor option!", options]
     }
@@ -48,28 +47,63 @@ TestsPageGUI.ExerciseEditor = function (oid, options) {
         if (lastData.question === question) {
             return;
         }
-        var query = {
-            id: oid,
+        var input = {
+            token: await getAPIToken(),
             question: question
         }
-        var result = await StateTracker.get(modifyURL, query)
-        StateTracker.reloadTracker(dataURL, {id: oid})
+        var request = new XMLHttpRequest()
+        request.open("PUT", endpoint + "/" + oid)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
+
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed updating at " + endpoint, request.status, request.response)
+                return;
+            }
+        })
     }
     this.setAnswer = async function (answer, useAnswer) {
-        var query = {
-            id: oid
-        }
+        var input = {}
         if (lastData.answer !== answer && answer !== undefined) {
-            query.answer = answer
+            input.answer = answer
         }
         if (lastData.useAnswer !== useAnswer && useAnswer !== undefined) {
-            query.useAnswer = useAnswer
+            input.useAnswer = useAnswer
         }
-        if (Object.keys(query).length === 1) {
+        if (Object.keys(input).length === 0) {
             return;
         }
-        var result = await StateTracker.get(modifyURL, query)
-        StateTracker.reloadTracker(dataURL, {id: oid})
+        input.token = await getAPIToken()
+
+        var request = new XMLHttpRequest()
+        request.open("PUT", endpoint + "/" + oid)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
+
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed updating at " + endpoint, request.status, request.response)
+                return;
+            }
+        })
+    }
+
+    function getAPIToken () {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", endpoint + "/get-token")
+            request.send()
+
+            request.addEventListener("load", function () {
+                var data = JSON.parse(request.response)
+                if (data.token !== undefined) {
+                    resolve(data.token)
+                } else {
+                    console.log("Couldn't accure token. Maybe your session expired")
+                }
+            })
+        })
     }
 
 

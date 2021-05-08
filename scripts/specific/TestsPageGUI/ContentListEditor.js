@@ -120,8 +120,8 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
         var contents = JSON.parse(e.data).data.contents
         var keys = []
         contents.forEach(function (pair) {
-            track(pair.id)
-            keys.push(pair.id)
+            track(getId(pair))
+            keys.push(getId(pair))
         })
         Object.keys(tracked).forEach(function (key) {
             if (keys.indexOf(key) === -1) {

@@ -24,10 +24,10 @@ if (count($_path) > 0){
     $_id = $_path[0];
 
     $exercises = (array) $user->exercises ?? [];
-    if (!in_array($_id, $exercises)){
-        header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
-        die;
-    }
+    //if (!in_array($_id, $exercises)){
+    //    header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
+    //    die;
+    //}
     if (!Exercise::exists($db, new ObjectId($_id))){
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
         die;

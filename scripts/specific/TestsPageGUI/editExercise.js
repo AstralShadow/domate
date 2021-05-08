@@ -93,6 +93,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
                 if (TestsPageGUI.activeEditor) {
                     if (TestsPageGUI.activeEditor.type === "exercise") {
                         TestsPageGUI.activeEditor.renderMath()
+                        TestsPageGUI.activeEditor.setQuestion(input.innerText)
                     }
                 }
             })
