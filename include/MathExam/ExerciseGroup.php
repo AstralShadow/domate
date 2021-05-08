@@ -109,4 +109,11 @@ class ExerciseGroup
         return $exercises;
     }
 
+    public static function exists(Database $database, ObjectId $id): bool {
+        $collection = $database->exerciseGroups;
+        $filter = ["_id" => $id];
+        $document = $collection->findOne($filter);
+        return (bool) $document;
+    }
+
 }

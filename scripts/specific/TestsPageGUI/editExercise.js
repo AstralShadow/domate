@@ -31,8 +31,7 @@ if (!window.TestsPageGUI.ContentListEditor) {
 
     var options = {
         type: "exercise",
-        dataURL: "exerciseData",
-        modifyURL: "modifyExercise",
+        endpoint: "exercise",
         pageQuery: "#exerciseExitorPage",
         nameQuery: "#exerciseName",
         descriptionQuery: "#exerciseDescription",

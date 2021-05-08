@@ -153,7 +153,7 @@ TestsPageGUI.Container = function (options) {
         source.addEventListener(evModified, function (e) {
             var data = JSON.parse(e.data)
             console.log("event data: ", data)
-            tracked[data.id] = data;
+            tracked[data.id] = data.data;
             updateCellOrRender(data.id)
         })
         fetchContentList();

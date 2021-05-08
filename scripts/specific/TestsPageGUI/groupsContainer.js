@@ -24,8 +24,8 @@ if (!window.TestsPageGUI.Container) {
         evCreated: "new_group",
         evModified: "modified_group",
         evDeleted: "deleted_group",
-        noName: TestsPageGUI.noGroupName,
-        noDescription: TestsPageGUI.noGroupDescription,
+        noName: TestsPageGUI.no_group_name,
+        noDescription: TestsPageGUI.no_group_description,
 
         /* Functionality */
         functions: [
@@ -43,12 +43,14 @@ if (!window.TestsPageGUI.Container) {
                     var self = this
                     div.style.display = "block"
 
-                    del.onclick = function () {
+                    del.onclick = function (e) {
                         self.remove(oid)
                         div.style.display = "none"
+                        e.stopPropagation()
                     }
-                    nodel.onclick = function () {
+                    nodel.onclick = function (e) {
                         div.style.display = "none"
+                        e.stopPropagation()
                     }
                 }
             ],

@@ -25,8 +25,8 @@ if (!window.TestsPageGUI.Container) {
         evCreated: "new_exam",
         evModified: "modified_exam",
         evDeleted: "deleted_exam",
-        noName: TestsPageGUI.noTestName,
-        noDescription: TestsPageGUI.noTestDescription,
+        noName: TestsPageGUI.no_test_name,
+        noDescription: TestsPageGUI.no_test_description,
 
         /* Functionality */
         functions: [
@@ -43,12 +43,14 @@ if (!window.TestsPageGUI.Container) {
                     var self = this
                     div.style.display = "block"
 
-                    del.onclick = function () {
+                    del.onclick = function (e) {
                         self.remove(oid)
                         div.style.display = "none"
+                        e.stopPropagation()
                     }
-                    nodel.onclick = function () {
+                    nodel.onclick = function (e) {
                         div.style.display = "none"
+                        e.stopPropagation()
                     }
                 }
             ],

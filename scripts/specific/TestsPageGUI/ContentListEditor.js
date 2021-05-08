@@ -5,7 +5,7 @@
  */
 
 
-/* global StateTracker */
+/* global AppAppEventSource */
 
 if (!window.TestsPageGUI) {
     TestsPageGUI = {}
@@ -21,9 +21,8 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     const SwidingBoard = window.SwidingBoard
 
     const type = options.type
-    const dataURL = options.dataURL
-    const elementDataURL = options.elementDataURL
-    const modifyURL = options.modifyURL
+    const endpoint = options.endpoint
+    const contentEndpoint = options.contentEndpoint
     const contentsQuery = options.contentsQuery
     const noContentName = options.noContentName || ""
     const getId = options.parseContentRealId
@@ -31,7 +30,7 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
     const moving = !(options.disableMove || false)
     // TODO: implament count when design is ready
 
-    if (!type || !dataURL || !modifyURL || !elementDataURL || !contentsQuery) {
+    if (!type || !endpoint || !contentsQuery) {
         throw ["Missing TestPageGUI.ContentListEditor option!", options]
     }
     if (!getId || !getToken) {
@@ -40,54 +39,137 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
 
     /* Modifiers */
     this.addContent = async function (object) {
-        var query = {
-            id: oid,
-            addContents: object
+        var input = {
+            token: await getAPIToken(),
+            add_contents: object
         }
-        var result = await StateTracker.get(modifyURL, query)
-        StateTracker.reloadTracker(dataURL, {id: oid})
+        var request = new XMLHttpRequest()
+        request.open("PUT", endpoint + "/" + oid)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
+
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed updating at " + endpoint, request.status, request.response)
+                return;
+            }
+        })
     }
     this.removeContent = async function (c_oid) {
-        var query = {
-            id: oid,
-            removeContents: [c_oid]
+        var input = {
+            token: await getAPIToken(),
+            remove_contents: [c_oid]
         }
-        var result = await StateTracker.get(modifyURL, query)
-        StateTracker.reloadTracker(dataURL, {id: oid})
+        var request = new XMLHttpRequest()
+        request.open("PUT", endpoint + "/" + oid)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
+
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed updating at " + endpoint, request.status, request.response)
+                return;
+            }
+        })
     }
     if (moving) {
         this.move = async function (token, index) {
-            var query = {
-                id: oid,
+            var input = {
+                token: await getAPIToken(),
                 move: token,
                 position: index
             }
-            var result = await StateTracker.get(modifyURL, query)
-            StateTracker.reloadTracker(dataURL, {id: oid})
+            var request = new XMLHttpRequest()
+            request.open("PUT", endpoint + "/" + oid)
+            request.setRequestHeader("Content-type", "application/json")
+            request.send(JSON.stringify(input))
+
+            request.addEventListener("load", function () {
+                if (request.status !== 200) {
+                    console.log("Failed updating at " + endpoint, request.status, request.response)
+                    return;
+                }
+            })
         }
+    }
+
+    function getAPIToken () {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", endpoint + "/get-token")
+            request.send()
+
+            request.addEventListener("load", function () {
+                var data = JSON.parse(request.response)
+                if (data.token !== undefined) {
+                    resolve(data.token)
+                } else {
+                    console.log("Couldn't accure token. Maybe your session expired")
+                }
+            })
+        })
     }
 
     /* Tracking subelements */
     var tracked = {}
+    window.AppEventSource.then(function (source) {
+        source.addEventListener("modified_" + endpoint, source_onModified)
+        source.addEventListener("modified_" + contentEndpoint, content_onModified)
+    })
+    function source_onModified (e) {
+        var contents = JSON.parse(e.data).data.contents
+        var keys = []
+        contents.forEach(function (pair) {
+            track(pair.id)
+            keys.push(pair.id)
+        })
+        Object.keys(tracked).forEach(function (key) {
+            if (keys.indexOf(key) === -1) {
+                untrack(key)
+            }
+        })
+    }
+    function content_onModified (e) {
+        var input = JSON.parse(e.data)
+        var id = input.id
+        var data = input.data
+        if (Object.keys(tracked).indexOf(id) === -1) {
+            return;
+        }
+
+        tracked[id] = data
+        updateNodes(id)
+    }
     function track (oid) {
         if (Object.keys(tracked).indexOf(oid) === -1) {
             tracked[oid] = null
-            StateTracker.track(elementDataURL, {id: oid}, handleUpdate)
         }
+        download(oid)
     }
     function untrack (oid) {
-        StateTracker.untrack(elementDataURL, {id: oid}, handleUpdate)
         delete tracked[oid]
     }
-    function handleUpdate (e) {
-        if (e.code !== "Success") {
-            console.log("Update failed for subelement of " + type, e)
-            return;
-        }
-        var object = e.result
-        tracked[object._id] = object
-        updateNodes(object._id)
+
+    function download (oid) {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", contentEndpoint + "/" + oid)
+            request.send()
+
+            request.addEventListener("load", function () {
+                if (request.status !== 200) {
+                    console.log("Failed downloading element at " + contentEndpoint, request.status, request.response)
+                    return;
+                }
+
+                var data = JSON.parse(request.response).data
+                resolve(data)
+                tracked[oid] = data
+                updateNodes(oid)
+            })
+        })
     }
+
 
     /* Rendering */
     var container = document.querySelector(contentsQuery)
@@ -116,7 +198,6 @@ TestsPageGUI.ContentListEditor = function (oid, options) {
                 console.log("err", entry)
             }
             track(getId(entry))
-            updateNodes(getId(entry))
         })
 
         /* Untrack old contents */

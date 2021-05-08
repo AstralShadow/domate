@@ -52,7 +52,7 @@ if (isset($_input["remove_contents"]) && is_array($_input["remove_contents"])){
 header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
 echo json_encode([
     "code" => "success",
-    "id" => $_id,
+    "id" => (string) $_id,
     "message" => $dictionary["success"]
 ]);
 

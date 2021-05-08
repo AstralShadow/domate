@@ -24,8 +24,8 @@ if (!window.TestsPageGUI.Container) {
         evCreated: "new_exercise",
         evModified: "modified_exercise",
         evDeleted: "deleted_exercise",
-        noName: TestsPageGUI.noExerciseName,
-        noDescription: TestsPageGUI.noExerciseDescription,
+        noName: TestsPageGUI.no_exercise_name,
+        noDescription: TestsPageGUI.no_exercise_description,
 
         /* Functionality */
         functions: [
@@ -43,12 +43,14 @@ if (!window.TestsPageGUI.Container) {
                     var self = this
                     div.style.display = "block"
 
-                    del.onclick = function () {
+                    del.onclick = function (e) {
                         self.remove(oid)
                         div.style.display = "none"
+                        e.stopPropagation()
                     }
-                    nodel.onclick = function () {
+                    nodel.onclick = function (e) {
                         div.style.display = "none"
+                        e.stopPropagation()
                     }
                 }
             ],

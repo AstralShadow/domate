@@ -72,4 +72,11 @@ class Exercise
         return new Exercise($database, $id);
     }
 
+    public static function exists(Database $database, ObjectId $id): bool {
+        $collection = $database->exercises;
+        $filter = ["_id" => $id];
+        $document = $collection->findOne($filter);
+        return (bool) $document;
+    }
+
 }

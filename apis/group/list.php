@@ -1,7 +1,7 @@
 <?php
 
 if (false === strpos($_SERVER["HTTP_ACCEPT"], "text/event-stream")){
-    $groups = $user->groups ?? [];
+    $groups = $user->exerciseGroups ?? [];
     foreach ($groups as $key => $value){
         $groups[$key] = (string) $value;
     }

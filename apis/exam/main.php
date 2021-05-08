@@ -16,7 +16,7 @@ if (count($_path) > 0){
         header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
         echo json_encode([
             "code" => "token",
-            "token" => generateSecureToken($session, "test")
+            "token" => generateSecureToken($session, "exam")
         ]);
         die;
     }
@@ -60,7 +60,7 @@ if (!isset($_input["token"])){
     ]);
     die;
 }
-if (!verifySecureToken($session, "test", $_input["token"])){
+if (!verifySecureToken($session, "exam", $_input["token"])){
     header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 400);
     echo json_encode([
         "code" => "invalid_token",

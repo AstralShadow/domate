@@ -23,16 +23,15 @@ if (!window.TestsPageGUI.ContentListEditor) {
 
     var options = {
         type: "group",
-        dataURL: "exerciseGroupData",
-        modifyURL: "modifyExerciseGroup",
+        endpoint: "group",
         pageQuery: "#groupEditorPage",
         nameQuery: "#groupName",
         descriptionQuery: "#groupDescription",
         swidingDirection: "left",
 
         contentsQuery: "#groupContents",
-        elementDataURL: "exerciseData",
-        noContentName: TestPageGUI.noExerciseName,
+        contentEndpoint: "exercise",
+        noContentName: TestPageGUI.no_exercise_name,
         parseContentRealId: (e) => {
             return e
         },

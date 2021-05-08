@@ -9,6 +9,7 @@ if (!isset($whitebell)){
 
 require "include/testsAndTasks.php";
 
+use MongoDB\BSON\ObjectId as ObjectId;
 use MathExam\Test as Test;
 use MathExam\ExerciseGroup as ExerciseGroup;
 use MathExam\Exercise as Exercise;
@@ -26,6 +27,7 @@ $whitebell->addEventListener("new_exam_" . $user->id, function (string $id) use 
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("deleted_exam_" . $user->id, function (string $id) use ($whitebell){
@@ -37,10 +39,11 @@ $whitebell->addEventListener("deleted_exam_" . $user->id, function (string $id) 
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("modified_exam_" . $user->id, function (string $exam_id) use ($db, $whitebell){
-    $exam = new Test($db, $exam_id);
+    $exam = new Test($db, new ObjectId($exam_id));
     $data = [
         "id" => $exam_id,
         "data" => $exam->dump()
@@ -53,6 +56,7 @@ $whitebell->addEventListener("modified_exam_" . $user->id, function (string $exa
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("new_active_exam_" . $user->id, function (string $id) use ($whitebell){
@@ -64,6 +68,7 @@ $whitebell->addEventListener("new_active_exam_" . $user->id, function (string $i
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("deleted_active_exam_" . $user->id, function (string $id) use ($whitebell){
@@ -75,6 +80,7 @@ $whitebell->addEventListener("deleted_active_exam_" . $user->id, function (strin
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("new_group_" . $user->id, function (string $id) use ($whitebell){
@@ -86,6 +92,7 @@ $whitebell->addEventListener("new_group_" . $user->id, function (string $id) use
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("deleted_group_" . $user->id, function (string $id) use ($whitebell){
@@ -97,12 +104,13 @@ $whitebell->addEventListener("deleted_group_" . $user->id, function (string $id)
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("modified_group_" . $user->id, function (string $id) use ($db, $whitebell){
-    $group = new ExerciseGroup($db, $id);
+    $group = new ExerciseGroup($db, new ObjectId($id));
     $data = [
-        "id" => $group->getId(),
+        "id" => $id,
         "data" => $group->dump()
     ];
     echo "event: modified_group\n";
@@ -113,6 +121,7 @@ $whitebell->addEventListener("modified_group_" . $user->id, function (string $id
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("new_exercise_" . $user->id, function (string $id) use ($whitebell){
@@ -124,6 +133,7 @@ $whitebell->addEventListener("new_exercise_" . $user->id, function (string $id) 
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("deleted_exercise_" . $user->id, function (string $id) use ($whitebell){
@@ -135,10 +145,11 @@ $whitebell->addEventListener("deleted_exercise_" . $user->id, function (string $
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
 $whitebell->addEventListener("modified_exercise_" . $user->id, function (string $id) use ($db, $whitebell){
-    $exercise = new Exercise($db, $id);
+    $exercise = new Exercise($db, new ObjectId($id));
     $data = [
         "id" => $id,
         "data" => $exercise->dump()
@@ -151,11 +162,11 @@ $whitebell->addEventListener("modified_exercise_" . $user->id, function (string 
     if (connection_aborted()){
         $whitebell->stop();
     }
+    set_time_limit(60);
 });
 
-flush();
-
 if (!defined("DONT_RUN_WHITEBELL")){
+    flush();
     $whitebell->run();
 }
 

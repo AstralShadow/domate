@@ -5,7 +5,7 @@
  */
 
 
-/* global StateTracker */
+/* global AppAppEventSource */
 
 if (!window.TestsPageGUI) {
     TestsPageGUI = {}

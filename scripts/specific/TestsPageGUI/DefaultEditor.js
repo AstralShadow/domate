@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global StateTracker */
+/* global AppEventSource */
 
 /* Dependencies */
 if (!window.TestsPageGUI) {
@@ -13,8 +13,8 @@ if (!window.TestsPageGUI) {
 if (!window.SwidingBoard) {
     throw "SwidingBoard is a dependency of TestsPageGUI"
 }
-if (!window.StateTracker) {
-    throw "StateTracker is a dependency of TestsPageGUI"
+if (!window.AppEventSource) {
+    throw "AppEventSource is a dependency of TestsPageGUI"
 }
 
 /**
@@ -30,15 +30,14 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
     const SwidingBoard = window.SwidingBoard
 
     const type = options.type
-    const dataURL = options.dataURL
-    const modifyURL = options.modifyURL
+    const endpoint = options.endpoint
     const pageQuery = options.pageQuery
     const nameQuery = options.nameQuery
     const descriptionQuery = options.descriptionQuery
     const contentsRenderer = options.contentsRenderer
     const swidingDirection = options.swidingDirection || "right"
 
-    if (!type || !dataURL || !modifyURL || !contentsRenderer) {
+    if (!type || !endpoint || !contentsRenderer) {
         throw ["Missing TestPageGUI.Container option!", options]
     }
     if (!pageQuery || !nameQuery || !descriptionQuery) {
@@ -60,21 +59,45 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
 
     /* Tracking */
     var lastData = {}
-    StateTracker.track(dataURL, {id: oid}, updateHandler)
-    function update () {
-        StateTracker.reloadTracker(dataURL, {id: oid})
-    }
-    function updateHandler (e) {
-        if (e.code !== "Success") {
-            // TODO: implement some kind of feedback
-            console.log("Failed to load object", oid)
-            return;
+    window.AppEventSource.then(function (source) {
+        source.addEventListener("deleted_" + endpoint, source_onDeleted)
+        source.addEventListener("modified_" + endpoint, source_onModified)
+        download()
+    })
+    function source_onDeleted (e) {
+        var data = JSON.parse(e.data)
+        if (data.id === oid) {
+            console.log("closed", oid, "because deleted", data)
+            self.deactivate()
         }
-        var object = e.result
+    }
+    function source_onModified (e) {
+        var data = JSON.parse(e.data)
+        updateHandler(data.data)
+    }
+    function updateHandler (object) {
         nameInput.innerText = object.name
         descriptionInput.innerText = object.description
         lastData = object
         renderContents()
+    }
+    function download () {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", endpoint + "/" + oid)
+            request.send()
+
+            request.addEventListener("load", function () {
+                if (request.status !== 200) {
+                    console.log("Failed downloading element at " + endpoint, request.status, request.response)
+                    return;
+                }
+
+                var data = JSON.parse(request.response).data
+                resolve(data)
+                updateHandler(data)
+            })
+        })
     }
 
     /* Modifiers */
@@ -82,23 +105,62 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
         if (lastData.name === name) {
             return;
         }
-        var query = {
-            id: oid,
+
+        var input = {
+            token: await getToken(),
             name: name
         }
-        var result = await StateTracker.get(modifyURL, query)
-        StateTracker.reloadTracker(dataURL, {id: oid})
+
+        var request = new XMLHttpRequest()
+        request.open("PUT", endpoint + "/" + oid)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
+
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed updating at " + endpoint, request.status, request.response)
+                return;
+            }
+        })
     }
     this.setDescription = async function (description) {
         if (lastData.description === description) {
             return;
         }
-        var query = {
-            id: oid,
+
+        var input = {
+            token: await getToken(),
             description: description
         }
-        var result = await StateTracker.get(modifyURL, query)
-        StateTracker.reloadTracker(dataURL, {id: oid})
+
+        var request = new XMLHttpRequest()
+        request.open("PUT", endpoint + "/" + oid)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
+
+        request.addEventListener("load", function () {
+            if (request.status !== 200) {
+                console.log("Failed updating at " + endpoint, request.status, request.response)
+                return;
+            }
+        })
+    }
+
+    function getToken () {
+        return new Promise(function (resolve) {
+            var request = new XMLHttpRequest()
+            request.open("GET", endpoint + "/get-token")
+            request.send()
+
+            request.addEventListener("load", function () {
+                var data = JSON.parse(request.response)
+                if (data.token !== undefined) {
+                    resolve(data.token)
+                } else {
+                    console.log("Couldn't accure token. Maybe your session expired")
+                }
+            })
+        })
     }
 
     /* Interface */
@@ -137,7 +199,10 @@ TestsPageGUI.DefaultEditor = function (oid, options) {
 
 
     this.deactivate = function () {
-        StateTracker.untrack(dataURL, {id: oid}, updateHandler)
+        window.AppEventSource.then(function (source) {
+            source.removeEventListener("deleted_" + endpoint, source_onDeleted)
+            source.removeEventListener("modified_" + endpoint, source_onModified)
+        })
         TestsPageGUI.activeEditor = null
 
         var animationPromise = new Promise(function (resolve) {

@@ -2,6 +2,7 @@
 
 require "include/dictionary.php";
 require "include/secureTokens.php";
+require "include/testsAndTasks.php";
 
 use MongoDB\BSON\ObjectId;
 use MathExam\ExerciseGroup as ExerciseGroup;
@@ -22,7 +23,7 @@ if (count($_path) > 0){
 
     $_id = $_path[0];
 
-    $groups = (array) $user->groups ?? [];
+    $groups = (array) $user->exerciseGroups ?? [];
     if (!in_array($_id, $groups)){
         header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
         die;
