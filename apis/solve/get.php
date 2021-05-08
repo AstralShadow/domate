@@ -13,7 +13,7 @@ $answer = [
     "start" => $_active_exam->start->toDateTime()->getTimestamp(),
     "end" => $_active_exam->end->toDateTime()->getTimestamp(),
     "worktime" => (int) $_active_exam->worktime,
-    "question_count" => count($_test->contents)
+    "question_count" => count($_exam->contents)
 ];
 
 header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);

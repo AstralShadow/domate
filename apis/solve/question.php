@@ -8,5 +8,8 @@ $_exam_solution;
 $_question;
 
 header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
-echo json_encode($_question->dump());
+echo json_encode([
+    "code" => "success",
+    "data" => $_question->dump()
+]);
 return;

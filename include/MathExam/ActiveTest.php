@@ -36,7 +36,7 @@ class ActiveTest
 
         do{
             $key = "";
-            for ($i = 0; $i < 5; $i++){
+            for ($i = 0; $i < 7; $i++){
                 $key .= $characters[mt_rand(0, $charactersLength)];
             }
         } while (ActiveTest::getIdFromKey($database, $key) != null);

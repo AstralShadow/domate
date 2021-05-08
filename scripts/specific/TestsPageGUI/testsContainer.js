@@ -114,20 +114,53 @@ if (!window.TestsPageGUI.Container) {
         var idE = startTestDiv.querySelector("#ST_identification")
         document.getElementById("ST_button")
             .addEventListener("click", async function () {
-                var query = await StateTracker.get("scheduleTest", {
-                    id: data["_id"],
+                var id = data["_id"];
+                var input = {
+                    token: await getToken(),
                     start: (new Date(startE.value)).getTime() / 1000,
                     end: (new Date(endE.value)).getTime() / 1000,
                     worktime: worktimeE.value || def_worktime(),
                     note: noteE.value,
                     question: idE.value || "Име на ученик:"
+                }
+
+                var request = new XMLHttpRequest()
+                request.open("POST", "exam/" + id + "/active")
+                request.setRequestHeader("Content-type", "application/json")
+                request.send(JSON.stringify(input))
+
+                request.addEventListener("load", function () {
+                    if (request.status !== 200) {
+                        console.log("Failed activating test ", request.status, request.response)
+                        return;
+                    }
+
+                    var data = JSON.parse(request.response)
+                    console.log(data.key, data.id)
+
+                    var msg = TestsPageGUI.successful_test_schedule
+                    var url = location.href.replace(/([^/\\]*\.php)?(\?.*)?$/, "")
+                    var link = url + data.key
+                    document.getElementById("ST_feedback").innerHTML = msg.replace(/\$link/g, link)
+                    console.log(data)
                 })
-                var msg = query.msg
-                var url = location.href.replace(/([^/\\]*\.php)?(\?.*)?$/, "")
-                var link = url + "?test=" + query.key
-                document.getElementById("ST_feedback").innerHTML = msg.replace(/\$link/g, link)
-                console.log(query)
             })
+        function getToken () {
+            return new Promise(function (resolve) {
+                var request = new XMLHttpRequest()
+                request.open("GET", "exam/get-token")
+                request.send()
+
+                request.addEventListener("load", function () {
+                    var data = JSON.parse(request.response)
+                    if (data.token !== undefined) {
+                        resolve(data.token)
+                    } else {
+                        console.log("Couldn't accure token. Maybe your session expired")
+                    }
+                })
+            })
+        }
         startE.addEventListener("input", function () {
             if (endE.valueAsNumber)
                 startE.valueAsNumber = Math.min(startE.valueAsNumber, endE.valueAsNumber - 60000)

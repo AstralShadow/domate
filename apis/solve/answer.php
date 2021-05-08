@@ -8,7 +8,7 @@ $_exam_solution;
 $_question;
 $_input;
 
-if (!isset($_input["answer"]) || !is_string($input["answer"])){
+if (!isset($_input["answer"]) || !is_string($_input["answer"])){
     header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request", true, 400);
     echo json_encode([
         "code" => "missing_fields",

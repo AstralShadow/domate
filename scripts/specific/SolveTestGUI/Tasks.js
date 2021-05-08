@@ -4,40 +4,43 @@
  * and open the template in the editor.
  */
 
-/* global StateTracker */
-
 if (!window.SolveTestGUI) {
-    window.SolveTestGUI = {}
+    throw "SolveTestGUI aint initialized"
 }
 
 window.SolveTestGUI.Tasks = function (core) {
     "use strict"
 
     /* Tracking */
-    StateTracker.track("getExamData", {id: core.oid}, examDataHandler)
-    var lastData = undefined
-    function examDataHandler (e) {
-        lastData = e.result
-        e.result.tasks.forEach(trackTask)
+    this.onLoad = function () {
         container.style.display = "block"
     }
-    var tasks = {}
-    function trackTask (oid) {
-        if (Object.keys(tasks).indexOf(oid) === -1) {
-            tasks[oid] = undefined
-            StateTracker.track("getExamQuestion", {id: oid}, taskUpdateHandler)
-        }
-    }
-    function taskUpdateHandler (e) {
-        tasks[e.args.id] = e.result
-        updateTask(e.args.id)
+    this.onTaskLoad = function (key) {
+        updateTask(key)
     }
 
     /* Functionality */
     async function setAnswer (oid, answer) {
-        if (answer !== tasks[oid].answer) {
-            await StateTracker.get("answerExamQuestion", {id: oid, answer: answer})
-            StateTracker.reloadTracker("getExamQuestion", {id: oid})
+        var task = core.getTask(oid)
+        if (answer !== task.answer) {
+            var token = await window.SolveTestGUI.getToken()
+            var input = {
+                token: token,
+                answer: answer
+            }
+
+            var request = new XMLHttpRequest()
+            request.open("PUT", window.SolveTestGUI.endpoint + "/" + oid)
+            request.setRequestHeader("Content-type", "application/json")
+            request.send(JSON.stringify(input))
+
+            request.addEventListener("load", function () {
+                if (request.status !== 200) {
+                    console.log("Failed answering ", oid, request.status, request.response)
+                    return;
+                }
+                core.onAnswer(oid)
+            })
         }
     }
 
@@ -47,7 +50,7 @@ window.SolveTestGUI.Tasks = function (core) {
         while (container.firstChild) {
             container.removeChild(container.firstChild)
         }
-        lastData.tasks.forEach(function (oid) {
+        core.task_keys.forEach(function (oid) {
             if (nodes[oid]) {
                 container.appendChild(nodes[oid].base)
             }
@@ -101,12 +104,13 @@ window.SolveTestGUI.Tasks = function (core) {
             fillElements()
         }
 
-        if (!tasks[oid]) {
+        if (!core.getTask(oid)) {
             return;
         }
+        var task = core.getTask(oid)
 
-        ptrs.question.innerText = tasks[oid].question
-        ptrs.input.value = tasks[oid].answer
+        ptrs.question.innerText = task.question
+        ptrs.input.value = task.answer
 //        ptrs.display.innerText = tasks[oid].answer
         if (MathJax.typeset) {
             MathJax.typeset()

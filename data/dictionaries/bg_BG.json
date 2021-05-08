@@ -158,10 +158,10 @@
         "no_group_description": "<i style=\"opacity:0.5;\">Липсва описание</i>",
 
         "no_exercise_name": "<i style=\"opacity:0.5;\">Неименувана задача</i>",
-        "no_exercise_description": "<i style=\"opacity:0.5;\">Липсва описание</i>"
-    },
-    "successfulTestSchedule": "Насрочването на теста беше успешно. Моля споделете този линк с учениците си: \n $link",
+        "no_exercise_description": "<i style=\"opacity:0.5;\">Липсва описание</i>",
 
+        "successful_test_schedule": "Насрочването на теста беше успешно. Моля споделете този линк с учениците си: <p> $link </p>"
+    },
     "join_test": {
         "unknown_test": "Неопределен тест.",
         "not_started_yet": "Теста все още не е отворен.",

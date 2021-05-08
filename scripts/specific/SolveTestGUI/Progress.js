@@ -13,43 +13,33 @@ if (!window.SolveTestGUI) {
 window.SolveTestGUI.Progress = function (core) {
     "use strict"
 
-    /* Tracking */
-    StateTracker.track("getExamData", {id: core.oid}, examDataHandler)
-    var lastData = undefined
-    function examDataHandler (e) {
-        lastData = e.result
-        e.result.tasks.forEach(function (oid) {
-            set(oid, false)
-        })
-        e.result.tasks.forEach(trackTask)
-        container.style.display = "block"
-    }
-    var tasks = {}
-    function trackTask (oid) {
-        if (Object.keys(tasks).indexOf(oid) === -1) {
-            tasks[oid] = undefined
-            StateTracker.track("getExamQuestion", {id: oid}, taskUpdateHandler)
-        }
-    }
-    function taskUpdateHandler (e) {
-        tasks[e.args.id] = e.result
-        var solved = e.result.answer && e.result.answer.trim().length
-        set(e.args.id, solved)
+    var container = document.querySelector("#progressDisplay")
+    var nodes = {}
+
+    core.task_keys.forEach(function (oid) {
+        set(oid, false)
+    })
+    container.style.display = "block"
+
+    this.onTaskLoad = function (key) {
+        var task = core.getTask(key)
+        var solved = task.answer && task.answer.trim().length
+        set(key, solved)
     }
 
-    var container = document.querySelector("#progressDisplay")
+    /* Display */
+
     function clear () {
         while (container.firstChild) {
             container.removeChild(container.firstChild)
         }
-        lastData.tasks.forEach(function (oid) {
+        core.task_keys.forEach(function (oid) {
             if (nodes[oid]) {
                 container.appendChild(nodes[oid])
             }
         })
     }
 
-    var nodes = {}
     function set (oid, solved) {
         if (nodes[oid] === undefined) {
             var circle = document.createElement("div")

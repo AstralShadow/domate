@@ -35,7 +35,8 @@ if ($default){
 }
 
 
-$pages = toFilenames(scandirForPHP("pages"));
+//$pages = toFilenames(scandirForPHP("pages"));
+$pages = ["app", "home"];
 $apis = scandirForDirectories("apis");
 $path = preg_split("/\//", $requestURI, -1, PREG_SPLIT_NO_EMPTY);
 $req_base = strtolower($path[0]);
@@ -59,12 +60,27 @@ if (in_array($req_base, $pages, true)){
         "method" => "GET",
         "api" => null,
         "page" => $req_base,
-        "path" => array_slice($path, 1)
+        "path" => array_slice($path, 1) // TODO fix files' relative paths
     ];
     unset($pages, $path, $req_base);
     return;
 }
-unset($pages, $path, $req_base);
+unset($pages);
+
+// page test
+if (preg_match('/^[a-z0-9]{7}$/', $req_base)){
+    $_requested_resource = [
+        "method" => "GET",
+        "api" => null,
+        "page" => "test",
+        "path" => array_slice($path, 1)
+    ];
+    $_key = $req_base;
+    unset($path, $req_base);
+    return;
+}
+
+unset($path, $req_base);
 
 header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
 die;

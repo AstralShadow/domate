@@ -7,12 +7,16 @@
 /* global StateTracker */
 
 if (!window.SolveTestGUI) {
-    window.SolveTestGUI = {}
+    throw "SolveTestGUI aint initialized"
 }
 
-window.SolveTestGUI.Core = function (oid) {
+window.SolveTestGUI.Core = function (data) {
     "use strict"
-    this.oid = oid
+    var self = this
+    this.data = data
+    console.log(data)
+    this.solution = data.solution
+    this.task_keys = data.solution.tasks
 
     const timer = new SolveTestGUI.Timer(this)
     const progress = new SolveTestGUI.Progress(this)
@@ -20,28 +24,49 @@ window.SolveTestGUI.Core = function (oid) {
     document.getElementById("testUI").style.display = "block"
     document.getElementById("testContents").style.display = "block"
 
-    /* Tracking */
-    StateTracker.track("getExamData", {id: oid}, examDataHandler)
-    var lastData = undefined
-    function examDataHandler (e) {
-        lastData = e.result
-        console.log(e.result)
-        e.result.tasks.forEach(trackTask)
-    }
-    var tasks = {}
-    function trackTask (oid) {
-        if (Object.keys(tasks).indexOf(oid) === -1) {
-            tasks[oid] = undefined
-            StateTracker.track("getExamQuestion", {id: oid}, taskUpdateHandler)
-        }
-    }
-    function taskUpdateHandler (e) {
-        tasks[e.args.id] = e.result
+    this.getTask = function (oid) {
+        return tasks[oid]
     }
 
-    /* Modules events */
     this.onFinish = function () {
         contentsProcessor.disableInput()
     }
+
+    function onTaskLoad (oid) {
+        progress.onTaskLoad(oid)
+        contentsProcessor.onTaskLoad(oid)
+    }
+
+    this.onAnswer = function (oid) {
+        var request = new XMLHttpRequest()
+        request.open("GET", window.SolveTestGUI.endpoint + '/' + oid)
+        request.send()
+
+        request.addEventListener("load", function () {
+            var data = JSON.parse(request.response);
+            tasks[oid] = data.data
+            onTaskLoad(oid)
+        })
+    }
+
+    /* Tracking */
+    var tasks = {}
+    var loadedTasks = 0
+    this.task_keys.forEach(function (oid) {
+        tasks[oid] = null
+        var request = new XMLHttpRequest()
+        request.open("GET", window.SolveTestGUI.endpoint + '/' + oid)
+        request.send()
+
+        request.addEventListener("load", function () {
+            var data = JSON.parse(request.response);
+            tasks[oid] = data.data
+            onTaskLoad(oid)
+            if (++loadedTasks === self.task_keys.length) {
+                contentsProcessor.onLoad()
+            }
+        })
+    })
+
 
 }

@@ -41,11 +41,11 @@ if (!isset($_input["identification"]) || !is_string($_input["identification"])){
     die;
 }
 
-$_exam_solution = TestSolution::create($db, $activeTest);
+$_exam_solution = TestSolution::create($db, $_active_exam);
 $_exam_solution_id = $_exam_solution->getId();
 $add_to_active_query = [
     '$set' => [
-        "activeTests." . $_key => $_exam_solution_id
+        "solutions." . $_key => $_exam_solution_id
     ]
 ];
 $session->update($add_to_active_query);

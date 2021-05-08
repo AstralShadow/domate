@@ -167,6 +167,7 @@ $whitebell->addEventListener("modified_exercise_" . $user->id, function (string 
 
 if (!defined("DONT_RUN_WHITEBELL")){
     flush();
+    set_time_limit(60);
     $whitebell->run();
 }
 

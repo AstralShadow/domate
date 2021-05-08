@@ -4,24 +4,59 @@
  * and open the template in the editor.
  */
 
-/* global StateTracker */
-
-if (!window.SolveTestGUI) {
-    window.SolveTestGUI = {}
+if (window.SolveTestGUI === undefined) {
+    throw "SolveTestGUI aint initialized"
 }
 
-window.SolveTestGUI.start = function (key, identification, cb) {
+window.SolveTestGUI.start = async function (identification, cb) {
     "use strict"
 
-    StateTracker.get("beginTest", {
-        "test": key,
-        "identification": identification
-    }, function (e) {
-        if (e.code === "Success") {
-            var oid = e.result
-            new window.SolveTestGUI.Core(oid)
+    console.log("STARTIN")
+    startOrResume()
+
+    function startOrResume () {
+        var request = new XMLHttpRequest()
+        request.open("GET", window.SolveTestGUI.endpoint)
+        request.send()
+
+        request.addEventListener("load", function () {
+            var data = JSON.parse(request.response)
+
+            if (request.status === 200) {
+                if (data.data.joined) {
+                    handleTestData(request)
+                } else {
+                    start()
+                }
+            } else {
+                cb(data)
+            }
+        })
+    }
+    async function start () {
+        var input = {
+            "token": await window.SolveTestGUI.getToken(),
+            "identification": identification
         }
-        cb(e)
-    })
+
+        var request = new XMLHttpRequest()
+        request.open("PUT", window.SolveTestGUI.endpoint)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(JSON.stringify(input))
+
+        request.addEventListener("load", function () {
+            handleTestData(request)
+        })
+    }
+
+    function handleTestData (request) {
+        var data = JSON.parse(request.response);
+        if (request.status === 200) {
+            new window.SolveTestGUI.Core(data.data)
+        }
+        cb(data)
+    }
+
+
 
 }

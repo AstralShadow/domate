@@ -365,7 +365,8 @@ EOL;
         $keys = [
             "no_test_name", "no_test_description",
             "no_group_name", "no_group_description",
-            "no_exercise_name", "no_exercise_description"
+            "no_exercise_name", "no_exercise_description",
+            "successful_test_schedule"
         ];
         foreach ($keys as $key){
             $TestsPageGUI_init[$key] = $placeholders[$key];

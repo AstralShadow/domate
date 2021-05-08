@@ -13,16 +13,9 @@ if (!window.SolveTestGUI) {
 window.SolveTestGUI.Timer = function (core) {
     "use strict"
 
-    /* Tracking */
-    StateTracker.track("getExamData", {id: core.oid}, examDataHandler)
-    var lastData = undefined
-    var endTime = undefined
-    function examDataHandler (e) {
-        lastData = e.result
-        endTime = e.result.finished
-        progressStartTimer()
-    }
+    var endTime = core.data.solution.finished
     const timer = document.querySelector("#mainTimer > .timerFontHalf")
+    progressStartTimer()
 
     var interval = setInterval(progressStartTimer, 1000)
     function progressStartTimer () {

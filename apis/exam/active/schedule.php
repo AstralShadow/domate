@@ -53,19 +53,19 @@ if ($start >= $end || time() >= $end || $worktime < 1){
 
 /*  Action  */
 $exam = new Test($db, new ObjectId($_id));
-$active_exam = $test->schedule($user, $start, $end, $worktime, $question, $note);
+$active_exam = $exam->schedule($user, $start, $end, $worktime, $question, $note);
 
 header($_SERVER["SERVER_PROTOCOL"] . " 200 OK", true, 200);
 echo json_encode([
     "code" => "200",
-    "key" => $activeTest->getKey(),
-    "id" => $activeTest->getId()
+    "key" => (string) $active_exam->getKey(),
+    "id" => (string) $active_exam->getId()
 ]);
 
 require "include/whiteBell.php";
 
 if (isset($whitebell)){
-    $whitebell->dispatchEvent("new_active_exam_" . $user->id, $activeTest->getId());
+    $whitebell->dispatchEvent("new_active_exam_" . $user->id, (string) $active_exam->getId());
 }
 
 return;

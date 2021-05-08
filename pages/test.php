@@ -13,19 +13,21 @@ use MathExam\Test as Test;
 use MathExam\ActiveTest as ActiveTest;
 use MathExam\TestSolution as TestSolution;
 
-$activeTest = null;
+$_key;
+
+$active_exam = null;
 $test = null;
 $startsAfter = null;
 $endsAfter = null;
 $errorMsg = null;
 
-if (isset($_GET["test"]) && is_string($_GET["test"])){
-    $key = trim($_GET["test"]);
-    $id = ActiveTest::getIdFromKey($db, $key);
-    if (isset($id)){
-        $activeTest = new ActiveTest($db, new ObjectId($id));
-    }
+$id = ActiveTest::getIdFromKey($db, $_key);
+if ($id == null){
+    header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
+} else {
+    $activeTest = new ActiveTest($db, new ObjectId($id));
 }
+
 if (!isset($activeTest)){
     $errorMsg = $dictionary["join_test"]["not_existing"];
 }
@@ -42,10 +44,10 @@ if (isset($activeTest)){
 
     /* Already started test */
 
-    $activeTests = $session->activeTests;
-    if (isset($activeTests[$key])){
-        $myTestId = $activeTests[$key];
-        $myTest = new TestSolution($db, $activeTests[$key]);
+    $activeTests = $session->solutions;
+    if (isset($activeTests[$_key])){
+        $myTestId = $activeTests[$_key];
+        $myTest = new TestSolution($db, $activeTests[$_key]);
         $endTimestamp = $myTest->finished->toDateTime()->getTimestamp();
     }
 
@@ -100,8 +102,14 @@ if (isset($activeTest)){
               rel="stylesheet" type="text/css" />
 
         <script defer src="./scripts/visuals/ExtendedDimensionParser.js"></script>
-        <script src="./scripts/StateTracker.js"></script>
 
+        <script>
+            var SolveTestGUI = {
+                key: <?php echo json_encode($_key); ?>,
+                endpoint: <?php echo json_encode("solve/" . $_key); ?>
+            }
+        </script>
+        <script defer src="./scripts/specific/SolveTestGUI/getToken.js"></script>
         <script defer src="./scripts/specific/SolveTestGUI/Core.js"></script>
         <script defer src="./scripts/specific/SolveTestGUI/Timer.js"></script>
         <script defer src="./scripts/specific/SolveTestGUI/Progress.js"></script>
@@ -115,6 +123,7 @@ if (isset($activeTest)){
     <body>
         <?php
         if (!$errorMsg && isset($activeTest) && !isset($myTestId)){
+            // TODO abstract these things to use the api's GET
             ?>
             <div class="centeredBox" id="startMenu" >
                 <div class="title" ></div>
@@ -128,7 +137,7 @@ if (isset($activeTest)){
                 }
                 ?>
                 <script>
-                    const startsAt = <?php echo json_encode($startTimestamp); ?>
+                const startsAt = <?php echo json_encode($startTimestamp); ?>
                 </script>
                 <div id="startTimerBox" <?php echo $timerCss; ?>>
                     <?php echo $dictionary["STARTING_IN"]; ?>:
@@ -216,14 +225,13 @@ if (isset($activeTest)){
                             if (started) {
                                 return;
                             }
-                            var testKey = <?php echo json_encode(substr($_GET["test"], 0, 10)); ?>
 
-                            window.SolveTestGUI.start(testKey, identification, function (e) {
-                                document.getElementById("startFeedback").innerText = e.msg
+                            window.SolveTestGUI.start(identification, function (e) {
+                                document.getElementById("startFeedback").innerText = e.message
                                 setTimeout(function () {
                                     document.getElementById("startFeedback").innerText = ""
                                 }, 5000)
-                                if (e.code === "Success") {
+                                if (e.code === "success") {
                                     started = true
                                     document.querySelector("#startMenu").style.display = "none"
                                 }
@@ -239,7 +247,8 @@ if (isset($activeTest)){
             ?>
             <script defer>
                 window.addEventListener("load", function () {
-                    new window.SolveTestGUI.Core(<?php echo json_encode((string) $myTestId); ?>)
+                    window.SolveTestGUI.start(<?php echo json_encode((string) $_key); ?>, () => {
+                    })
                 })
             </script>
             <?php
@@ -259,21 +268,27 @@ if (isset($activeTest)){
                 <?php echo $questions . "<br />" . $worktime; ?>
             </div>
             <div id="mainTimer">
-                <?php echo $dictionary["remainint_time"]; ?>: 
+                <?php echo $dictionary["remaining_time"]; ?>: 
                 <div class="timerFontHalf"></div>
             </div>
 
             <div id="progressDisplay"></div>
         </div>
-        <script>
-            window.addEventListener("load", fillTitle)
-            fillTitle()
-            function fillTitle () {
-                document.querySelectorAll(".title").forEach(function (el) {
-                    el.innerText = <?php echo json_encode($test->name) ?>
-                })
-            }
-        </script>
+        <?php
+        if (isset($test)){
+            ?>
+            <script>
+                window.addEventListener("load", fillTitle)
+                fillTitle()
+                function fillTitle () {
+                    document.querySelectorAll(".title").forEach(function (el) {
+                        el.innerText = <?php echo json_encode($test->name); ?> || "???"
+                    })
+                }
+            </script>
+            <?php
+        }
+        ?>
 
         <div id="testContents">
             <!--
