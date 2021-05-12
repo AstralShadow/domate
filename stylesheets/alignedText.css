@@ -58,6 +58,7 @@ and open the template in the editor.
     color: black;
     top: -30px;
     font-size: 14pt;
+    max-width: 100%;
 }
 .alignedTextContainer > .element.left > .content{
     margin-left: 25px;

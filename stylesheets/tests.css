@@ -23,7 +23,7 @@ and open the template in the editor.
     background-size: 90%;
     background-repeat: no-repeat;
     position: fixed;
-    background-position: center top;
+    background-position: center bottom;
     float: right;
     top: 5px;
     right: 5px;
@@ -32,14 +32,15 @@ and open the template in the editor.
     margin: 15px 15px;
     animation-name: logo;
     animation-duration: 3s;
-    padding-top: 120px;
+    padding-top: 150px;
     overflow:hidden;
     transition: all 150ms ease-in-out;
 }
 
 #logo:hover {
-    background-size: 65%;
-    padding-top: 90px;
+    background-size: 90%;
+    background-position: center top;
+    padding-top: 120px;
     height:30px;
     transition: all 150ms ease-in-out;
 }
@@ -473,4 +474,22 @@ hr{
 }
 .button_red.marked{
     background-image: url('../img/212.png');
+}
+
+.alignedTextContainer
+> .element
+> .content
+> span
+> p{
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0px;
+}
+.alignedTextContainer
+> .element
+> .content
+> span
+> p:hover {
+    white-space: normal;
 }
