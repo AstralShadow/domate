@@ -42,7 +42,26 @@ and open the template in the editor.
     background-position: center top;
     padding-top: 120px;
     height:30px;
-    transition: all 150ms ease-in-out;
+}
+
+.alignedTextContainer
+> .element
+> .content
+> span
+> p{
+    display: block;
+    max-height: 14pt;
+    text-overflow: ellipsis; 
+    overflow: hidden;
+    margin: 0px;
+    transition: all 450ms ease-in-out;
+}
+.alignedTextContainer
+> .element
+> .content
+> span
+> p:hover {
+    max-height: 1000px;
 }
 
 #end{
@@ -474,22 +493,4 @@ hr{
 }
 .button_red.marked{
     background-image: url('../img/212.png');
-}
-
-.alignedTextContainer
-> .element
-> .content
-> span
-> p{
-    text-overflow: ellipsis; 
-    white-space: nowrap;
-    overflow: hidden;
-    margin: 0px;
-}
-.alignedTextContainer
-> .element
-> .content
-> span
-> p:hover {
-    white-space: normal;
 }
