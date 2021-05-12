@@ -42,6 +42,7 @@ if (!isset($_input["identification"]) || !is_string($_input["identification"])){
 }
 
 $_exam_solution = TestSolution::create($db, $_active_exam);
+$_exam_solution->identification = trim($_input["identification"]);
 $_exam_solution_id = $_exam_solution->getId();
 $add_to_active_query = [
     '$set' => [
